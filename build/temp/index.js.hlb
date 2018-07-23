@@ -1,0 +1,82 @@
+(function($,window,document,undefined){
+
+    var authrizePlugin = (function(){
+        {{{system_js}}}
+        return {
+            enableAnonymous:enableAnonymous,
+            isLogin:isLogin,
+            authorizedMenuItems:authorizedMenuItems,
+            enableAuthorize:enableAuthorize
+        }
+    })();
+
+    var pluginName = "auth",
+        defaults = {},
+        authorizedData = null;
+
+    function Plugin(element, options) {
+        this.element = $(element);
+        this.settings = $.extend({}, defaults, options);
+    }
+
+    $.extend(Plugin.prototype, {
+        isAuthorized:function(id) {
+            if(!authorizedData){
+                var i,len,item,key,data;
+                data = authrizePlugin.authorizedMenuItems($);
+                authorizedData = {};
+                if(data) {
+                    len = data.length;
+                    for(i=0;i<len;i++) {
+                        item = data[i];
+                        key = "a"+item.id;
+                        authorizedData[key] = item;
+                    }
+                }
+            }
+            return authorizedData && !!authorizedData["a"+id];
+        },
+        enableAuthorize:function() {
+            return authrizePlugin.enableAuthorize();
+        }
+    });
+
+    $[pluginName] = $.fn[pluginName] = function(options) {
+        var args = arguments;
+        if (options === undefined || typeof options === 'object') {
+            if (!(this instanceof $)) {
+                $.extend(defaults, options);
+            }
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+            }
+        } else if (typeof options === 'string' && options[0] !== '_') {
+            var returns;
+            var instance = $.data(this, 'plugin_' + pluginName);
+            if (!instance) {
+                instance = $.data(this, 'plugin_' + pluginName, new Plugin(
+                    this, options));
+            }
+            //options 是方法名
+            if (instance instanceof Plugin && typeof instance[options] ===
+                'function') {
+                returns = instance[options].apply(instance, Array.prototype.slice
+                    .call(args, 1));
+            }
+            return returns !== undefined ? returns : this;
+        }
+    };
+
+
+    if(authrizePlugin.enableAnonymous()) {
+        return;
+    } else {
+        if(authrizePlugin.isLogin($)) {
+            return;
+        } else {
+            window.location.href = "login.html";
+        }
+    }
+
+})(jQuery,window, document);
+

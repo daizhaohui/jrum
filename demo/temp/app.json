@@ -1,0 +1,44 @@
+{
+    "info":{
+        "title":"你好，demo",
+        "copyright":"飞凡信息有限公司版权所有 沪ICP备08114786：沪B2-20150088 Copyright © 2017 ffan.com All Rights Reserved",
+        "anonymous":true
+    },
+    "routes":["a.json","b.json",{
+        "name":"test1",
+        "path":"/test1/a",
+        "component":"tableList,TableListContainer",
+        "thunkName":"aaa"
+    }],
+    "api":{
+        "prefixs":{
+            "pre":"abcd"
+        },
+        "urls":[
+            {
+                "name":"test1",
+                "url":"@pre/aaaa/bbbb/ccc/:id"
+            },
+            {
+                "name":"test2",
+                "url":"test2"
+            },
+            "a.json",
+            "c.json"
+        ]
+    },
+    "services":[
+        {
+            "name":"date",
+            "component":"a,util/dateUtil"
+        },
+        {
+            "name":"date2",
+            "component":"b,util/dateUtil"
+        }
+    ],
+    "plugins":[
+
+
+    ]
+}

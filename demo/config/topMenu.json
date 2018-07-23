@@ -1,0 +1,160 @@
+{
+  "items":[
+    {
+      "id":   "top1",
+      "name": "菜单1",
+      "url":  "",
+      "children":[
+        {
+          "id":   "top1-1",
+          "name": "菜单1-1abcdef",
+          "url":  ""
+        },
+        {
+          "id":   "top1-2",
+          "name": "菜单1-21abcdef",
+          "url":  ""
+        }
+      ]
+    },
+    {
+      "id":   "top-left-1",
+      "name": "菜单left",
+      "authId":"111",
+      "url":  "",
+      "position":"left",
+      "children":[
+        {
+          "id":   "top-left-1",
+          "name": "菜单1-1abcdef",
+          "url":  ""
+        },
+        {
+          "id":   "top-left-2",
+          "name": "菜单1-21abcdef",
+          "url":  ""
+        }
+      ]
+    },
+    {
+      "id":   "top3",
+      "name": "菜单3",
+      "url":  "",
+      "type": "info",
+      "position":"left",
+      "contentHTML":"<a href='http://wwww.sina.com.cn'>新浪ddddddddddd</a>",
+      "children":[
+        {
+          "id":   "top3-1",
+          "name": "菜单1-1abcdef",
+          "url":  ""
+        },
+        {
+          "id":   "top3-2",
+          "name": "菜单1-21abcdef",
+          "url":  ""
+        }
+      ]
+    },
+    {
+      "id":   "top4",
+      "name": "多列菜单",
+      "url":  "",
+      "position":"left",
+      "cols":"2",
+      "children":[
+        {
+          "id":   "tm1",
+          "name": "多列1",
+          "url":  "",
+          "icon": "./src/assets/images/input_password.png"
+        },
+        {
+          "id":   "tm2",
+          "name": "多列2",
+          "url":  "",
+          "icon": "./src/assets/images/input_password.png"
+        },
+        {
+          "id":   "tm3",
+          "name": "多列3",
+          "url":  "",
+          "icon": "./src/assets/images/input_password.png"
+        }
+      ]
+    },
+    {
+      "id":   "top5",
+      "name": "多列菜单",
+      "type": "dropdown",
+      "url":  "",
+      "position":"left",
+      "cols":"2",
+      "children":[
+        {
+          "id":   "tm1",
+          "name": "多列1",
+          "url":  "",
+          "icon": "./src/assets/images/logo.png"
+        },
+        {
+          "id":   "tm2",
+          "name": "多列2",
+          "url":  "",
+          "icon": "./src/assets/images/logo.png"
+        },
+        {
+          "id":   "tm3",
+          "name": "多列3",
+          "url":  "",
+          "icon": "./src/assets/images/logo.png"
+        }
+      ]
+    },
+    {
+      "id":   "top6",
+      "name": "单列菜单",
+      "type": "dropdown",
+      "url":  "",
+      "children":[
+        {
+          "id":   "tm1",
+          "name": "多列1",
+          "url":  "",
+          "icon": "./src/assets/images/logo.png"
+        },
+        {
+          "id":   "tm2",
+          "name": "多列2",
+          "url":  "",
+          "icon": "./src/assets/images/logo.png"
+        },
+        {
+          "id":   "tm3",
+          "name": "多列3",
+          "url":  "",
+          "icon": "./src/assets/images/logo.png"
+        }
+      ]
+    },
+    {
+      "id": "top11",
+      "name": "菜单right",
+      "url": "",
+      "children": [
+        {
+          "id": "top11-1",
+          "name": "菜单1",
+          "url": ""
+        },
+        {
+          "id": "top11-2",
+          "name": "菜单1",
+          "url": ""
+        }
+      ]
+    }
+
+  ]
+
+}

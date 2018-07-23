@@ -1,0 +1,8 @@
+[
+    {
+        "name":"test2",
+        "path":"/test2/a",
+        "component":"tableList,TableListContainer",
+        "thunkName":"aaa"
+    }
+]

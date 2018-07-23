@@ -1,0 +1,33 @@
+import React from 'react';
+{{#each components}}
+import {{this.name}} from "{{this.component}}";
+{{/each}}
+import Bundle  from '../../jrum/common/bundle';
+{{#each lazyComponents}}
+import {{this.name}} from 'bundle-loader?lazy&name={{this.thunkName}}!{{this.component}}'
+{{/each}}
+
+
+const  AppRouter = {
+    data:[
+    {{#each components}}
+    {
+        name: "{{this.name}}",
+        path: "{{this.path}}",
+        component:{{this.name}}
+    },
+    {{/each}}
+    {{#each lazyComponents}}
+    {
+        name: "{{this.name}}",
+        path: "{{this.path}}",
+        component: (props) => (<Bundle load={{this.sname}}>
+                    {(Comp) => <Comp {...props}/>}
+                 </Bundle>)
+    },
+    {{/each}}
+    ]
+};
+
+export  default  AppRouter;
+

@@ -1,0 +1,14 @@
+{
+    "port":"8000",
+    "proxy":{
+        "/api": "http://localhost:3000",
+        "/api1": {
+            "target": "http://localhost:3000",
+            "pathRewrite": {"^/api" : ""}
+        },
+        "/api3": {
+            "target": "https://other-server.example.com",
+            "secure": false
+        }
+    }
+}

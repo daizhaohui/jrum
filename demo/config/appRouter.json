@@ -1,0 +1,23 @@
+{
+  "items":[
+    {
+      "name" : "queryList",
+      "path" : "/queryList",
+      "component" : "../components/queryList",
+      "thunkName":"test"
+    },
+    {
+      "name" : "registerForm",
+      "path" : "/registerForm",
+      "component" : "../components/registerForm",
+      "thunkName":"test"
+    },
+    {
+      "name" : "helloWord",
+      "path" : "/hello",
+      "component" : "../components/helloWord",
+      "thunkName":"test"
+    }
+  ]
+
+}

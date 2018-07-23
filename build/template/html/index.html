@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>{{title}}</title>
+    {{#each font_files}}
+    <link rel="stylesheet" href="{{this}}"/>
+    {{/each}}
+    {{#each css_files}}
+    <link rel="stylesheet" type="text/css" href="{{this}}"/>
+    {{/each}}
+    <link rel="stylesheet" type="text/css" href="{{css_control_board}}"/>
+    <script  type="text/javascript" src="{{js_jquery}}"></script>
+    {{#each js_files}}
+    <script  type="text/javascript" src="{{this}}"></script>
+    {{/each}}
+    <script  type="text/javascript" src="{{js_login}}"></script>
+    <script  type="text/javascript" src="{{js_control_board}}"></script>
+</head>
+<script type="text/javascript">
+    {{{js_index_entry}}}
+</script>
+<body class="viewFramework-body">
+    <div class="viewFramework-topbar menu-scope">
+        <div class="viewframework-console-topbar menu-isolate-scope">
+            <div class="topbar-wrap topbar-clearfix">
+                <div class="topbar-head topbar-left">
+                    <span class="topbar-logo topbar-left">
+                        <img src="wlogo.png" style="height: 40px;padding-top:6px;">
+                    </span>
+                    <!--动态从左边插入菜单-->
+                    <div class="topbar-left topbar-info topbar-info-left topbar-clearfix" id="topMenu-left">
+
+                    </div>
+                </div>
+
+                <!--动态从右边插入菜单-->
+                <div class="topbar-info topbar-right topbar-clearfix" id="topMenu-right">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='sidebar-left' class="viewFramework-div viewFramework-sidebar-full">
+        <div class="viewFramework-sidebar">
+        <div id="sidebar" product-id="account" class="sidebar-content">
+            <div class="sidebar-inner menu-scope">
+                <div id='sidebar-icon' class="sidebar-fold menu-scope icon-unfold"></div>
+                <!--动态插入菜单-->
+                <div id="vf-time" class="vf-time"></div>
+            </div>
+        </div>
+    </div>
+        <div id='sidebar-middle' class="viewFramework-product">
+        <div class="viewFramework-product-navbar menu-scope hidden">
+            <div class="product-nav-stage menu-scope product-nav-stage-main">
+                <div class="product-nav-scene product-nav-main-scene">
+                    <div class="product-nav-title" id="subMenuTitle">账号管理</div>
+                    <!-- 自定义内容插入点，比如商标、logo -->
+                    <div customized-content="" class="menu-isolate-scope"></div>
+                    <div class="product-nav-list" id="product-nav-list">
+                        <!--动态插入扩展菜单-->
+                    </div>
+                </div>
+                <div class="product-nav-scene product-nav-sub-scene">
+                    <div class="product-nav-title">
+                    </div>
+                    <div class="product-nav-list">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="viewFramework-product-navbar-collapse menu-scope hidden">
+            <div class="product-navbar-collapse-inner">
+                <div class="product-navbar-collapse-bg"></div>
+                <div id='icon-left' class="product-navbar-collapse">
+                    <span class="icon-collapse-left"></span>
+                    <span class="icon-collapse-right"></span>
+                </div>
+            </div>
+        </div>
+        <div class="viewFramework-product-body">
+            <div class="console-title  clearfix" style="padding-left: 12px;padding-right: 12px;">
+                <div>
+                    <h4><span id="subSubMenuTitle" class="sidebar-title-text">&nbsp;</span></h4>
+                </div>
+                <div class="splitLine"></div>
+            </div>
+            <div style="padding-left: 12px;padding-right: 12px;">
+                <div id="appContent">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</body>
+</html>

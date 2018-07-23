@@ -1,0 +1,64 @@
+{
+
+  "items":[
+    {
+      "id":   "001",
+      "name": "样例",
+      "url":  "",
+      "children":[
+        {
+          "id":   "001001",
+          "name": "模板页面",
+          "url":  "",
+          "iconClass":"",
+          "children":[
+            {
+              "id":   "001001001",
+              "name": "查询列表",
+              "url":  "queryList"
+            },
+            {
+              "id":   "001001002",
+              "name": "表单",
+              "url":  "",
+              "children":[
+                {
+                  "id":   "001001002001",
+                  "name": "表单1",
+                  "url":  "registerForm"
+                },
+                {
+                  "id":   "001001002001",
+                  "name": "表单2",
+                  "url":  "registerForm"
+                }
+              ]
+            },
+            {
+              "id":   "001001003",
+              "name": "高级查询",
+              "url":  "queryList"
+            },
+            {
+              "id":   "001001004",
+              "name": "步骤",
+              "url":  "queryList"
+            },
+            {
+              "id":   "001001005",
+              "name": "卡片列表",
+              "url":  "queryList"
+            }
+          ]
+        },
+        {
+          "id":   "001002",
+          "name": "其他",
+          "url":  "bbb"
+        }
+      ]
+    }
+
+  ]
+
+}
