@@ -14,7 +14,6 @@ export default class UserController{
         } else {
 
         }
-        next();
     }
 
 }
