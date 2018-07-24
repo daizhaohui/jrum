@@ -3,7 +3,7 @@ export default class UserService{
 
     }
 
-    login(user) {
+    getUser(name) {
         
     }
 

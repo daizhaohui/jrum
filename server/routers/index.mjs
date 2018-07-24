@@ -1,11 +1,19 @@
 import Router from 'koa-router';
-import { createContext } from 'vm';
+import {UserController} from '../controllers/index.mjs';
 
 const indexRouter = new Router();
 
 indexRouter.get('/',async (ctx,next)=>{
     ctx.body = "hello,world!";
+    next();
 });
 
+indexRouter.post('/v1/login',UserController.login);
 
-export default indexRouter;
+const Routes = indexRouter.routes();
+const AllowedMethods = indexRouter.allowedMethods();
+
+export {
+    Routes,
+    AllowedMethods
+} 
