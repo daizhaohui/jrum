@@ -4,6 +4,7 @@ import {Routes,AllowedMethods} from './routers/index.mjs';
 import {AuthController} from './controllers/index.mjs';
 import handleError from './helpers/errorHandler.mjs';
 import KoaBody from 'koa-body';
+import KoaLogger from 'koa-logger';
 import appConfigMjs from './app.config.mjs';
 
 const app = new Koa();
@@ -11,6 +12,7 @@ const port = AppConfig.port || 8008;
 
 //错误处理
 app.on('error',handleError);
+app.use(new KoaLogger());
 app.use(KoaBody());
 //用户会话检查
 app.use(AuthController.checkUserToken);
