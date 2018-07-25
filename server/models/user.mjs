@@ -5,5 +5,6 @@ const userSchema = new mongoose.Schema({
     password:String,
     chinese_name:String
 });
+var user = mongoose.model("users",userSchema);
 
-export default userSchema;
+export default user;

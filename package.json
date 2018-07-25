@@ -16,6 +16,7 @@
     "history": "^4.7.2",
     "jrum": "file:modules/jrum-1.0.0.tgz",
     "jrum-build": "file:modules/jrum-build-1.0.0.tgz",
+    "koa-body": "^4.0.4",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",

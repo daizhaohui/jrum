@@ -16,4 +16,11 @@ log4js.configure({
 });
 const logger = log4js.getLogger("logger_date");
 
-export default logger;
+export default {
+    error:(e)=>{logger.error(e)},
+    info:(i)=>{logger.info(i)},
+    warn:(w)=>{logger.warn(w)},
+    trace:(t)=>{logger.trace(t)},
+    debug:(d)=>{logger.debug(t)},
+    fatal:(f)=>{logger.fatal(f)}
+};

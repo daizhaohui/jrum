@@ -5,6 +5,15 @@ export default {
         port:27017,
         db_name:'jrum_demo'
     },
-    keys:["Where are you from? What are you going to do?","Where are you going to? Who are you?"]
+    token:{
+        checkTokenExcludePath:["/login"],
+        cryptKey:"abcde",
+        expiredSeconds:30
+    },
+    codeMessage:{
+        invalid_token:{code:5001,message:'无效token'},
+        expired_token:{code:5002,message:'token失效'}
+    }
+    
 
 }
