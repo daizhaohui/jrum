@@ -17,12 +17,12 @@
     }],
     "api":{
         "prefixs":{
-            "pre":"abcd"
+            "local":"http://127.0.0.1:8008"
         },
         "urls":[
             {
-                "name":"test1",
-                "url":"@pre/aaaa/bbbb/ccc/:id"
+                "name":"login",
+                "url":"@local/login"
             },
             {
                 "name":"test2",

@@ -13,9 +13,10 @@ const Routes=[
 const Services=[];
 
 const ApiUrls=[
-{name:'test1',url:'abcd/aaaa/bbbb/ccc/:id'},
+{name:'login',url:'http://127.0.0.1:8008/login'},
 {name:'test2',url:'test2'},
-{name:'test3',url:'test3'}
+{name:'test3',url:'test3'},
+{name:'test1',url:'test3'}
 ];
 
 const Plugins=[

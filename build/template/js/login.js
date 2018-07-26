@@ -2,7 +2,6 @@ import  LoginPlugin  from '{{login_plugin_component}}';
 import  HttpPlugin from '{{http_plugin_component}}';
 import  HttpService from '{{http_service_component}}';
 
-var _apiUrls = '{{apiUrls}}';
 var _httpPlugin = new HttpPlugin();
 if(_httpPlugin.setHttpDefaultSetting && typeof _httpPlugin.setHttpDefaultSetting ==='function'){
     _httpPlugin.setHttpDefaultSetting(axios);
@@ -19,7 +18,7 @@ Object.defineProperty(window.__login__,"http",{
     writable:false,
     configurable:false,
     enumerable:true,
-    value:new HttpService(JSON.parse(_apiUrls),axios)
+    value:new HttpService(JSON.parse('{{{apiUrls}}}'),axios)
 });
 
 $(window.document).ready(function(){
