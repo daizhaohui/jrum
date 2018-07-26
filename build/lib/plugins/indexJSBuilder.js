@@ -21,7 +21,7 @@ IndexJSBuilder.prototype.run = function(appConfigReader,next) {
 
     appConfig = appConfigReader.getMergedAppConfig();
     TemplateContext.anonymous = appConfig.info.anonymous ? 'true' : 'false';
-    template = Handlebars.compile(fs.readFileSync(path.resolve(__dirname,'../../template/js/index.js.hlb'),'utf-8'));
+    template = Handlebars.compile(fs.readFileSync(path.resolve(__dirname,'../../template/js/index.js'),'utf-8'));
     code = template(TemplateContext);
     if(this.args.env===AppConsts.ENV_PRODUCTION && code.length>200) {
         code = util.minifyJS(code);

@@ -18,8 +18,10 @@ module.exports = {
     FILE_NAME_LOGIN_JS:'login', //登录脚本文件名,
     FILE_NAME_LOGIN_CSS:'login',//登录样式文件名,
     FILE_NAME_JQUERY_JS:'jquery',//jquery 文件名
+    FILE_NAME_AXIOS_JS:'axios',//axios 文件名
     FILE_NAME_CONTROL_BOARD_CSS:'control-board',//首页样式文件名
     FILE_NAME_CONTROL_BOARD_JS:'controlboard',//首页脚本文件名
+
 
     APP_CONFIG_NODE_NAMES:{
         PLUGINS : 'Plugins',

@@ -23,17 +23,24 @@ LoginJSBuilder.prototype.run = function(pluginFile) {
     var template,
         targetFile,
         sourceFile,
-        config;
+        config,
+        httpPlugin;
 
     if(!pluginFile){
         Error('login plugin is empty.')
         return;
     }
 
+    httpPlugin = this.options.plugins.find(item=>item.name===AppConsts.PLUGIN_NAMES.HTTP);
+
     //根据模板文件，生成login.js文件,然后把login.js文件转换成es2015代码
     //生成引用插件类的代码
     TemplateContext.login_plugin_component = path.resolve(cwd,this.args.target,AppConsts.APP_PLUGINS_DIRECTORY,pluginFile);
-    template = Handlebars.compile(fs.readFileSync(path.resolve(__dirname,'../template/js/login.js.hlb'),'utf-8'));
+    TemplateContext.http_plugin_component = path.resolve(cwd,this.args.target,AppConsts.APP_PLUGINS_DIRECTORY,httpPlugin.component);
+    TemplateContext.http_service_component = path.resolve(__dirname,"../template/js/httpService.js");
+    TemplateContext.apiUrls = JSON.stringify(this.options.apiUrls);
+   
+    template = Handlebars.compile(fs.readFileSync(path.resolve(__dirname,'../template/js/login.js'),'utf-8'));
     targetFile = path.resolve(cwd,this.args.output,AppConsts.APP_JS_DIRECTORY,`${AppConsts.FILE_NAME_LOGIN_JS}`);
     targetFile = this.args.env===AppConsts.ENV_PRODUCTION ? `${targetFile}.min.js` : `${targetFile}.js`;
     sourceFile = path.resolve(cwd,this.args.output,AppConsts.BUILD_TEMP_DIRECTORY,`${AppConsts.FILE_NAME_LOGIN_JS}`);

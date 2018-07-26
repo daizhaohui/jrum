@@ -54,7 +54,13 @@ PluginManager.prototype.getAllPlugins = function() {
 }
 
 PluginManager.prototype.createPluginBuilder = function(plugin) {
-    return  PluginBuilderFactory.createBuilder(plugin,this.args,this.options);
+    var appConfig = this.appConfigReader.getMergedAppConfig();
+    return  PluginBuilderFactory.createBuilder(plugin,this.args,util.assign(this.options,{
+        plugins:appConfig.plugins,
+        apiUrls:appConfig.apiUrls,
+        info:appConfig.info,
+        routes:appConfig.routes
+    }));
 };
 
 
