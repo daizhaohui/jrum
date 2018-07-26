@@ -8,7 +8,7 @@ indexRouter.get('/',async (ctx,next)=>{
     next();
 });
 
-indexRouter.post('/v1/login',UserController.login);
+indexRouter.get('/v1/login',UserController.login);
 
 const Routes = indexRouter.routes();
 const AllowedMethods = indexRouter.allowedMethods();

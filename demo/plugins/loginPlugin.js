@@ -7,6 +7,28 @@ export default  class LoginPlugin {
          if(!password) {
              return callback('请输入密码！');
          }
+
+         this.http.post("login",{
+            name:userName,
+            password:password
+         },{
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+            }
+         }).then((res)=>{
+             if(res.status===200){
+                if(res.data.status===1){
+                    callback();
+                } else {
+                    callback(res.data.message);
+                }
+             } else {
+                callback('网路异常，请稍后重试！')
+             }
+         }).catch((e)=>{
+             callback('网路异常，请稍后重试！')
+         })
+
          if(userName==='admin' && password==='admin'){
              callback();
          } else {

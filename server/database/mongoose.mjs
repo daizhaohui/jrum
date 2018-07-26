@@ -2,7 +2,7 @@ import Mongoose from 'mongoose';
 import AppConfig from '../app.config.mjs';
 
 Mongoose.connect(`mongodb://${AppConfig.mongodb.host}:${AppConfig.mongodb.port}/${AppConfig.mongodb.db_name}`,{
-    useMongoClient: true,
+    useNewUrlParser:true,
     autoIndex: false, // Don't build indexes
     reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
     reconnectInterval: 500, // Reconnect every 500ms

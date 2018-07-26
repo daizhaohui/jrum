@@ -3,14 +3,16 @@ import  HttpPlugin from '{{http_plugin_component}}';
 import  HttpService from '{{http_service_component}}';
 
 var _httpPlugin = new HttpPlugin();
-if(_httpPlugin.setHttpDefaultSetting && typeof _httpPlugin.setHttpDefaultSetting ==='function'){
-    _httpPlugin.setHttpDefaultSetting(axios);
-}
-if(_httpPlugin.requestInterceptor && typeof _httpPlugin.requestInterceptor ==='function'){
-    axios.interceptors.request.use(_httpPlugin.requestInterceptor);
-}
-if(_httpPlugin.responseInterceptor && typeof _httpPlugin.responseInterceptor ==='function'){
-    axios.interceptors.response.use(_httpPlugin.responseInterceptor);
+if(axios){
+    if(_httpPlugin.setHttpDefaultSetting && typeof _httpPlugin.setHttpDefaultSetting ==='function'){
+        _httpPlugin.setHttpDefaultSetting(axios);
+    }
+    if(_httpPlugin.requestInterceptor && typeof _httpPlugin.requestInterceptor ==='function'){
+        axios.interceptors.request.use(_httpPlugin.requestInterceptor);
+    }
+    if(_httpPlugin.responseInterceptor && typeof _httpPlugin.responseInterceptor ==='function'){
+        axios.interceptors.response.use(_httpPlugin.responseInterceptor);
+    }
 }
 
 window.__login__ = new LoginPlugin();

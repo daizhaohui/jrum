@@ -17,12 +17,12 @@
     }],
     "api":{
         "prefixs":{
-            "local":"http://127.0.0.1:8008"
+            "local":"http://localhost:8008"
         },
         "urls":[
             {
                 "name":"login",
-                "url":"@local/login"
+                "url":"@local/v1/login"
             },
             {
                 "name":"test2",

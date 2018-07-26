@@ -6,7 +6,7 @@ export default {
         db_name:'jrum_demo'
     },
     token:{
-        checkTokenExcludePath:["/login"],
+        checkTokenExcludePath:["/v1/login"],
         cryptKey:"abcde",
         expiredSeconds:30
     },

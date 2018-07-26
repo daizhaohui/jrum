@@ -1,12 +1,19 @@
 import Logger from './logger.mjs';
 
-export default (err,ctx)=>{
-    try{
-        Logger.error(err);
-        if(ctx){
-            Logger.error(JSON.stringify(ctx));
+export default class ErrorHandler{
+    static handle(err,ctx){
+        try{
+            console.error(err);
+            if(err.stack){
+                Logger.error(`${err.message}\r\n${err.stack}`);
+            } else {
+                Logger.error(`${err.message}`);
+            }
+            if(ctx && ctx.body){
+                Logger.error(`${ctx.body}`);
+            }
+        }catch(err){
+            console.error(err);
         }
-    } catch(e){
-        console.log(e);
     }
 }

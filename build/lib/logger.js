@@ -26,7 +26,7 @@ const styles = {
 
 module.exports = {
     error:function(err){
-        console.log('\x1B[31m%s\x1b[0m:',err);
+        console.error(err);  //'\x1B[31m%s\x1b[0m:',
     },
     info:function(info) {
         console.log(info);

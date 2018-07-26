@@ -20,9 +20,9 @@ export  default  class HttpService{
         items = apiUrls || [];
         this.apiUrls = {};
         this.http = http;
-        len = this.apiUrls.length;
+        len = items.length;
         for(i=0;i<len;i++){
-            item = this.apiUrls[i];
+            item = items[i];
             this.apiUrls[item.name] = item.url;
         }
     }
@@ -32,21 +32,21 @@ export  default  class HttpService{
 
         url = _checkName(this.apiUrls,name);
         _mergeConfig(url,config);
-        this.http.request(config);
+        return this.http.request(config);
     }
 
     get = (name,config)=>{
         var url;
 
         url = _checkName(this.apiUrls,name);
-        this.http.get(url,config);
+        return this.http.get(url,config);
     }
 
     delete = (name,config)=>{
         var url;
 
         url = _checkName(this.apiUrls,name);
-        this.http.delete(url,config);
+        return this.http.delete(url,config);
     }
 
     head = (name,config)=>{
@@ -60,21 +60,21 @@ export  default  class HttpService{
         var url;
 
         url = _checkName(this.apiUrls,name);
-        this.http.options(url,config);
+        return this.http.options(url,config);
     }
 
     post = (name,data,config)=>{
         var url;
 
         url = _checkName(this.apiUrls,name);
-        this.http.post(url,data,config);
+        return this.http.post(url,data,config);
     }
 
     put = (name,data,config)=>{
         var url;
 
         url = _checkName(this.apiUrls,name);
-        this.http.put(url,data,config);
+        return this.http.put(url,data,config);
     }
 
     patch = (name,data,config)=>{
@@ -85,11 +85,11 @@ export  default  class HttpService{
     }
 
     all =()=>{
-        this.http.all.apply(this.http,Array.prototype.slice.call(arguments));
+        return this.http.all.apply(this.http,Array.prototype.slice.call(arguments));
     }
 
-    spread = (callback)=>{
-        this.http.spread.apply(this.http,Array.prototype.slice.call(arguments));
+    spread = ()=>{
+        return this.http.spread.apply(this.http,Array.prototype.slice.call(arguments));
     }
 
     createIntance = (config)=>{

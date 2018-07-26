@@ -1,5 +1,5 @@
 import {ServiceFactory,ServiceNames} from '../services/index.mjs';
-import Logger from '../helpers/logger.mjs';
+import ErrorHandler from '../helpers/errorHandler.mjs';
 export default class UserController{
 
     static login(ctx,next){
@@ -13,7 +13,7 @@ export default class UserController{
             });
             ctx.body = result;   
         }catch(e){
-            Logger.error(e);
+            ErrorHandler.handle(e);
             ctx.body = {
                 status:500,
                 message:`服务端错误`
