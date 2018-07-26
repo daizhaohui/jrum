@@ -36,7 +36,7 @@ LoginHtmlBuilder.prototype.run = function (appConfigReader,next) {
     TemplateContext.copyright = appConfig.info.copyright;
     TemplateContext.getBackPassword = "__login__.getBackPassword()";
     TemplateContext.js_jquery =  `${AppConsts.APP_JS_DIRECTORY}/${AppConsts.FILE_NAME_JQUERY_JS}.min.js`;
-    TemplateContext.js_axios =  `${AppConsts.APP_JS_DIRECTORY}/${AppConsts.FILE_NAME_AXIOS_JS}.min.js`;
+    TemplateContext.js_axios =  `${AppConsts.APP_JS_DIRECTORY}/${AppConsts.FILE_NAME_AXIOS_JS}.${temp}js`;
     TemplateContext.css_login = `${AppConsts.APP_CSS_DIRECTORY}/${AppConsts.FILE_NAME_LOGIN_CSS}.${temp}css`;
     TemplateContext.js_login = `${AppConsts.APP_JS_DIRECTORY}/${AppConsts.FILE_NAME_LOGIN_JS}.${temp}js`;
 
@@ -46,7 +46,7 @@ LoginHtmlBuilder.prototype.run = function (appConfigReader,next) {
     //拷贝jquery文件
     fs.copyFileSync(path.resolve(__dirname,`../../template/js/${AppConsts.FILE_NAME_JQUERY_JS}.min.js`),path.resolve(cwd,this.args.output,TemplateContext.js_jquery));
     //拷贝axios文件
-    fs.copyFileSync(path.resolve(__dirname,`../../template/js/${AppConsts.FILE_NAME_AXIOS_JS}.min.js`),path.resolve(cwd,this.args.output,TemplateContext.js_axios));
+    fs.copyFileSync(path.resolve(__dirname,`../../template/js/${AppConsts.FILE_NAME_AXIOS_JS}.${temp}js`),path.resolve(cwd,this.args.output,TemplateContext.js_axios));
 
     new LoginJSBuilder(this.args,this.options).run(this.plugin.from); // this.plugin.from 源登录插件代码文件
     new CssBuilder(this.args,this.options).run(`${AppConsts.FILE_NAME_LOGIN_CSS}`,function(){

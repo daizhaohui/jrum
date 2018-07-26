@@ -1,11 +1,11 @@
 export  default  class  HttpPlugin {
 
-    requestInterceptor = (request)=>{
-
+    requestInterceptor = (config)=>{
+        return config;
     }
 
     responseInterceptor = (response)=>{
-
+        return response; 
     }
 
     setHttpDefaultSetting = (http)=>{

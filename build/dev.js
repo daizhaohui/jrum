@@ -15,8 +15,8 @@ var options,
     config,
     params;
 
-
-options = createOptions(args);
+args.env = AppConsts.ENV_DEVELOPMENT;
+options = createOptions(args,'dev');
 config = devConfig(args,options);
 params = {
     appConfigReader:  new AppConfigReader(args,options),

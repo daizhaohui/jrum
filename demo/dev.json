@@ -1,7 +1,9 @@
 {
     "port":"8000",
     "proxy":{
-        "/api": "http://localhost:3000",
+        "/v1":{
+            "target":"http://localhost:8008/v1"
+        },
         "/api1": {
             "target": "http://localhost:3000",
             "pathRewrite": {"^/api" : ""}
