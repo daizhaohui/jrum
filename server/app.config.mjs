@@ -13,7 +13,8 @@ export default {
     codeMessage:{
         invalid_token:{code:5001,message:'无效token'},
         expired_token:{code:5002,message:'token失效'}
-    }
+    },
+    allowOrigins:["http://localhost:8000"]
     
 
 }

@@ -17,7 +17,7 @@ export default class UserService{
                 status:1,
                 token:Token.create({
                     name:user.name,
-                    date:Date.now().getTime()
+                    date:Date.now()
                 }),
                 message:'OK'
             }

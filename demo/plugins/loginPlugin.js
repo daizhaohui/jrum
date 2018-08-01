@@ -13,7 +13,7 @@ export default  class LoginPlugin {
             password:password
          },{
             headers:{
-                "Content-Type":"application/x-www-form-urlencoded"
+                "Content-Type":"application/json"
             }
          }).then((res)=>{
              console.log("aaa");

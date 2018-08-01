@@ -5,12 +5,14 @@ import {AuthController} from './controllers/index.mjs';
 import ErrorHandler from './helpers/errorHandler.mjs';
 import KoaBody from 'koa-body';
 import KoaLogger from 'koa-logger';
+import RequestHandler from './helpers/requestHandler.mjs';
 
 const app = new Koa();
 const port = AppConfig.port || 8008;
 
 //错误处理
 app.on('error',ErrorHandler.handle);
+app.use(RequestHandler.handle);
 app.use(new KoaLogger());
 app.use(KoaBody());
 //用户会话检查
