@@ -30,7 +30,7 @@ export default  class LoginPlugin {
         authority:'' //权利，多个权利以逗号隔开，如'read,write' 有读写的权利
      }]
       */
-     getAuthorization = (callback)=>{
+     getAuthorization = (userName,callback)=>{
 
      }
 
@@ -49,7 +49,7 @@ export default  class LoginPlugin {
         }
      ]
       */
-     getMenus = (callback)=>{
+     getMenus = (userName,callback)=>{
 
      }
 

@@ -19,4 +19,8 @@ export default class ErrorHandler{
             console.error(err);
         }
     }
+
+    static getResponseOfServerError(err){
+        return AppConfig.codeMessage.server_error;
+    }
 }

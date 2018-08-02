@@ -1,15 +1,20 @@
 function _checkName(urls,name){
-    var url = urls[name];
+    var url,pathName;
+    if(typeof name === 'string'){
+        pathName = name;
+        url = urls[name];
+    } else if(typeof name === 'object'){
+        pathName = name["name"];
+        url = urls[pathName];
+        for(var para in name.paras){
+            url = url.replace(`:${para}`,name.paras[para])
+        }
+    } 
     if(!url){
-        throw new Error(`名为[${name}]的api url不存在！`);
+        throw new Error(`名为[${pathName}]的apiUrl不存在！`);
     }
     return url;
 }
-
-function _mergeConfig(url,config){
-    config.url = url;
-}
-
 
 export  default  class HttpService{
     constructor(apiUrls,http){
@@ -31,7 +36,6 @@ export  default  class HttpService{
         var url;
 
         url = _checkName(this.apiUrls,name);
-        _mergeConfig(url,config);
         return this.http.request(config);
     }
 

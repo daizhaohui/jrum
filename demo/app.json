@@ -25,8 +25,8 @@
                 "url":"@local/v1/login"
             },
             {
-                "name":"test2",
-                "url":"test2"
+                "name":"privilege",
+                "url":"@local/v1/privilege/:name"
             },
             "a.json",
             "c.json"

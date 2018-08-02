@@ -8,12 +8,29 @@ import ServiceNames from './serviceNames';
 
 export default class SysServiceManager {
 
-    static  register(appConfig,browserHistory,http) {
-        let _login = window.__login__;
+    static  register(appConfig,browserHistory,http,login) {
+        var service;
+    
+        ServiceManager.registerService({
+            name:ServiceNames.ROUTE,
+            instance: new RouteService(appConfig.Routes,browserHistory)
+        });
+        service = new HttpService(appConfig.ApiUrls,http);
+        //给登录接口设置统一的http属性值
+        if(login){
+            login.http = service;
+        }
+        ServiceManager.registerService({
+            name:ServiceNames.HTTP,
+            instance: service
+        });
+        ServiceManager.registerService({
+            name:ServiceNames.GLOBAL,
+            instance: new GlobalService(Logger)
+        });
 
-        //注册系统提供的服务:权限和路由 http请求服务
-        if(_login && _login.getAuthorization) {
-            _login.getAuthorization((data)=>{
+         if(login && login.getAuthorization) {
+            login.getAuthorization(login.userName,(data)=>{
                 ServiceManager.registerService({
                     name:ServiceNames.AUTH,
                     instance: new AuthService(data||[])
@@ -22,18 +39,6 @@ export default class SysServiceManager {
         } else {
             Logger.error('还没有实现登录插件获取权限方法：getAuthorization')
         }
-        ServiceManager.registerService({
-            name:ServiceNames.ROUTE,
-            instance: new RouteService(appConfig.Routes,browserHistory)
-        });
-        ServiceManager.registerService({
-            name:ServiceNames.HTTP,
-            instance: new HttpService(appConfig.ApiUrls,http)
-        });
-        ServiceManager.registerService({
-            name:ServiceNames.GLOBAL,
-            instance: new GlobalService(Logger)
-        });
     }
 
 }

@@ -14,7 +14,7 @@ const Services=[];
 
 const ApiUrls=[
 {name:'login',url:'http://localhost:8008/v1/login'},
-{name:'test2',url:'test2'},
+{name:'privilege',url:'http://localhost:8008/v1/privilege/:name'},
 {name:'test3',url:'test3'},
 {name:'test1',url:'test3'}
 ];

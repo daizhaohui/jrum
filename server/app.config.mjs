@@ -9,13 +9,13 @@ export default {
     token:{
         checkTokenExcludePath:["/v1/login"],
         cryptKey:"abcde",
-        expiredSeconds:30
+        expiredSeconds:1200
     },
     codeMessage:{
         invalid_token:{code:5001,message:'无效token'},
-        expired_token:{code:5002,message:'token失效'}
+        expired_token:{code:5002,message:'token失效'},
+        server_error:{code:500,message:'服务端错误'}
     },
-    allowOrigins:["http://localhost:8000"]
-    
+    allowOrigins:["http://localhost:8000"]    
 
 }

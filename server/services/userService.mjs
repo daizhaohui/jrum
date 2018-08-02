@@ -1,4 +1,4 @@
-import {User} from '../models/index.mjs';
+import {User,UserPrivilege} from '../models/index.mjs';
 import Token from '../helpers/token.mjs';
 export default class UserService{
     constructor(){
@@ -7,6 +7,16 @@ export default class UserService{
 
     getUser(name) {
         return User.findOne({name:name}).exec();
+    }
+
+    getPrivilege(condition){
+        return UserPrivilege.find(condition).exec();
+    }
+
+    async getUserPrivilege(userName) {
+        var result;
+        result = await this.getPrivilege({name:userName});
+        return result;
     }
 
     async validUser(user) {

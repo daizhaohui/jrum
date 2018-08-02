@@ -179,3 +179,57 @@ ReferenceError: c2 is not defined
     at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
     at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
     at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T17:27:49.272] [ERROR] dateFile - Date.now(...).getTime is not a function
+TypeError: Date.now(...).getTime is not a function
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:19:32)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T17:31:03.504] [ERROR] dateFile - Date.now(...).getTime is not a function
+TypeError: Date.now(...).getTime is not a function
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:19:32)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T20:24:34.898] [ERROR] dateFile - userName is not defined
+ReferenceError: userName is not defined
+    at UserService.getPrivilege (file:///Users/zhaohui.dai/work/jrum/server/services/userService.mjs:13:41)
+    at UserService.getUserPrivilege (file:///Users/zhaohui.dai/work/jrum/server/services/userService.mjs:21:29)
+    at getUserPrivilege (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:28:42)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:22:27)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T20:24:34.901] [ERROR] dateFile - err is not defined
+ReferenceError: err is not defined
+    at getUserPrivilege (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:32:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T20:37:25.292] [ERROR] dateFile - no connection available for operation and number of stored operation > 0
+MongoError: no connection available for operation and number of stored operation > 0
+    at Function.MongoError.create (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb-core/lib/error.js:49:10)
+    at Store.addObjectAndMethod (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/topologies/topology_base.js:78:18)
+    at nextFunction (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb-core/lib/cursor.js:606:39)
+    at Cursor.next (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb-core/lib/cursor.js:824:3)
+    at Cursor._next (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/cursor.js:211:36)
+    at fetchDocs (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/operations/cursor_ops.js:211:12)
+    at toArray (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/operations/cursor_ops.js:241:3)
+    at executeOperation (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/utils.js:420:24)
+    at Cursor.toArray (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/cursor.js:818:10)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/mquery/lib/collection/node.js:30:14
+    at handleCallback (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/utils.js:128:55)
+    at Collection.find (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/collection.js:431:43)
+    at NativeCollection.(anonymous function) [as find] (/Users/zhaohui.dai/work/jrum/server/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:28)
+    at NodeCollection.find (/Users/zhaohui.dai/work/jrum/server/node_modules/mquery/lib/collection/node.js:26:19)
+    at model.Query.Query._find (/Users/zhaohui.dai/work/jrum/server/node_modules/mongoose/lib/query.js:1617:20)
+    at process.nextTick (/Users/zhaohui.dai/work/jrum/server/node_modules/kareem/index.js:333:33)
+[2018-08-02T20:37:25.296] [ERROR] dateFile - err is not defined
+ReferenceError: err is not defined
+    at getUserPrivilege (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:32:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)

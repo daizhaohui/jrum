@@ -67,13 +67,25 @@ export default  class LoginPlugin {
          if(!password) {
              return callback('请输入密码！');
          }
+         return callback();
+     }
 
-         this.http.post("login",{
+     userSessionIsValid = ()=>{
+        var token = localStorage.getItem('__token__');
+        if(token) {
+            return true;
+        }
+        return false;
+     }
+
+     login = (userName,password,callback)=>{
+        this.http.post("login",{
             name:userName,
             password:Base64.encode(password)
          }).then((res)=>{
              if(res.status===200){
                 if(res.data.status===1){
+                    localStorage.setItem('__token__',res.data.token);
                     callback();
                 } else {
                     callback(res.data.message); 
@@ -87,31 +99,44 @@ export default  class LoginPlugin {
          })
      }
 
-     userSessionIsValid = ()=>{
-        var user = JSON.parse(localStorage.getItem('$user$'));
-        if(user && user.userName==='admin' && user.password==='admin') {
-            return true;
-        }
-        return false;
+     ///
+    //  [{
+    //     type:'', //授权类型（权限的分类）
+    //     code:'', //授权码,同一个type，code唯一
+    //     authority:'' //权利，多个权利以逗号隔开，如'read,write' 有读写的权利
+    //  }]
+     //
+     getAuthorization = (userName,callback)=>{
+        this.http.get({
+            name:"privilege",
+            paras:{
+                name:userName
+            }
+        }).then((res)=>{
+             if(res.status===200 && res.data){
+                var i,len,item,result;
+                len = res.data.length;
+                result = [];
+                for(i=0;i<len;i++){
+                    item = res.data[i];
+                    result.push({
+                        type:item.resource_type,
+                        code:item.resource_id,
+                        authority:item.operation
+                    });
+                }
+                console.log(`auth:${JSON.stringify(result)}`)
+                callback(result);
+             } else {
+                callback([])
+             }
+         }).catch((e)=>{
+             console.error(e);
+             callback([])
+         })
      }
 
-
-     login = (userName,password,callback)=>{
-         if(userName!=='admin' && password!=='admin'){
-             return callback('无效的用户名和密码');
-         }
-         localStorage.setItem('$user$',JSON.stringify({
-             userName,
-             password
-         }));
-         return callback();
-     }
-
-     getAuthorization = (callback)=>{
-        return callback([]);
-     }
-
-    getMenus = (callback)=>{
+    getMenus = (userName,callback)=>{
         var menus = [
             {
                 id:'m1',

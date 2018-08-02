@@ -16,7 +16,7 @@ export default class AuthController {
     
             token = Token.parse(token);
             if(token){
-                if((Date.now().getTime()-token.date)/1000>(AppConfig.token.expiredSeconds||1200)){
+                if((Date.now()-token.date)/1000>(AppConfig.token.expiredSeconds||1200)){
                     ctx.body =  AppConfig.codeMessage.expired_token;
                 } else {
                     await next();

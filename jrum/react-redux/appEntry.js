@@ -17,12 +17,18 @@ import AppStore from './appStore';
 import ServiceNames from './serviceNames';
 
 const browserHistory = createHistory();
+var _login;
+
+if(typeof window.__login__ !== 'undefined'){
+    _login = window.__login__;
+    _login.userName = localStorage.getItem("__userName__");
+} else {
+    _login = undefined;
+}
 
 function _loadMenus(appConfig,self) {
-    let _login = window.__login__;
-
     if(_login && _login.getMenus){
-        _login.getMenus((data)=>{
+        _login.getMenus(_login.userName,(data)=>{
             //$.controlBoard().createLeftMenu(data).createTopMenu([]);
             //$.controlBoard.listen("routeChanged",self.routeChanage);
             MenuManager.createMenu(appConfig,data);
@@ -48,10 +54,10 @@ export  default  class AppEntry extends  React.Component {
         let  {appConfig} = this.props;
         //初始化服务
         ServiceManager.init(appConfig);
-        //注册系统默认提供的服务
-        SysServiceManager.register(appConfig,browserHistory,axios);
-        //加载插件
+         //加载插件
         PluginManager.loadPlugins(appConfig,axios);
+        //注册系统默认提供的服务
+        SysServiceManager.register(appConfig,browserHistory,axios,_login);
         //初始化控制器
         ControllerManager.initAllControllers();
         //创建菜单和路由信息
@@ -77,8 +83,7 @@ export  default  class AppEntry extends  React.Component {
     }
 
     routeOnChanage(location,action) {
-        var _login = window.__login__;
-        if(_login && !_login.anonymous && !_login.userSessionIsValid()) {
+        if(_login && !_login.anonymous && (!_login.userSessionIsValid() || !_login.userName)) {
             this.listenHistory && this.listenHistory();
             window.location.href = "login.html";
         }
