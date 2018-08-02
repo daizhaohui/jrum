@@ -1,0 +1,6 @@
+[2018-07-26T19:41:05.861] [ERROR] dateFile - Cannot read property 'toString' of undefined
+TypeError: Cannot read property 'toString' of undefined
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:11:76)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)

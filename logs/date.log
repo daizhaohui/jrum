@@ -1,6 +1,78 @@
-[2018-07-26T19:41:05.861] [ERROR] dateFile - Cannot read property 'toString' of undefined
-TypeError: Cannot read property 'toString' of undefined
-    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:11:76)
+[2018-08-02T10:07:44.830] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
     at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
-    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
-    at process._tickCallback (internal/process/next_tick.js:68:7)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:10:53.009] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:11:10.060] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:15:58.557] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:22:32.549] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:24:41.603] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:18:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)

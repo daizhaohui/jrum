@@ -11,12 +11,7 @@ export default  class LoginPlugin {
          this.http.post("login",{
             name:userName,
             password:password
-         },{
-            headers:{
-                "Content-Type":"application/json"
-            }
          }).then((res)=>{
-             console.log("aaa");
              console.log(res);
              if(res.status===200){
                 if(res.data.status===1){
