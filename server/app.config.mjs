@@ -1,5 +1,6 @@
 export default {
     port:8008,
+    mode:'debug',
     mongodb:{
         host:'localhost',
         port:27017,

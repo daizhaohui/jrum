@@ -8,5 +8,4 @@ export default class Crypt {
     static descrypt(key,text){
         return AES256.decrypt(key,text);
     }
-
 }

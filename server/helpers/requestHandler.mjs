@@ -15,13 +15,13 @@ export default class RequestHandler {
             //非简单请求，发送了options预检请求
             if(ctx.method === "OPTIONS"){ 
                 ctx.set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS"); //非简单请求：预检请求允许的方法
-                ctx.set("Access-Control-Allow-Headers","x-requested-with, accept, origin, content-type");//非简单请求：设置可以接收到的额外的header字段（可选）
-                ctx.set("Access-Control-Max-Age",20*60);//非简单请求：下面的的设置只本次验证的有效时间，即在该时间段内服务端可以不用进行验证，单位为秒(可选)
+                ctx.set("Access-Control-Allow-Headers","x-requested-with, accept, origin, content-type,token");//非简单请求：设置可以接收到的额外的header字段（可选）
+                ctx.set("Access-Control-Max-Age",1200);//非简单请求：下面的的设置只本次验证的有效时间，即在该时间段内服务端可以不用进行验证，单位为秒(可选)
                 ctx.status = 204;
             } 
             //简单请求
             else {
-                //ctx.set("Access-Control-Expose-Headers","") 简单请求：设置拿到除了6个基本header字段值得其他字段    
+                ctx.set("Access-Control-Expose-Headers","token");//简单请求：设置拿到除了6个基本header字段值得其他字段    
                 await next();      
             }     
         } else {
