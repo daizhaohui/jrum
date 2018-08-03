@@ -14,19 +14,43 @@
         "name":"hello",
         "path":"/hello",
         "component":"controls/hello"
+    },{
+        "name":"menuList",
+        "path":"/menuList",
+        "component":"menu/menuList"
     }],
     "api":{
         "prefixs":{
-            "local":"http://localhost:8008"
+            "domain":"http://localhost:8008"
         },
         "urls":[
             {
                 "name":"login",
-                "url":"@local/v1/login"
+                "url":"@domain/v1/login"
             },
             {
                 "name":"privilege",
-                "url":"@local/v1/privilege/:name"
+                "url":"@domain/v1/privilege/:name"
+            },
+            {
+                "name":"userMenus",
+                "url":"@domain/v1/menus/:name"
+            },
+            {
+                "name":"menus",
+                "url":"@domain/v1/menus"
+            },
+            {
+                "name":"addMenu",
+                "url":"@domain/v1/menu/add"
+            },
+            {
+                "name":"deleteMenu",
+                "url":"@domain/v1/menu/delete/:id"
+            },
+            {
+                "name":"updateMenu",
+                "url":"@domain/v1/menu/update"
             },
             "a.json",
             "c.json"

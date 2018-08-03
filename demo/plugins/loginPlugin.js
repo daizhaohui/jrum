@@ -137,33 +137,21 @@ export default  class LoginPlugin {
      }
 
     getMenus = (userName,callback)=>{
-        var menus = [
-            {
-                id:'m1',
-                label:'控件',
-                url:'',
-                icon:'',
-                children:[{
-                    id:'m1_1',
-                    label:'数据查询列表',
-                    url:'tableList',
-                    icon:'',
-                }]
-            },
-            {
-                id:'m2',
-                label:'测试2',
-                url:'',
-                icon:'',
-                children:[{
-                    id:'m2_1',
-                    label:'hello',
-                    url:'hello',
-                    icon:'',
-                }]
+        this.http.get({
+            name:"userMenus",
+            paras:{
+                name:userName
             }
-        ];
-        return callback(menus);
+        }).then((res)=>{
+             if(res.status===200 && res.data){
+                callback(res.data.data);
+             } else {
+                callback([])
+             }
+         }).catch((e)=>{
+             console.error(e);
+             callback([])
+         })
     }
 
     getBackPassword = ()=>{

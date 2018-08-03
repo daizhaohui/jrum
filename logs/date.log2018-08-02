@@ -1,0 +1,235 @@
+[2018-08-02T10:07:44.830] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:10:53.009] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:11:10.060] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:15:58.557] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:22:32.549] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:19:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T10:24:41.603] [ERROR] dateFile - Invalid character in header content ["Access-Control-Allow-Headers"]
+TypeError [ERR_INVALID_CHAR]: Invalid character in header content ["Access-Control-Allow-Headers"]
+    at ServerResponse.setHeader (_http_outgoing.js:472:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:18:21)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T11:22:49.397] [ERROR] dateFile - Header name must be a valid HTTP token ["Access-Control-Allow-ç"]
+TypeError [ERR_INVALID_HTTP_TOKEN]: Header name must be a valid HTTP token ["Access-Control-Allow-ç"]
+    at ServerResponse.setHeader (_http_outgoing.js:471:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:14:17)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T11:23:04.655] [ERROR] dateFile - Header name must be a valid HTTP token ["Access-Control-Allow-ç"]
+TypeError [ERR_INVALID_HTTP_TOKEN]: Header name must be a valid HTTP token ["Access-Control-Allow-ç"]
+    at ServerResponse.setHeader (_http_outgoing.js:471:3)
+    at Object.set (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/response.js:444:16)
+    at Object.proto.(anonymous function) [as set] (/Users/zhaohui.dai/work/jrum/server/node_modules/delegates/index.js:40:31)
+    at handle (file:///Users/zhaohui.dai/work/jrum/server/helpers/requestHandler.mjs:14:17)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/zhaohui.dai/work/jrum/server/node_modules/koa/lib/application.js:133:19)
+    at Server.emit (events.js:182:13)
+    at parserOnIncoming (_http_server.js:658:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+[2018-08-02T11:32:29.981] [ERROR] dateFile - atob is not defined
+ReferenceError: atob is not defined
+    at _decode (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:5:5)
+    at login (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:19:26)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:14:30)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T11:34:56.060] [ERROR] dateFile - atob is not defined
+ReferenceError: atob is not defined
+    at _decode (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:5:5)
+    at login (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:19:26)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:14:30)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T11:39:53.086] [ERROR] dateFile - atob is not defined
+ReferenceError: atob is not defined
+    at _decode (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:5:5)
+    at login (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:19:26)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:14:30)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T11:53:15.460] [ERROR] dateFile - c2 is not defined
+ReferenceError: c2 is not defined
+    at Object._utf8_decode (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:4:1288)
+    at Object.decode (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:4:858)
+    at login (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:16:33)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:14:30)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T12:13:26.201] [ERROR] dateFile - c2 is not defined
+ReferenceError: c2 is not defined
+    at Object._utf8_decode (file:///Users/zhaohui.dai/work/jrum/server/utils/base64.mjs:107:25)
+    at Object.decode (file:///Users/zhaohui.dai/work/jrum/server/utils/base64.mjs:70:25)
+    at login (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:14:33)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:14:30)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T17:27:49.272] [ERROR] dateFile - Date.now(...).getTime is not a function
+TypeError: Date.now(...).getTime is not a function
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:19:32)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T17:31:03.504] [ERROR] dateFile - Date.now(...).getTime is not a function
+TypeError: Date.now(...).getTime is not a function
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:19:32)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T20:24:34.898] [ERROR] dateFile - userName is not defined
+ReferenceError: userName is not defined
+    at UserService.getPrivilege (file:///Users/zhaohui.dai/work/jrum/server/services/userService.mjs:13:41)
+    at UserService.getUserPrivilege (file:///Users/zhaohui.dai/work/jrum/server/services/userService.mjs:21:29)
+    at getUserPrivilege (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:28:42)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:22:27)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T20:24:34.901] [ERROR] dateFile - err is not defined
+ReferenceError: err is not defined
+    at getUserPrivilege (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:32:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-02T20:37:25.292] [ERROR] dateFile - no connection available for operation and number of stored operation > 0
+MongoError: no connection available for operation and number of stored operation > 0
+    at Function.MongoError.create (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb-core/lib/error.js:49:10)
+    at Store.addObjectAndMethod (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/topologies/topology_base.js:78:18)
+    at nextFunction (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb-core/lib/cursor.js:606:39)
+    at Cursor.next (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb-core/lib/cursor.js:824:3)
+    at Cursor._next (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/cursor.js:211:36)
+    at fetchDocs (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/operations/cursor_ops.js:211:12)
+    at toArray (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/operations/cursor_ops.js:241:3)
+    at executeOperation (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/utils.js:420:24)
+    at Cursor.toArray (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/cursor.js:818:10)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/mquery/lib/collection/node.js:30:14
+    at handleCallback (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/utils.js:128:55)
+    at Collection.find (/Users/zhaohui.dai/work/jrum/server/node_modules/mongodb/lib/collection.js:431:43)
+    at NativeCollection.(anonymous function) [as find] (/Users/zhaohui.dai/work/jrum/server/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:28)
+    at NodeCollection.find (/Users/zhaohui.dai/work/jrum/server/node_modules/mquery/lib/collection/node.js:26:19)
+    at model.Query.Query._find (/Users/zhaohui.dai/work/jrum/server/node_modules/mongoose/lib/query.js:1617:20)
+    at process.nextTick (/Users/zhaohui.dai/work/jrum/server/node_modules/kareem/index.js:333:33)
+[2018-08-02T20:37:25.296] [ERROR] dateFile - err is not defined
+ReferenceError: err is not defined
+    at getUserPrivilege (file:///Users/zhaohui.dai/work/jrum/server/controllers/userController.mjs:32:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)

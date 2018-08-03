@@ -1,3 +1,4 @@
 export default {
-    USER:'user'
+    USER:'user',
+    MENU:'menu'
 }
