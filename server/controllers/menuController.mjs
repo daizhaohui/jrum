@@ -9,7 +9,6 @@ export default class MenuController {
         var result;
         try{
             result =  await _menuService.getUserMenus(ctx.params.name);
-            console.log(`menus:${JSON.stringify(result)}`)
             ctx.body = {
                 code:1,
                 data:result,
@@ -33,7 +32,18 @@ export default class MenuController {
 
     }
 
-    static async getMenus(condition) {
-
+    static async getMenus(ctx,next) {
+        var result;
+        try{
+            result =  await _menuService.getMenus(ctx.params.name);
+            ctx.body = {
+                code:1,
+                data:result,
+                message:''
+            };  
+        }catch(e){
+            ErrorHandler.handle(e);
+            ctx.body = ErrorHandler.getResponseOfServerError(e);
+        } 
     }
 }

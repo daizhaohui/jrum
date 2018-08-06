@@ -50,9 +50,10 @@ module.exports = function(args,options) {
                         {
                             loader: 'babel-loader',
                             options: {
-                                presets: ['es2015','react','stage-0'],
+                                presets: ['env','react','stage-0'],
                                 plugins: ['syntax-dynamic-import','transform-class-properties',["import", {
                                     libraryName: "antd",
+                                    "libraryDirectory": "es",
                                     style: "true"
                                 }]],
                                 compact: true
@@ -84,7 +85,6 @@ module.exports = function(args,options) {
                 },
                 {
                     test: /\.less$/,
-                    exclude: /^node_modules$/,
                     use: [
                         {
                             loader:"style-loader"

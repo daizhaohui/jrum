@@ -41,7 +41,10 @@ export default class MenuService{
     }
 
     async getMenus(condition) {
-  
+        var result;
+        result = await Menu.find().exec();
+        result = _createTree(result,"");
+        return result;
     }
 
 }

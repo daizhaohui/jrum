@@ -26,8 +26,8 @@ export default function connectController(controllerClass,view){
     };
 
     //服务注入到view
-    if(view.prototype.hasOwnProperty("Services")===false){
-        Object.defineProperty(view.prototype,"Services",{
+    if(view.prototype.hasOwnProperty("services")===false){
+        Object.defineProperty(view.prototype,"services",{
             value:ServiceManager.getAllServices(),
             writable:false,
             configurable:false,

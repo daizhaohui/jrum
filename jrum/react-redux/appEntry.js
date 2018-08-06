@@ -15,6 +15,7 @@ import SysServiceManager from './sysServiceManager';
 import axios from 'axios';
 import AppStore from './appStore';
 import ServiceNames from './serviceNames';
+import Loading from './component/loading'
 
 const browserHistory = createHistory();
 var _login;
@@ -48,6 +49,18 @@ export  default  class AppEntry extends  React.Component {
         this.currentRoute = {
           path:''
         };
+        this.state = {
+            loading:false
+        }
+        this.on = this.on.bind(this);
+    }
+
+    on(event,message){
+        if(event==="loading"){
+            this.setState({
+                loading: message === 1 ? true:false
+            })    
+        }
     }
 
     componentWillMount(){
@@ -57,7 +70,7 @@ export  default  class AppEntry extends  React.Component {
          //加载插件
         PluginManager.loadPlugins(appConfig,axios);
         //注册系统默认提供的服务
-        SysServiceManager.register(appConfig,browserHistory,axios,_login);
+        SysServiceManager.register(appConfig,browserHistory,axios,_login,this.on);
         //初始化控制器
         ControllerManager.initAllControllers();
         //创建菜单和路由信息
@@ -96,6 +109,7 @@ export  default  class AppEntry extends  React.Component {
             <Provider store={AppStore}>
                 <Router history={browserHistory}>
                     <div>
+                        <Loading visible={this.state.loading} tip="loading..."/>
                         {
                             appConfig.Routes.map((item)=> {
                                 return (

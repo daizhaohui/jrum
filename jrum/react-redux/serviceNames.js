@@ -1,6 +1,7 @@
 export  default  {
-    HTTP: "Http",
-    ROUTE: "Route",
-    AUTH:"Auth",
-    GLOBAL:"Global"
+    HTTP: "http",
+    ROUTE: "route",
+    AUTH:"auth",
+    GLOBAL:"global",
+    APP:"app"
 }

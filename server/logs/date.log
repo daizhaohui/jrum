@@ -1,0 +1,28 @@
+[2018-08-03T19:45:18.370] [ERROR] dateFile - ctx is not defined
+ReferenceError: ctx is not defined
+    at getMenus (file:///Users/zhaohui.dai/work/jrum/server/controllers/menuController.mjs:38:51)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:22:27)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2018-08-03T19:45:18.371] [ERROR] dateFile - ctx is not defined
+ReferenceError: ctx is not defined
+    at getMenus (file:///Users/zhaohui.dai/work/jrum/server/controllers/menuController.mjs:46:13)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:22:27)
+    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
+    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at process._tickCallback (internal/process/next_tick.js:68:7)

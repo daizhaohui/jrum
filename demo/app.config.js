@@ -2,14 +2,14 @@ import React from 'react';
 import Loadable from 'react-loadable';
 import {LazyLoading} from 'jrum';
 import hello from './components/controls/hello';
-import menuList from './components/menu/menuList';
+import menuListController from './components/menu/menuListController';
 import httpPlugin from './plugins/httpPlugin';
 var AppInfo = {menuLayout:'topLeft'};
 
 const Routes=[
 {name:'tableList',path:'/controls/tableList',component:Loadable({loader: () => import(/* webpackChunkName: "t1" */ "./components/controls/tableList/tableListController"), loading:LazyLoading})},
 {name:'hello',path:'/hello',component:hello},
-{name:'menuList',path:'/menuList',component:menuList}
+{name:'menuList',path:'/menuList',component:menuListController}
 ];
 
 const Services=[];

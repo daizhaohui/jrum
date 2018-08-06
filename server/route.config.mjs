@@ -1,7 +1,6 @@
 import {UserController,MenuController} from './controllers/index.mjs';
 
 export default {
-
     routes:[
         {
             method:'post',
@@ -21,6 +20,11 @@ export default {
         {
             method:'get',
             path:'/v1/menus',
+            handler:MenuController.getMenus
+        },
+        {
+            method:'get',
+            path:'/v1/menus/:id',
             handler:MenuController.getMenus
         },
         {

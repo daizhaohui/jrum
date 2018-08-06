@@ -9,7 +9,7 @@ export default {
     token:{
         checkTokenExcludePath:["/v1/login"],
         cryptKey:"abcde",
-        expiredSeconds:1200
+        expiredSeconds:7200
     },
     codeMessage:{
         invalid_token:{code:5001,message:'无效token'},
