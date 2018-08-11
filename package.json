@@ -13,6 +13,7 @@
   "dependencies": {
     "antd": "^3.7.3",
     "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
     "classnames": "^2.2.6",
     "history": "^4.7.2",
     "jrum": "file:modules/jrum-1.0.0.tgz",

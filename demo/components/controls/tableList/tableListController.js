@@ -4,7 +4,7 @@ import TableList from './tableList';
 class TableListController extends Controller{
 
     addItem(handler) {
-        var user = this.services.global.get("user");
+        var user = this.Services.Global.get("user");
 
         alert(user.name);
     }

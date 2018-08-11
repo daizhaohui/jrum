@@ -45,10 +45,6 @@ PluginManager.prototype.getAllPlugins = function() {
             sortedPlugins.push(plugin);
         }
     });
-
-    if(!appConfig.info.anonymous && !sortedPlugins[0].component) {
-        throw new Error(`app.json中登录插件[lgoin]还没有配置`);
-    }
     return sortedPlugins;
 
 }

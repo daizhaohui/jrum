@@ -1,9 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 const cwd = process.cwd();
-const AppConsts = require('./appConsts');
-const util = require('./util');
-const Error = require('./logger').error;
+const AppConsts = require('../appConsts');
+const util = require('../util');
+const Error = require('../logger').error;
 
 function CssBuilder(args,options){
     this.args = args;

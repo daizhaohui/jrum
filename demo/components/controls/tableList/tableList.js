@@ -13,7 +13,7 @@ export default  class TableList extends React.Component{
 
     render() {
         let {list} = this.props;
-        this.services.global.set("user",{
+        this.Services.Global.set("user",{
             name:"admin"
         });
         return (

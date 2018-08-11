@@ -1,29 +1,28 @@
 const parseArgv = require('./lib/parseArgs');
 const createOptions = require('./lib/options');
 const Builder = require('./lib/builder');
-const devConfig = require('./config/webpack.dev.config');
+const devAppConfig = require('./config/webpack.dev.config');
+const devLoginConfig = require('./config/webpack.login.config');
 const AppConfigWatcher = require('./lib/appConfigWatcher');
 const AppConfigReader = require('./lib/appConfigReader');
-const AppConfigBuilder = require('./lib/appConfigBuilder');
+const AppConfigBuilder = require('./lib/builders/appConfigBuilder');
 const Error = require('./lib/logger').error;
 const args = parseArgv(process.argv);
-const path = require('path');
-const util = require('./lib/util');
 const AppConsts = require('./lib/appConsts');
 
 var options,
-    config,
+    configs,
     params;
 
 args.env = AppConsts.ENV_DEVELOPMENT;
 options = createOptions(args,'dev');
-config = devConfig(args,options);
+configs = [devLoginConfig(args,options),devAppConfig(args,options)];
 params = {
     appConfigReader:  new AppConfigReader(args,options),
     appConfigBuilder: new AppConfigBuilder(args,options)
 };
 
-new Builder(args,config,options).run(params,function (err) {
+new Builder(args,configs,options).run(params,function (err) {
     if(err){
         Error(err);
     } else {

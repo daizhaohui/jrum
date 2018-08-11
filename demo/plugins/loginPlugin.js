@@ -1,3 +1,8 @@
+import React from 'react';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
+
+const FormItem = Form.Item;
+
 var Base64 = {
     // private property
     _keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
@@ -58,103 +63,130 @@ var Base64 = {
         return utftext;
     }
 };
-export default  class LoginPlugin {
+ class LoginPlugin  extends React.Component{
 
-     verifyUserInfo = (userName,password,callback)=>{
-         if(!userName) {
-             return callback('请输入用户名！');
-         }
-         if(!password) {
-             return callback('请输入密码！');
-         }
-         return callback();
-     }
+    constructor(props){
+        super(props);
+    }
 
-     userSessionIsValid = ()=>{
-        var token = localStorage.getItem('__token__');
-        if(token) {
-            return true;
-        }
-        return false;
-     }
-
-     login = (userName,password,callback)=>{
-        this.http.post("login",{
-            name:userName,
-            password:Base64.encode(password)
-         }).then((res)=>{
-             if(res.status===200){
-                if(res.data.status===1){
-                    localStorage.setItem('__token__',res.data.token);
-                    callback();
-                } else {
-                    callback(res.data.message); 
-                }
-             } else {
-                callback('网路异常，请稍后重试！')
-             }
-         }).catch((e)=>{
-             console.error(e);
-             callback('网路异常，请稍后重试！')
-         })
-     }
-
-     ///
+      ///
     //  [{
     //     type:'', //授权类型（权限的分类）
     //     code:'', //授权码,同一个type，code唯一
     //     authority:'' //权利，多个权利以逗号隔开，如'read,write' 有读写的权利
     //  }]
      //
-     getAuthorization = (userName,callback)=>{
-        this.http.get({
-            name:"privilege",
-            paras:{
-                name:userName
-            }
-        }).then((res)=>{
-             if(res.status===200 && res.data){
-                var i,len,item,result;
-                len = res.data.length;
-                result = [];
-                for(i=0;i<len;i++){
-                    item = res.data[i];
-                    result.push({
-                        type:item.resource_type,
-                        code:item.resource_id,
-                        authority:item.operation
-                    });
+    login = (userName,password)=>{
+        let {Http,toMainPage} = this.props;
+        var i,len,item,result,data;
+
+        data = {};
+        Http.post("login",{
+            name:userName,
+            password:Base64.encode(password)
+            }).then((res)=>{
+                if(res.status===200)
+                {
+                    if(res.data.status===1){
+                        localStorage.setItem('__token__',res.data.token);
+                        //获取菜单和权限
+                        Http.all([Http.get({
+                            name:"userMenus",
+                            paras:{
+                                name:this.userName
+                            }
+                        }),Http.get({
+                            name:"privilege",
+                            paras:{
+                                name:userName
+                            }
+                        })]).then(Http.spread((menuRes,authRes)=>{
+                            if(menuRes.status===200 && menuRes.data){
+                                data["menus"] = menuRes.data;
+                            } 
+                            if(authRes.status===200 && authRes.data){
+                                len = authRes.data.length;
+                                result = [];
+                                for(i=0;i<len;i++){
+                                    item = res.data[i];
+                                    result.push({
+                                        type:item.resource_type,
+                                        code:item.resource_id,
+                                        authority:item.operation
+                                    });
+                                }
+                                data["authority"] = result;
+                             }
+                             if(data.menus && data.authority){
+                                toMainPage(data);
+                             }
+                        })).catch((e)=>{
+                            console.error(e);
+                        });
+                    } 
                 }
-                console.log(`auth:${JSON.stringify(result)}`)
-                callback(result);
-             } else {
-                callback([])
-             }
-         }).catch((e)=>{
-             console.error(e);
-             callback([])
-         })
-     }
-
-    getMenus = (userName,callback)=>{
-        this.http.get({
-            name:"userMenus",
-            paras:{
-                name:userName
-            }
-        }).then((res)=>{
-             if(res.status===200 && res.data){
-                callback(res.data.data);
-             } else {
-                callback([])
-             }
-         }).catch((e)=>{
-             console.error(e);
-             callback([])
-         })
+            }).catch((e)=>{
+                console.error(e);
+            })
     }
 
-    getBackPassword = ()=>{
-        alert('找回密码！');
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+          if (!err) {
+            console.log('Received values of form: ', values);
+            this.login(this.state.userName,this.state.password);
+          }
+        });
     }
-}
+
+    onChangeUserName =(e)=>{
+        this.setState({
+            userName:e.target.value
+        })
+    }
+
+    onChangePassword =(e)=>{
+        this.setState({
+            password:e.target.value
+        })
+    }
+
+    render(){
+        const { getFieldDecorator } = this.props.form;
+        return (
+        <Form onSubmit={this.handleSubmit} className="login-form">
+            <FormItem>
+            {getFieldDecorator('userName', {
+                rules: [{ required: true, message: 'Please input your username!' }],
+            })(
+                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" onChange={this.onChangeUserName}/>
+            )}
+            </FormItem>
+            <FormItem>
+            {getFieldDecorator('password', {
+                rules: [{ required: true, message: 'Please input your Password!' }],
+            })(
+                <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" onChange={this.onChangePassword}/>
+            )}
+            </FormItem>
+            <FormItem>
+            {getFieldDecorator('remember', {
+                valuePropName: 'checked',
+                initialValue: true,
+            })(
+                <Checkbox>Remember me</Checkbox>
+            )}
+            <a className="login-form-forgot" href="">Forgot password</a>
+            <Button type="primary" htmlType="submit" className="login-form-button">
+                Log in
+            </Button>
+            </FormItem>
+        </Form>
+        );
+    }
+ }
+
+ const WrappedLoginForm = Form.create()(LoginPlugin);
+
+ export default WrappedLoginForm;

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const cwd = process.cwd();
 const util = require('./util');
-const DirectoryBuilder = require('./directoryBuilder');
+const DirectoryBuilder = require('./builders/directoryBuilder');
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const AppConsts = require('./appConsts');
@@ -11,10 +11,11 @@ const Info = require('./logger').info;
 const MultiConfig = require('./multiWebpackConfig');
 const CopyAssets = require('./copyAssets');
 
-function Builder(args,config,options){
+function Builder(args,configs,options){
     this.args = args;
-    this.config = config;
+    this.configs = configs;
     this.options = options;
+    configs.forEach(item=>MultiConfig.add(item));
 }
 /*
 params:{appConfigReader,appConfigBuilder}
@@ -32,8 +33,9 @@ Builder.prototype.run = function (params,callback) {
     params.appConfigReader.read();
     //拷贝assets资源
     new CopyAssets(this.args,this.options).run(params.appConfigReader);
-    //开始生产appConfig.js
+    //开始生产app.config.js
     params.appConfigBuilder.run(params.appConfigReader,next);
+    
 
     function next() {
         var options;
@@ -41,7 +43,6 @@ Builder.prototype.run = function (params,callback) {
         if(AppConsts.DEBUG){
             return  callback(null);
         }
-
 
         options = {
             contentBase: path.resolve(cwd,self.args.output),
@@ -59,8 +60,7 @@ Builder.prototype.run = function (params,callback) {
         if(self.options.dev.proxy){
             options.proxy = self.options.dev.proxy;
         }
-        //构建打包代码
-        MultiConfig.add(self.config);
+        
         config = MultiConfig.allConfig();
         //构建应用逻辑代码
         if(self.args.env===AppConsts.ENV_DEVELOPMENT) {

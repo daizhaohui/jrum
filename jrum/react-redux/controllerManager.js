@@ -35,7 +35,7 @@ export default  class ControllerManager{
 
     static initAllControllers() {
         if(!_isInitialized) {
-            Object.defineProperty(Controller.prototype,"services",{
+            Object.defineProperty(Controller.prototype,"Services",{
                 configurable:false,
                 enumerable:true,
                 writable:false,

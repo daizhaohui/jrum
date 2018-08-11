@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const AppConsts = require('./appConsts');
+const AppConsts = require('../appConsts');
 
 const Node_Names = [AppConsts.APP_CONFIG_NODE_NAMES.ROUTES,AppConsts.APP_CONFIG_NODE_NAMES.SERVICES,AppConsts.APP_CONFIG_NODE_NAMES.API_URLS,
     AppConsts.APP_CONFIG_NODE_NAMES.PLUGINS,AppConsts.APP_CONFIG_NODE_NAMES.APP_INFO];
@@ -18,6 +18,7 @@ function AppConfigJSBuilder(args,options) {
     };
     this.bodyItems = {};
     this.bodyContents = [];
+    this.exportItems = [].concat(Node_Names);
 
     len = Node_Names.length;
     for(i=0;i<len;i++){
@@ -27,7 +28,6 @@ function AppConfigJSBuilder(args,options) {
             this.bodyItems[item] = [];
         }
     }
-    this.exportContent = `\nexport default {${Node_Names.join(',')}}`;
 }
 
 
@@ -52,8 +52,9 @@ AppConfigJSBuilder.prototype.run = function() {
             output.push(`\nconst ${pName}=[];`);
         }
     }
+    this.exportContent = `\nexport default {${this.exportItems.join(',')}}`;
     output.push(this.exportContent);
-    fs.writeFileSync(path.resolve(process.cwd(),this.args.target,'app.config.js'),output.join("\n"));
+    fs.writeFileSync(path.resolve(__dirname,'../../temp/app.config.js'),output.join("\n"));
 }
 
 AppConfigJSBuilder.prototype.clearImportItems = function(name) {
@@ -62,6 +63,10 @@ AppConfigJSBuilder.prototype.clearImportItems = function(name) {
 
 AppConfigJSBuilder.prototype.addImportItem = function(name,item) {
     this.importItems[name].push(item);
+}
+
+AppConfigJSBuilder.prototype.addExportItem = function(name) {
+    this.exportItems.push(name);
 }
 
 AppConfigJSBuilder.prototype.clearBodyItems = function(name) {

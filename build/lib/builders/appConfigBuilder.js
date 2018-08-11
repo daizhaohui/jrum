@@ -1,28 +1,32 @@
 const path = require('path');
 const fs = require('fs');
-const AppConsts = require('./appConsts');
-const PluginManager = require('./plugins/pluginManager');
+const AppConsts = require('../appConsts');
+const PluginManager = require('../plugins/pluginManager');
 const AppConfigJSBuilder = require('./appConfigJSBuilder');
+const LogConfigJSBuilder = require('./loginConfigJSBuilder');
 
 function _buildRoutes(self,appConfigReader) {
     var appConfig,
         item,
         importName,
         i,
-        len;
+        len,
+        from;
+
     appConfig = appConfigReader.getMergedAppConfig();
     self.appConfigJSBuilder.clearItems(AppConsts.APP_CONFIG_NODE_NAMES.ROUTES);
     len = appConfig.routes.length;
     for(i=0;i<len;i++){
         item = appConfig.routes[i];
         importName = self.appConfigJSBuilder.createImportName(item);
+        from = `../../../${self.args.target}/${item.from}`;
         //异步加载组件
         if(item.thunkName){
-            self.appConfigJSBuilder.addBodyItem(AppConsts.APP_CONFIG_NODE_NAMES.ROUTES,`{name:'${item.name}',path:'${item.path}',component:Loadable({loader: () => import(/* webpackChunkName: "${item.thunkName}" */ "./${item.from}"), loading:LazyLoading})}`);
+            self.appConfigJSBuilder.addBodyItem(AppConsts.APP_CONFIG_NODE_NAMES.ROUTES,`{name:'${item.name}',path:'${item.path}',component:Loadable({loader: () => import(/* webpackChunkName: "${item.thunkName}" */ "${from}"), loading:LazyLoading})}`);
         }
         //同步加载组件
         else {
-            self.appConfigJSBuilder.addImportItem(AppConsts.APP_CONFIG_NODE_NAMES.ROUTES,`import ${importName} from './${item.from}';`);
+            self.appConfigJSBuilder.addImportItem(AppConsts.APP_CONFIG_NODE_NAMES.ROUTES,`import ${importName} from '${from}';`);
             self.appConfigJSBuilder.addBodyItem(AppConsts.APP_CONFIG_NODE_NAMES.ROUTES,`{name:'${item.name}',path:'${item.path}',component:${item.component}}`)
         }
     }
@@ -32,7 +36,7 @@ function _buildInfo(self,appConfigReader) {
     var appConfig,
          content;
     appConfig = appConfigReader.getMergedAppConfig();
-    content = `var ${AppConsts.APP_CONFIG_NODE_NAMES.APP_INFO} = {menuLayout:'${appConfig.info.menuLayout}'};`;
+    content = `var ${AppConsts.APP_CONFIG_NODE_NAMES.APP_INFO} = ${JSON.stringify(appConfig.info)};`;
     self.appConfigJSBuilder.addContentToBody(content);
 }
 
@@ -41,14 +45,17 @@ function _buildServices(self,appConfigReader) {
         item,
         importName,
         i,
-        len;
+        len,
+        from;
+
     appConfig = appConfigReader.getMergedAppConfig();
     self.appConfigJSBuilder.clearItems(AppConsts.APP_CONFIG_NODE_NAMES.SERVICES);
     len = appConfig.services.length;
     for(i=0;i<len;i++) {
         item = appConfig.services[i];
         importName = self.appConfigJSBuilder.createImportName(item);
-        self.appConfigJSBuilder.addImportItem(AppConsts.APP_CONFIG_NODE_NAMES.SERVICES,`import ${importName} from './${item.from}';`);
+        from = `../../../${self.args.target}/${item.from}`;
+        self.appConfigJSBuilder.addImportItem(AppConsts.APP_CONFIG_NODE_NAMES.SERVICES,`import ${importName} from '${from}';`);
         self.appConfigJSBuilder.addBodyItem(AppConsts.APP_CONFIG_NODE_NAMES.SERVICES,`{name:'${item.name}',component:${item.component}}`)
     }
 
@@ -70,7 +77,10 @@ function _buildPlugins(self,appConfigReader,callback) {
         }
         pluginBuilder = pManager.createPluginBuilder(plugins[index]);
         pluginBuilder ? pluginBuilder.run(appConfigReader,function(callback){
-             callback && callback(self.appConfigJSBuilder);
+             callback && callback({
+                 appConfigJSBuilder:self.appConfigJSBuilder,
+                 loginConfigJSBuilder:self.loginConfigJSBuilder
+             });
             iterate(index+1);
         }) : iterate(index+1);
     }
@@ -97,6 +107,7 @@ function AppConfigBuilder(args,options){
     this.args = args;
     this.options = options;
     this.appConfigJSBuilder = new AppConfigJSBuilder(args,options);
+    this.loginConfigJSBuilder = new LogConfigJSBuilder(args,options);
 }
 
 AppConfigBuilder.prototype.run = function(appConfigReader,next) {
@@ -107,6 +118,7 @@ AppConfigBuilder.prototype.run = function(appConfigReader,next) {
     _buildInfo(self, appConfigReader);
     _buildServices(self, appConfigReader);
     _buildPlugins(self, appConfigReader, function () {
+        self.loginConfigJSBuilder.run();
         self.appConfigJSBuilder.run();
         next && next();
     });

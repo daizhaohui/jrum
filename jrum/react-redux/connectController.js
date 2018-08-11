@@ -5,7 +5,6 @@ import ControllerManager from './controllerManager';
 import ControllerParser from './controllerParser';
 import ServiceManager from '../services/serviceManager';
 import AppStore from './appStore';
-import ServiceNames from './serviceNames';
 
 export default function connectController(controllerClass,view){
     var mapActionToProps,
@@ -26,8 +25,8 @@ export default function connectController(controllerClass,view){
     };
 
     //服务注入到view
-    if(view.prototype.hasOwnProperty("services")===false){
-        Object.defineProperty(view.prototype,"services",{
+    if(view.prototype.hasOwnProperty("Services")===false){
+        Object.defineProperty(view.prototype,"Services",{
             value:ServiceManager.getAllServices(),
             writable:false,
             configurable:false,

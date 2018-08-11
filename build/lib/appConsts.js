@@ -32,10 +32,12 @@ module.exports = {
     },
 
     PLUGIN_NAMES:{
-        LOGIN:"login",
-        INDEX:'index',
+        LOGIN_LAYOUT:"login",
         HTTP:'http',
-        ROUTE:'route'
+        ROUTE:'route',
+        MAIN_LAYOUT:'main',
+        INDEX:'index_html',
+        LOGIN:'login_html'
     },
 
 

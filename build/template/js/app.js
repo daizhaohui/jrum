@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {AppEntry} from 'jrum'
-import AppConfig from './app.config';
+import {Components} from 'jrum'
+import AppConfig from '../../temp/app.config.js';;
 
 class Root extends  React.Component {
 
@@ -13,8 +13,8 @@ class Root extends  React.Component {
 
     }
 
-
     render() {
+        let {AppEntry} = Components;
         return (
             <AppEntry appConfig={AppConfig}/>
         );

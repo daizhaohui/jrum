@@ -20,7 +20,6 @@ function getUrlLoadName(dirName) {
     return 'assets/'+dirName + '/[name].[ext]'
 }
 
-
 module.exports = function(args,options) {
 
     var isProduction,
@@ -32,14 +31,12 @@ module.exports = function(args,options) {
     const config = {
         mode:args.env,
         entry: {
-            'assets/js/app':path.resolve(cwd, __dirname,'../template/js/app.js'),
-            'assets/js/jrum':['jrum'],
-            'assets/js/vendor':['react','react-dom','react-router','react-redux','prop-types','react-loadable','babel-polyfill']
+            'assets/js/login':path.resolve(cwd, __dirname,'../template/js/login.js')
         },
         output: {
             path: path.resolve(cwd, args.output),
-            filename:'[name].js',
-            chunkFilename:'[name].[chunkhash:6].js'
+            filename:isProduction?'[name].min.js':'[name].js',
+            chunkFilename:isProduction?'[name].[chunkhash:6].min.js':'[name].[chunkhash:6].js'
         },
         module: {
             rules: [
@@ -135,42 +132,16 @@ module.exports = function(args,options) {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                filename:"index.html",
-                template:path.resolve(cwd,args.output,"index.html"),
+                filename:"login.html",
+                template:path.resolve(cwd,args.output,"login.html"),
                 inject : 'body'
             }),
             new webpack.DefinePlugin( {'process.env.NODE.ENV':args.env}),
-            new webpack.optimize.OccurrenceOrderPlugin(),
-            new webpack.HashedModuleIdsPlugin(),
-
         ],
-        optimization:{
-            runtimeChunk: {
-                name: "assets/js/manifest"
-            },
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: "assets/js/vendor",
-                        chunks: "all",
-                        enforce: true,
-                        reuseExistingChunk: true
-                    },
-                    jrum: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: "assets/js/jrum",
-                        chunks: "all",
-                        enforce: true,
-                        reuseExistingChunk: true
-                    }
-                }
-            }
-        },
         performance: {
             hints: isProduction?"error":"warning",
-            maxEntrypointSize: isProduction?10000000:60000000,
-            maxAssetSize: isProduction?10000000:6000000,//单资源体积
+            maxEntrypointSize: isProduction?600000:600000,
+            maxAssetSize: isProduction?600000:600000,//单资源体积
         }
     };
 

@@ -21,7 +21,7 @@ function _loadHttpPlugin(plugin,http) {
 function _createInstance(plugin){
     var instance = new plugin.component();
 
-    Object.defineProperty(instance,"services",{
+    Object.defineProperty(instance,"Services",{
         configurable:false,
         writable:false,
         enumerable:true,

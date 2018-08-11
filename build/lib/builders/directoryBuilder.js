@@ -1,4 +1,4 @@
-const AppConsts = require('./appConsts');
+const AppConsts = require('../appConsts');
 const fs = require('fs');
 const path = require('path');
 const cwd = process.cwd();

@@ -1,9 +1,6 @@
 {
     "info":{
-        "title":"你好，demo",
-        "copyright":"飞凡信息有限公司版权所有 沪ICP备08114786：沪B2-20150088 Copyright © 2017 ffan.com All Rights Reserved",
-        "anonymous":false,
-        "menuLayout":"topLeft"
+        "anonymous":false
     },
     "routes":[{
         "name":"tableList",
@@ -57,7 +54,7 @@
         ]
     },
     "services":[],
-    "plugins":[
+    "plugins":[ 
         {
             "name":"login",
             "component":"loginPlugin"
@@ -65,6 +62,10 @@
         {
             "name":"http",
             "component":"httpPlugin"
+        },
+        {
+            "name":"main",
+            "component":"mainPlugin" 
         }
     ],
     "assets":{
