@@ -92,8 +92,8 @@ export  default  class HttpService{
         return this.http.all.apply(this.http,Array.prototype.slice.call(arguments));
     }
 
-    spread = ()=>{
-        return this.http.spread.apply(this.http,Array.prototype.slice.call(arguments));
+    spread = (callback)=>{
+        return this.http.spread(callback);
     }
 
     createIntance = (config)=>{
