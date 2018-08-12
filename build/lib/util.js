@@ -111,6 +111,14 @@ function _createDirectory(parentDir,dirPath) {
     });
 }
 
+function _getImportName(comp) {
+    if(comp.isDefault) {
+        return `${comp.import}`;
+    } else {
+        return `{${comp.import}}`;
+    }
+}
+
 module.exports = {
     fromJsonFileToObject:_fromJsonFileToObject,
     assign:_assign,
@@ -119,5 +127,6 @@ module.exports = {
     clearDirecoty:_clearDirectory,
     removeDirectory:_removeDirectory,
     copyFileToDirectory:_copyFileToDirectory,
-    createDirectory:_createDirectory
+    createDirectory:_createDirectory,
+    getImportName:_getImportName
 }

@@ -32,14 +32,14 @@ module.exports = function(args,options) {
     const config = {
         mode:args.env,
         entry: {
-            'assets/js/app':path.resolve(cwd, __dirname,'../template/js/app.js'),
-            'assets/js/jrum':['jrum'],
-            'assets/js/vendor':['react','react-dom','react-router','react-redux','prop-types','react-loadable','babel-polyfill']
+            'app':path.resolve(cwd, __dirname,'../template/js/app.js'),
+            'jrum':['jrum'],
+            'vendor':['react','react-dom','react-router','react-redux','prop-types','react-loadable','babel-polyfill']
         },
         output: {
             path: path.resolve(cwd, args.output),
-            filename:'[name].js',
-            chunkFilename:'[name].[chunkhash:6].js'
+            filename:'assets/js/[name].js',
+            chunkFilename:'assets/js/[name].[chunkhash:6].js'
         },
         module: {
             rules: [
@@ -146,20 +146,20 @@ module.exports = function(args,options) {
         ],
         optimization:{
             runtimeChunk: {
-                name: "assets/js/manifest"
+                name: "manifest"
             },
             splitChunks: {
                 cacheGroups: {
                     vendor: {
                         test: /[\\/]node_modules[\\/]/,
-                        name: "assets/js/vendor",
+                        name: "vendor",
                         chunks: "all",
                         enforce: true,
                         reuseExistingChunk: true
                     },
                     jrum: {
                         test: /[\\/]node_modules[\\/]/,
-                        name: "assets/js/jrum",
+                        name: "jrum",
                         chunks: "all",
                         enforce: true,
                         reuseExistingChunk: true

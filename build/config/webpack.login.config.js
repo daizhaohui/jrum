@@ -6,6 +6,7 @@ const cwd = process.cwd();
 const autoprefixerProcessor =  require('autoprefixer')({
     browsers:['last 5 versions']
 });
+const mergeConfig = require('webpack-merge');
 
 function getFileLoaderOption(dirName) {
     var fileLoaderOption = {
@@ -20,6 +21,10 @@ function getUrlLoadName(dirName) {
     return 'assets/'+dirName + '/[name].[ext]'
 }
 
+const devConfig = {
+    devtool: '#inline-source-map'
+};
+
 module.exports = function(args,options) {
 
     var isProduction,
@@ -28,15 +33,15 @@ module.exports = function(args,options) {
     isProduction  = args.env === AppConsts.ENV_PRODUCTION ? true : false;
     cwd = process.cwd();
 
-    const config = {
+    var config = {
         mode:args.env,
         entry: {
-            'assets/js/login':path.resolve(cwd, __dirname,'../template/js/login.js')
+            'login':path.resolve(cwd, __dirname,'../template/js/login.js')
         },
         output: {
             path: path.resolve(cwd, args.output),
-            filename:isProduction?'[name].min.js':'[name].js',
-            chunkFilename:isProduction?'[name].[chunkhash:6].min.js':'[name].[chunkhash:6].js'
+            filename:isProduction?'assets/js/[name].min.js':'assets/js/[name].js',
+            chunkFilename:isProduction?'assets/js/[name].[chunkhash:6].min.js':'assets/js/[name].[chunkhash:6].js'
         },
         module: {
             rules: [
@@ -143,6 +148,10 @@ module.exports = function(args,options) {
             maxAssetSize: isProduction?600000:600000,//单资源体积
         }
     };
+
+    if(!isProduction){
+       config =  mergeConfig(config,devConfig);
+    }
 
     return config;
 }

@@ -8,12 +8,14 @@ export default  class ServiceManager{
 
 
     static registerService(item){
-        Object.defineProperty(CacheServices,item.name,{
-            value:item.instance,
-            configurable:false,
-            writable:false,
-            enumerable:true
-        })
+        if(!CacheServices.hasOwnProperty(item.name)){
+            Object.defineProperty(CacheServices,item.name,{
+                value:item.instance,
+                configurable:false,
+                writable:false,
+                enumerable:true
+            })
+        } 
     }
 
     static init(appConfig){

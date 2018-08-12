@@ -10,7 +10,8 @@
     },{
         "name":"hello",
         "path":"/hello",
-        "component":"controls/hello"
+        "component":"controls/hello",
+        "exportIsDefault":true
     },{
         "name":"menuList",
         "path":"/menuList",

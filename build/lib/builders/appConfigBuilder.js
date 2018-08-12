@@ -1,9 +1,8 @@
-const path = require('path');
-const fs = require('fs');
 const AppConsts = require('../appConsts');
 const PluginManager = require('../plugins/pluginManager');
 const AppConfigJSBuilder = require('./appConfigJSBuilder');
 const LogConfigJSBuilder = require('./loginConfigJSBuilder');
+const util = require('../util');
 
 function _buildRoutes(self,appConfigReader) {
     var appConfig,
@@ -18,7 +17,7 @@ function _buildRoutes(self,appConfigReader) {
     len = appConfig.routes.length;
     for(i=0;i<len;i++){
         item = appConfig.routes[i];
-        importName = self.appConfigJSBuilder.createImportName(item);
+        importName = util.getImportName(item);
         from = `../../../${self.args.target}/${item.from}`;
         //异步加载组件
         if(item.thunkName){
@@ -53,7 +52,7 @@ function _buildServices(self,appConfigReader) {
     len = appConfig.services.length;
     for(i=0;i<len;i++) {
         item = appConfig.services[i];
-        importName = self.appConfigJSBuilder.createImportName(item);
+        importName = util.getImportName(item);
         from = `../../../${self.args.target}/${item.from}`;
         self.appConfigJSBuilder.addImportItem(AppConsts.APP_CONFIG_NODE_NAMES.SERVICES,`import ${importName} from '${from}';`);
         self.appConfigJSBuilder.addBodyItem(AppConsts.APP_CONFIG_NODE_NAMES.SERVICES,`{name:'${item.name}',component:${item.component}}`)

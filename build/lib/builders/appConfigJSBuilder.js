@@ -87,12 +87,4 @@ AppConfigJSBuilder.prototype.clearItems = function(name) {
     this.clearBodyItems(name);
 }
 
-AppConfigJSBuilder.prototype.createImportName = function(comp) {
-    if(comp.isDefault) {
-        return `${comp.import}`;
-    } else {
-        return `{${comp.import}}`;
-    }
-}
-
 module.exports = AppConfigJSBuilder;

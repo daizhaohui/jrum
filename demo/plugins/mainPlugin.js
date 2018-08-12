@@ -69,7 +69,8 @@ export default class MainLayout extends React.Component {
     }
 
     componentDidMount(){
-        this.Services.Event.on("changeBreadcrumb",(data)=>{
+        let {Services} = this.props;
+        Services.Event.on("changeBreadcrumb",(data)=>{
             this.setState({
                 routes:data
             })
@@ -80,7 +81,8 @@ export default class MainLayout extends React.Component {
     }
 
     componentWillMount(){
-        this.Services.Event.off("changeBreadcrumb");
+        let {Services} = this.props;
+        Services.Event.off("changeBreadcrumb");
     }
 
     itemRender = (route, params, routes, paths)=>{

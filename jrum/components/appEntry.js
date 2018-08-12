@@ -23,20 +23,29 @@ export  default  class AppEntry extends  React.Component {
     }
 
     componentWillMount(){
-        let  {appConfig} = this.props;
-        this.data = JSON.parse(window.localStorage.getItem("__data__"));
-        window.localStorage.removeItem("__data__");
+        var cryptoService;
         //初始化服务
         ServiceManager.init(appConfig);
+
+        let  {appConfig} = this.props;
+        cryptoService = ServiceManager.getService(ServiceNames.CRYPTO);
+        try{
+            this.data = window.localStorage.getItem("__data__");
+            //不存在，重新登录
+            if(!this.data){
+                window.location.href="login.html";
+            }
+            this.data = cryptoService.AES.decrypt(this.data,"jrumdata");
+            this.data = JSON.parse(this.data);
+        }catch(e){
+            console.error(e);
+        }
          //加载插件
         PluginManager.loadPlugins(appConfig,axios);
         //注册系统默认提供的服务
         SysServiceManager.register(appConfig,browserHistory,axios,this.data);
         //初始化控制器
         ControllerManager.initAllControllers();
-        //创建菜单和路由信息
-        _loadMenus(appConfig,this);
-
     }
 
     componentDidMount() {

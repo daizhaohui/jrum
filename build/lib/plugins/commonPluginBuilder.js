@@ -1,5 +1,5 @@
 const AppConsts = require('../appConsts');
-const path = require('path');
+const util = require('../util');
 
 function CommonPluginBuilder(plugin,args,options) {
     this.args = args;
@@ -13,7 +13,7 @@ CommonPluginBuilder.prototype.run = function(appConfigReader,next) {
     self = this;
     next(function(context){
         var importName;
-        importName = context.appConfigJSBuilder.createImportName(self.plugin);
+        importName = util.getImportName(self.plugin);
         context.appConfigJSBuilder.addImportItem(AppConsts.APP_CONFIG_NODE_NAMES.PLUGINS,`import ${importName} from '../../../${self.args.target}/${AppConsts.APP_PLUGINS_DIRECTORY}${self.plugin.from}';`);
         context.appConfigJSBuilder.addBodyItem(AppConsts.APP_CONFIG_NODE_NAMES.PLUGINS,`{name:'${self.plugin.name}',component:${importName}}`)
     });

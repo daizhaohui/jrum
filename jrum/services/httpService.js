@@ -85,11 +85,11 @@ export  default  class HttpService{
         var url;
 
         url = _checkName(this.apiUrls,name);
-        this.http.patch(url,data,config);
+        return this.http.patch(url,data,config);
     }
 
-    all =()=>{
-        return this.http.all.apply(this.http,Array.prototype.slice.call(arguments));
+    all =(promises)=>{
+      return this.http.all(promises);
     }
 
     spread = (callback)=>{

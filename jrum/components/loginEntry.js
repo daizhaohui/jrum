@@ -1,6 +1,8 @@
 import React from 'react';
 import HttpService from '../services/httpService';
+import CryptoService from '../services/cryptoService';
 import axios from 'axios';
+import ServiceNames from '../services/serviceNames';
 
 export default class LoginEntry extends React.Component {
     constructor(props){
@@ -11,7 +13,29 @@ export default class LoginEntry extends React.Component {
 
     }
 
+    componentWillMount(){
+        let {Config} = this.props; 
+        if(Config.HttpPlugin){
+            this.httpPlugin = new Config.HttpPlugin();
+            if(this.httpPlugin.requestInterceptor){
+                axios.interceptors.request.use(this.httpPlugin.requestInterceptor);
+            }
+            if(this.httpPlugin.responseInterceptor){
+                axios.interceptors.response.use(this.httpPlugin.responseInterceptor);
+            }
+            if(this.httpPlugin.setHttpDefaultSetting){
+                this.httpPlugin.setHttpDefaultSetting(axios);
+            }
+        }
+        this.Services = {
+            [ServiceNames.HTTP]:new HttpService(Config.ApiUrls,axios),
+            [ServiceNames.CRYPTO]:new CryptoService()
+        }
+    }
+
     toMainPage = (data)=>{
+        var cryptedData;
+
         if(data===undefined){
             throw new Error(`调用toMainPage方法时没有传入任何参数`);
         }
@@ -27,7 +51,8 @@ export default class LoginEntry extends React.Component {
         }
 
         try{
-            window.localStorage.setItem("__data__",JSON.stringify(data));
+            cryptedData = this.Services.AES.encrypt(JSON.stringify(data),"jrumdata");
+            window.localStorage.setItem("__data__",cryptedData);
             window.location.href = "index.html";
         }catch(e){
             console.error(e);
@@ -37,9 +62,8 @@ export default class LoginEntry extends React.Component {
 
     render(){
         let {Config} = this.props;
-        var http = new HttpService(Config.ApiUrls,axios);
         return (
-            <Config.LoginLayout Http={http} toMainPage={this.toMainPage} AppInfo={Config.AppInfo}/>
+            <Config.LoginLayout Services={this.Services} toMainPage={this.toMainPage} AppInfo={Config.AppInfo}/>
         )
     }
 }

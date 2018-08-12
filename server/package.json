@@ -9,6 +9,7 @@
   "author": "daizhaohui",
   "license": "ISC",
   "dependencies": {
+    "crypto-js": "^3.1.9-1",
     "koa": "^2.5.2",
     "koa-router": "^7.4.0",
     "lodash": "^4.17.10",

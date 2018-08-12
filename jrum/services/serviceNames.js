@@ -3,6 +3,6 @@ export  default  {
     ROUTE: "Route",
     AUTH:"Auth",
     GLOBAL:"Global",
-    APP:"App",
-    EVENT:'Event'
+    EVENT:'Event',
+    CRYPTO:'Crypto'
 }

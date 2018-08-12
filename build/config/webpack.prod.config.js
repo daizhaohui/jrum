@@ -9,8 +9,8 @@ module.exports = function(args,options) {
 
     config = mergeConfig(config,{
         output: {
-            filename:'[name].min.js',
-            chunkFilename:'[name].[chunkhash:6].min.js'
+            filename:'assets/js/[name].min.js',
+            chunkFilename:'assets/js/[name].[chunkhash:6].min.js'
         }
     });
     config.plugins.push(new UglifyJSPlugin());

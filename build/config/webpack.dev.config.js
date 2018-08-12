@@ -8,7 +8,6 @@ module.exports = function(args,options) {
     config = mergeConfig(config, {
         devtool: '#inline-source-map'
     });
-    config.plugins.push(new webpack.HotModuleReplacementPlugin());
     config.plugins.push(new OpenBrowserPlugin(
         {
             url: `http://localhost:${options.dev.port}/login.html`
