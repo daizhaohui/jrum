@@ -8,13 +8,6 @@
   "author": "daizhaohui",
   "license": "ISC",
   "dependencies": {
-    "history": "^4.7.2",
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6",
-    "react-router": "^4.2.0",
-    "redux": "^4.0.0",
-    "crypto-js": "^3.1.9-1"
+   
   }
 }

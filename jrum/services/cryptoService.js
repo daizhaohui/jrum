@@ -10,7 +10,7 @@ export default class CryptoService{
 
     AES = {
         encrypt:(strData,key)=>{
-            ciphertext = AES.encrypt(strData, key);
+            var ciphertext = AES.encrypt(strData, key);
             return ciphertext.toString();
         },
         decrypt:(strData,key)=>{

@@ -80,9 +80,14 @@ export default class MainLayout extends React.Component {
         })
     }
 
-    componentWillMount(){
+    componentWillUnmount(){
         let {Services} = this.props;
         Services.Event.off("changeBreadcrumb");
+    }
+
+    componentWillMount(){ 
+        let {Menus} = this.props;
+        this.parseMenuData(Menus);
     }
 
     itemRender = (route, params, routes, paths)=>{
@@ -98,7 +103,7 @@ export default class MainLayout extends React.Component {
     }
 
     createSubMenuOrMenuItem(item){
-        if(item){
+        if(!item){
             return (
                 <div></div>
             )
@@ -121,14 +126,13 @@ export default class MainLayout extends React.Component {
     }
 
     render() {
-        let {RouteComponents,Menus} = this.props; //获取路由组件
+        let {RouteComponents} = this.props; //获取路由组件
         const routes = this.state.routes.map(route=>{
             return {
                 breadcrumbName:route.title,
                 path:this.Services.Route.getPath(route.name,route.paras)
             }
         });
-        this.parseMenuData(Menus);
         return (
             <Layout>
             <Header className="header">

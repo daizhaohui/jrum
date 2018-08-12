@@ -13,6 +13,7 @@ import SysServiceManager from '../services/sysServiceManager';
 import axios from 'axios';
 import ServiceNames from '../services/serviceNames';
 import AppStore from '../react-redux/appStore';
+import CryptoService from '../services/cryptoService';
 
 
 const browserHistory = createHistory();
@@ -23,12 +24,9 @@ export  default  class AppEntry extends  React.Component {
     }
 
     componentWillMount(){
-        var cryptoService;
-        //初始化服务
-        ServiceManager.init(appConfig);
-
         let  {appConfig} = this.props;
-        cryptoService = ServiceManager.getService(ServiceNames.CRYPTO);
+        var cryptoService = new CryptoService();
+        //初始化菜单和权限数据
         try{
             this.data = window.localStorage.getItem("__data__");
             //不存在，重新登录
@@ -40,7 +38,9 @@ export  default  class AppEntry extends  React.Component {
         }catch(e){
             console.error(e);
         }
-         //加载插件
+        //初始化服务
+        ServiceManager.init(appConfig);
+        //加载插件
         PluginManager.loadPlugins(appConfig,axios);
         //注册系统默认提供的服务
         SysServiceManager.register(appConfig,browserHistory,axios,this.data);
