@@ -55,7 +55,8 @@ module.exports = function(args,options) {
                                 presets: ['env','react','stage-0'],
                                 plugins: ['syntax-dynamic-import','transform-class-properties',["import", {
                                     libraryName: "antd",
-                                    style: "true"
+                                    "libraryDirectory": "es",
+                                    style: true
                                 }]],
                                 compact: true
                             }

@@ -54,7 +54,7 @@ module.exports = function(args,options) {
                                 plugins: ['syntax-dynamic-import','transform-class-properties',["import", {
                                     libraryName: "antd",
                                     "libraryDirectory": "es",
-                                    style: "true"
+                                    style: true
                                 }]],
                                 compact: true
                             }

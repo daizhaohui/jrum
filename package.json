@@ -13,6 +13,7 @@
   "dependencies": {
     "antd": "^3.7.3",
     "axios": "^0.18.0",
+    "bable-loader": "^0.0.1-security",
     "classnames": "^2.2.6",
     "crypto-js": "^3.1.9-1",
     "history": "^4.7.2",
@@ -20,6 +21,7 @@
     "jrum-build": "file:modules/jrum-build-1.0.0.tgz",
     "koa-body": "^4.0.4",
     "koa-logger": "^3.2.0",
+    "less": "^2.7.3",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
