@@ -48,7 +48,7 @@ const FormItem = Form.Item;
                     if(res.data.status===1){
                         localStorage.setItem('__token__',res.data.token);
                         //获取菜单和权限
-                        Http.all([this.getMenus(),this.getAuthority()]).then(Http.spread((menuRes,authRes)=>{
+                        Services.Http.all([this.getMenus(),this.getAuthority()]).then(Services.Http.spread((menuRes,authRes)=>{
                             if(menuRes.status===200 && menuRes.data){
                                 data["menus"] = menuRes.data.data;
                             } 

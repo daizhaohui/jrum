@@ -51,7 +51,7 @@ export default class LoginEntry extends React.Component {
         }
 
         try{
-            cryptedData = this.Services.AES.encrypt(JSON.stringify(data),"jrumdata");
+            cryptedData = this.Services[ServiceNames.CRYPTO].AES.encrypt(JSON.stringify(data),"jrumdata");
             window.localStorage.setItem("__data__",cryptedData);
             window.location.href = "index.html";
         }catch(e){

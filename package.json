@@ -29,7 +29,8 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "undefined": "^undefined"
   },
   "devDependencies": {
     "autoprefixer": "^8.5.0",

@@ -3,8 +3,7 @@ import Base64 from 'crypto-js/enc-base64';
 import enUTF8 from 'crypto-js/enc-utf8';
 
 
-const  Base64 = {
-
+export default {
     
     encode:(strData)=>{
         var wordArray = enUTF8.parse(strData);
@@ -17,4 +16,3 @@ const  Base64 = {
     
    
 };
-export default Base64;
