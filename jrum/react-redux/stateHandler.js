@@ -39,7 +39,7 @@ export  default  class  StateHandler {
     /*
     给集合对象中添加数据，
      */
-   setStateByAppend(name,appendedItem){
+    append(name,appendedItem){
        if(this.stateDefines[name]){
             this.dispatch({
                 type:APPEND_DATA,
@@ -48,12 +48,13 @@ export  default  class  StateHandler {
                 stateDefine:this.stateDefines[name],
                 payLoad:appendedItem
             })
+            return this;
        } else {
            _throwNameIsNotExist(name,this.controllerName);
        }
    }
 
-   setStateByDelete(name,indexOrKeyOrFunc) {
+   delete(name,indexOrKeyOrFunc) {
        var payLoad;
        if(this.stateDefines[name]){
            payLoad = _getPayLoad(indexOrKeyOrFunc);
@@ -64,12 +65,13 @@ export  default  class  StateHandler {
                stateDefine:this.stateDefines[name],
                payLoad:payLoad
            });
+           return this;
        } else {
            _throwNameIsNotExist(name,this.controllerName);
        }
    }
 
-   setStateByInsert(name,insertedItem,afterIndexOrKeyOrFunc) {
+   insert(name,insertedItem,afterIndexOrKeyOrFunc) {
        var payLoad;
        if(this.stateDefines[name]){
            payLoad = _getPayLoad(afterIndexOrKeyOrFunc);
@@ -81,12 +83,13 @@ export  default  class  StateHandler {
                stateDefine:this.stateDefines[name],
                payLoad:payLoad
            });
+           return this;
        } else {
            _throwNameIsNotExist(name,this.controllerName);
        }
    }
 
-   setStateByUpdate(name,updatedItem,indexOrKeyOrFunc) {
+   update(name,updatedItem,indexOrKeyOrFunc) {
        var payLoad;
        if(this.stateDefines[name]){
            if(indexOrKeyOrFunc) {

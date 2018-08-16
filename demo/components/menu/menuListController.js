@@ -10,16 +10,13 @@ class MenuListController extends Controller{
     getMenuList(handler){
         var http = this.Services.Http;
         var app = this.Services.App;
-        app.showLoading();
         http.get("menus").then(res=>{
             if(res.status===200 && res.data){
-
+                handler.update("list",res.data.data);
             } else {
                 //app.notification.error()
             }
-            app.hideLoading();
         }).catch(err=>{
-            app.hideLoading();
         });
     }
 

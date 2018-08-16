@@ -97,6 +97,16 @@ export default class MainLayout extends React.Component {
 
     handleMenuClick = (e)=>{
         var menuItem = this.findMenuItem(this.menuData,e.key);
+        var curMenuKey = this.state.currentLeftMenu?this.state.currentLeftMenu.id:"";
+        if(menuItem.id!==curMenuKey){
+            this.setState({
+                currentLeftMenu:this.findMenuItem(this.menuData,menuItem.id)
+            })
+        }
+    }
+
+    handleMenuItemClick = (e)=>{
+        var menuItem = this.findMenuItem(this.menuData,e.key);
         if(menuItem.url){
             this.changeRoute(menuItem.url);
         }
@@ -104,25 +114,26 @@ export default class MainLayout extends React.Component {
 
     createSubMenuOrMenuItem(item){
         if(!item){
-            return (
-                <div></div>
-            )
+            return <div></div>
         }
-        if(item.children.length>0){
-            return (
-                <SubMenu key={item.id} title={<span><Icon type={item.icon} />{item.label}</span>}>
-                    {
-                        item.children.map(it=>{
-                            return this.createSubMenuOrMenuItem(it);
-                        })
-                    }
-                </SubMenu>
-            );
-        } else {
-            return (
-                <Menu.Item key={item.id}>{item.label}</Menu.Item>
-            );
-        }
+        return item.children.map(item=>{
+            if(item.children.length>0){
+                return (
+                    <SubMenu  key={item.id} title={<span><Icon type={item.icon} />{item.label}</span>}>
+                        {
+                            item.children.map(it=>{
+                                return this.createSubMenuOrMenuItem(it);
+                            })
+                        }
+                    </SubMenu>
+                );
+            } else {
+                return (
+                    <Menu.Item onClick={this.handleMenuItemClick} key={item.id}>{item.label}</Menu.Item>
+                );
+            }
+
+        });
     }
 
     render() {

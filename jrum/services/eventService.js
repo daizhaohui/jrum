@@ -49,7 +49,7 @@ export default class EventService{
         items = this.events[name];
         len = items.length;
         for(i=0;i<len;i++){
-            item = items[name];
+            item = items[i];
             if(item){
                 if(args!==undefined){
                     item.apply(null,args);
