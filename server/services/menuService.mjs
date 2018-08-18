@@ -29,15 +29,41 @@ export default class MenuService{
     }
 
     async addMenu(menu){
-
+        var result;
+            
+        result = await Menu.create({
+            id:menu.id,
+            label:menu.name,
+            icon:menu.icon?menu.icon:'',
+            url:menu.url?menu.url:'',
+            parent:menu.parent?menu.parent:''
+        });
+        return result;
     }
 
     async deleteMenu(id){
+        var result;
 
+        result = await Menu.findOneAndDelete({
+            id:id,
+        }).exec();
+        return result;
     }
 
     async updateMenu(menu) {
-
+        var result;
+            
+        result = await Menu.update(
+            {
+                id:menu.id
+            },
+            {
+                label:menu.name,
+                icon:menu.icon?menu.icon:'',
+                url:menu.url?menu.url:'',
+            }
+        );
+        return result;
     }
 
     async getMenus(condition) {

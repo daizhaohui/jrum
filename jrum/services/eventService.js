@@ -1,15 +1,15 @@
+const _events={
+
+};
 export default class EventService{
     constructor(){
-        this.events = {
-
-        };
     }
 
     on(name,callback){
-        if(this.events[name]===undefined){
-            this.events[name] = [];
+        if(_events[name]===undefined){
+            _events[name] = [];
         }
-        this.events[name].push(callback);
+        _events[name].push(callback);
     }
 
     off(name,callback){
@@ -19,12 +19,12 @@ export default class EventService{
             items,
             newItems;
 
-        if(this.events[name]!==undefined){
+        if(_events[name]!==undefined){
             if(callback===undefined){
-                delete this.events[name];
+                delete _events[name];
             } else {
                 newItems = [];
-                items = this.events[name];
+                items = _events[name];
                 len = items.length;
                 for(i=0;i<len;i++){
                     item = items[i];
@@ -33,9 +33,9 @@ export default class EventService{
                     }
                 }
                 if(newItems.length<=0){
-                    delete this.events[name];
+                    delete _events[name];
                 } else {
-                    this.events[name] = newItems; 
+                    _events[name] = newItems; 
                 }
             }       
         }
@@ -46,7 +46,7 @@ export default class EventService{
         len,
         item,
         items;
-        items = this.events[name];
+        items = _events[name];
         if(items){
             len = items.length;
             for(i=0;i<len;i++){
@@ -58,7 +58,7 @@ export default class EventService{
                 }
             }
         } else {
-            throw new Error(`未订阅名为${name}的事件`)
+            //throw new Error(`未订阅名为${name}的事件`)
         }
       
     }

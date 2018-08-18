@@ -20,12 +20,32 @@ export default class MenuController {
         } 
     }
 
-    static async addMenu(menu){
-
+    static async addMenu(ctx,next){
+        var result;
+        try{
+            result =  await _menuService.addMenu(ctx.request.body);
+            ctx.body = {
+                code:result?1:0,
+                message:result?'success':'fail'
+            };  
+        }catch(e){
+            ErrorHandler.handle(e);
+            ctx.body = ErrorHandler.getResponseOfServerError(e);
+        } 
     }
 
-    static async deleteMenu(id){
-
+    static async deleteMenu(ctx,next){
+        var result;
+        try{
+            result =  await _menuService.deleteMenu(ctx.params.id);
+            ctx.body = {
+                code:result?1:0,
+                message:result?'success':'fail'
+            };  
+        }catch(e){
+            ErrorHandler.handle(e);
+            ctx.body = ErrorHandler.getResponseOfServerError(e);
+        } 
     }
 
     static async updateMenu(menu) {

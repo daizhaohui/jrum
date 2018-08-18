@@ -1,32 +1,8 @@
 import React,{Component} from 'react';
-import {Tree,Button,Table} from 'antd';
+import {Tree,Button,Table,message} from 'antd';
 import AddModifyMenu from './addModifyMenu'
 
 const TreeNode = Tree.TreeNode;
-
-const columns = [
-    {
-        title:'代码',
-        key:'id',
-        dataIndex:'id'       
-    },
-    {
-        title:'名称',
-        key:'name',
-        dataIndex:'name'       
-    },
-    {
-        title:'路由地址',
-        key:'url',
-        dataIndex:'url'       
-    },
-    {
-        title:'图标名',
-        key:'icon',
-        dataIndex:'icon'       
-    }
-    
-];
 export  default  class  MenuList extends Component {
     constructor(props){
         super(props);
@@ -35,7 +11,7 @@ export  default  class  MenuList extends Component {
             addModifyMenuDialogVisible:false,
             editMenu:{
                 isAdd:true,
-                data:null
+                data:null,
             },
             currentMenu:null
         }
@@ -50,6 +26,62 @@ export  default  class  MenuList extends Component {
             name:"menuList"
         }])
        this.getList();
+    }
+
+    deleteMenu = (e)=>{
+        let {deleteMenu} = this.props;
+        if(this.deleteMenu){
+            deleteMenu(this.deleteMenu);
+        }
+    }
+
+    updateMenu = (data)=>{
+        let {updateMenu} = this.props;
+        updateMenu(data);
+    }
+
+    getDeleteFunc = (record,index)=>{
+        this.deleteMenuInfo = {
+            index:index,
+            id:record.id
+        };
+        return this.deleteMenu;
+    }
+
+    createOperationCell = (text, record, index)=>{
+        return (
+            <Button onClick={this.getDeleteFunc(record,index)}>删除</Button>
+        );
+    }
+
+    getColumns = ()=>{
+        var columns = [
+            {
+                title:'代码',
+                key:'id',
+                dataIndex:'id'       
+            },
+            {
+                title:'名称',
+                key:'label',
+                dataIndex:'name'       
+            },
+            {
+                title:'路由地址',
+                key:'url',
+                dataIndex:'url'       
+            },
+            {
+                title:'图标名',
+                key:'icon',
+                dataIndex:'icon'       
+            },
+            {
+                title:'操作',
+                render:createOperationCell
+            }
+        ]; 
+        return columns;
     }
 
     getList = ()=>{
@@ -77,10 +109,19 @@ export  default  class  MenuList extends Component {
 
     handleOnSelectTree = (e)=>{
         let {list} = this.props;
+        if(!e || e.length<0){
+            return;
+        }
         var menu = this.findMenu(list,e[0]);
         this.setState({
             subMenus:menu.children,
-            currentMenu:menu
+            currentMenu:menu,
+            editMenu:{
+                ...(this.state.editMenu),
+                ...{
+                    data:menu
+                }
+            }
         })
     }
 
@@ -103,10 +144,12 @@ export  default  class  MenuList extends Component {
     }
 
     addModifyMenuOk= (data)=>{
-
+        let {addMenu} = this.props;
         this.setState({
             addModifyMenuDialogVisible:false
         })
+        addMenu(data);
+
     }
 
     addModifyMenuCancel = ()=>{
@@ -116,13 +159,18 @@ export  default  class  MenuList extends Component {
     }
 
     addMenu = ()=>{
-        this.setState({
-            addModifyMenuDialogVisible:true,
-            editMenu:{
-                isAdd:true,
-                parent:this.state.currentMenu
-            }
-        })
+        if(this.state.editMenu.data){
+            this.setState({
+                addModifyMenuDialogVisible:true,
+                editMenu:{
+                    isAdd:true,
+                    parent:this.state.currentMenu
+                }
+            })
+        } else {
+            message.info('您还没有选择父菜单！');
+        }
+        
     }
 
     render() {
@@ -145,10 +193,10 @@ export  default  class  MenuList extends Component {
                 </div>
                 <div className="menu-data">
                     <div>
-                        <Button type="primary" onClick={this.addMenu}>新增</Button>
+                        <Button type="primary" onClick={this.addMenu} className="btn">新增</Button>
                     </div>
                     <div>
-                        <Table columns={columns} dataSource={this.state.subMenus} bordered={true}/>
+                        <Table columns={this.getColumns()} dataSource={this.state.subMenus} bordered={true}/>
                     </div>  
                 </div>
 
@@ -164,6 +212,9 @@ export  default  class  MenuList extends Component {
                     .menu-data{
                         display: inline-block;
                         width:80%;
+                    }
+                    .menu-data .btn{
+                        margin:20px 0 20px 0;
                     }
                 `}</style>
             </div>

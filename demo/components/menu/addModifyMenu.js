@@ -14,15 +14,33 @@ export class AddModifyMenu extends React.Component{
     handleOk = (e)=>{
         let {onOk,menu} = this.props;
         e.preventDefault();
+        var data;
 
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFieldsAndScroll((err, values) => {
           if (!err) {
-            onOk && onOk({
-               ...values
-            });
+                if(menu.isAdd){
+                    data = {
+                        ...values,
+                        parent:menu.parent.id
+                     }
+                }
+                this.props.form.resetFields();
+                onOk && onOk(data);
           }
         });
         
+    }
+
+    componentWillUpdate(props,state){
+        let {menu} = props;
+        if(!menu.isAdd){
+            this.props.form.setFields({
+               ...menu,
+               ...{
+                   name:menu.label
+               }
+            })
+        }
     }
 
     handleCancel = ()=>{
@@ -31,12 +49,12 @@ export class AddModifyMenu extends React.Component{
     }
 
     render(){
-        let {menu} = this.props;
+        let {menu,visible} = this.props;
         const { getFieldDecorator } = this.props.form;
         return (
             <Modal
             title={menu.isAdd?'新增':'修改'}
-            visible={this.state.visible}
+            visible={visible}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
             >
@@ -58,7 +76,7 @@ export class AddModifyMenu extends React.Component{
                     labelCol={{ span: 5 }}
                     wrapperCol={{ span: 12 }}>
                     {
-                        getFieldDecorator('id', {
+                        getFieldDecorator('name', {
                             rules: [{ required: true, message: '请输入名称!' }],
                         })(
                             <Input />
