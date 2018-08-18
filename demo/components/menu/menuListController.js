@@ -1,18 +1,17 @@
-import {Controller,DataTypes,ConnectController} from 'jrum';
+import {Controller,ConnectController} from 'jrum';
 import MenuList from './menuList';
-
+import {Menu} from '../../model';
 class MenuListController extends Controller{
 
-    addItem(handler) {
+    addItem() {
 
     }
-
-    getMenuList(handler){
+    
+    getMenuList(){
         var http = this.Services.Http;
-        var app = this.Services.App;
         http.get("menus").then(res=>{
             if(res.status===200 && res.data){
-                handler.update("list",res.data.data);
+                Menu.update("list",res.data.data);
             } else {
                 //app.notification.error()
             }
@@ -20,25 +19,17 @@ class MenuListController extends Controller{
         });
     }
 
-    uniqueName(){
-        return "demo.menuList";
-    }
-
-    mapActionToProps() {
+    propsMap(){
         return {
-           "getMenus":this.getMenuList
-        }
-    }
-
-    state(){
-        return {
-            list:{
-                defaultValue:[],
-                prop:"list",
-                dataType:DataTypes.Array
+            propToMethod:{
+                "getMenus":this.getMenuList
+            },
+            dataToProp:{
+                "menu.list":"list"
             }
         }
     }
+
 }
 
 export default  ConnectController(MenuListController,MenuList);

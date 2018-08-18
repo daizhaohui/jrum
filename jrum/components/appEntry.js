@@ -14,6 +14,7 @@ import axios from 'axios';
 import ServiceNames from '../services/serviceNames';
 import AppStore from '../react-redux/appStore';
 import CryptoService from '../services/cryptoService';
+import ModelManager from '../model/modelManager';
 
 
 const browserHistory = createHistory();
@@ -44,8 +45,11 @@ export  default  class AppEntry extends  React.Component {
         PluginManager.loadPlugins(appConfig,axios);
         //注册系统默认提供的服务
         SysServiceManager.register(appConfig,browserHistory,axios,this.data);
+         //初始化模型数据
+         ModelManager.initAllModelDefautValue();
         //初始化控制器
         ControllerManager.initAllControllers();
+       
     }
 
     componentDidMount() {

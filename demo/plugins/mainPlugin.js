@@ -91,8 +91,7 @@ export default class MainLayout extends React.Component {
     }
 
     itemRender = (route, params, routes, paths)=>{
-        const last = routes.indexOf(route) === routes.length - 1;
-        return last ? <span>{route.breadcrumbName}</span> : <Link to={paths.join('/')}>{route.breadcrumbName}</Link>;
+        return !route.name ? <span>{route.breadcrumbName}</span> : <Link to={paths.join('/')}>{route.breadcrumbName}</Link>;
     }
 
     handleMenuClick = (e)=>{
@@ -137,11 +136,11 @@ export default class MainLayout extends React.Component {
     }
 
     render() {
-        let {RouteComponents} = this.props; //获取路由组件
+        let {RouteComponents,Services} = this.props; //获取路由组件
         const routes = this.state.routes.map(route=>{
             return {
                 breadcrumbName:route.title,
-                path:this.Services.Route.getPath(route.name,route.paras)
+                path:route.name?Services.Route.getPath(route.name,route.paras):""
             }
         });
         return (

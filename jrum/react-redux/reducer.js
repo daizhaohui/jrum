@@ -1,9 +1,9 @@
 import {APPEND_DATA,DELETE_DATA,UPDATE_DATA,INSERT_DATA,INIT_DATA} from './actionTypes';
-import DataTypes from './dataTypes';
+import DataTypes from '../model/dataTypes';
 import Checker from '../utils/checker';
 
 function _getCurrentState(state,action) {
-    return state[action.controllerName] || {};
+    return state[action.modelName] || {};
 }
 
 /*
@@ -14,7 +14,7 @@ function _append(state,action){
         result = state,
         data;
     currentState = _getCurrentState(state,action);
-    if(action.stateDefine.dataType===DataTypes.Array) {
+    if(action.schema.type ===DataTypes.Array) {
         //添加的是集合
         if(Checker.isArray(action.payLoad)){
             data = [...currentState[action.name],...(action.payLoad)]
@@ -23,17 +23,17 @@ function _append(state,action){
         }
         result = {
             ...state,
-            [action.controllerName]:{
+            [action.modelName]:{
                 ...currentState,
                 ...{
                     [action.name]:data
                 }
             }
         }
-    } else if(action.stateDefine.dataType===DataTypes.Object) {
+    } else if(action.schema.type===DataTypes.Object) {
         result = {
             ...state,
-            [action.controllerName]:{
+            [action.modelName]:{
                 ...currentState,
                 ...{
                     [action.name]:{
@@ -126,13 +126,13 @@ function _delete(state,action){
     pl = action.payLoad;
     currentState = _getCurrentState(state,action);
 
-    if(currentState[action.name] && action.stateDefine.dataType===DataTypes.Array) {
+    if(currentState[action.name] && action.schema.type===DataTypes.Array) {
         indexOrObject = _getDelIndexOrArray(currentState[action.name],pl);
         //删多条记录
         if(Checker.isArray(indexOrObject)){
             result = {
                 ...state,
-                [action.controllerName]:{
+                [action.modelName]:{
                     ...currentState,
                     [action.name]:[...indexOrObject]
                 }
@@ -153,14 +153,14 @@ function _delete(state,action){
             }
             result = {
                 ...state,
-                [action.controllerName]:{
+                [action.modelName]:{
                     ...currentState,
                     [action.name]:data
                 }
             }
         }
     }
-    else if(currentState[action.name] && action.stateDefine.dataType===DataTypes.Object) {
+    else if(currentState[action.name] && action.schema.type===DataTypes.Object) {
         indexOrObject = _getDelKeyOrObject(currentState[action.name],pl);
         if(indexOrObject===""){
             data = null;
@@ -176,7 +176,7 @@ function _delete(state,action){
         }
         result = data ? {
             ...state,
-            [action.controllerName]:{
+            [action.modelName]:{
                     ...currentState,
                     [action.name]:data
                 }
@@ -256,14 +256,14 @@ function _update(state,action){
     if(pl.covered) {
         return {
             ...state,
-            [action.controllerName]:{
+            [action.modelName]:{
                 ...currentState,
                 [action.name]:pl.item
             }
         }
     }
 
-    if(action.stateDefine.dataType===DataTypes.Array && currentState[action.name]) {
+    if(action.schema.type===DataTypes.Array && currentState[action.name]) {
         indexOrKeys = _getUpdateArrayIndexs(currentState[action.name],pl);
         indexOrKey = indexOrKeys[0];
         //修改单条记录
@@ -277,7 +277,7 @@ function _update(state,action){
 
             result = {
                 ...state,
-                [action.controllerName]:{
+                [action.modelName]:{
                     ...currentState,
                     [action.name]:data
                 }
@@ -295,21 +295,21 @@ function _update(state,action){
             }
             result = {
                 ...state,
-                [action.controllerName]:{
+                [action.modelName]:{
                     ...currentState,
                     [action.name]:data
                 }
             }
         }
     }
-    else if(action.stateDefine.dataType===DataTypes.Object && currentState[action.name]) {
+    else if(action.schema.type===DataTypes.Object && currentState[action.name]) {
         indexOrKeys = _getUpdateObjectKeys(currentState[action.name],pl);
         indexOrKey = indexOrKeys.length>0 ? indexOrKeys[0] : '';
         if(indexOrKeys.length===1 && indexOrKey){
             data = isPlainObject ? (hasOwnProperty ? {...(currentState[action.name][indexOrKey]),...(pl.item)} : {}) : pl.item;
             result =  {
                 ...state,
-                [action.controllerName]:{
+                [action.modelName]:{
                     ...currentState,
                     [action.name]:{
                         ...(currentState[action.name]),
@@ -324,7 +324,7 @@ function _update(state,action){
             }
             result =  {
                 ...state,
-                [action.controllerName]:{
+                [action.modelName]:{
                     ...currentState,
                     [action.name]:{
                         ...(currentState[action.name]),
@@ -337,7 +337,7 @@ function _update(state,action){
         if(Checker.isValue(pl.item)){
             result = {
                 ...state,
-                [action.controllerName]:{
+                [action.modelName]:{
                     ...currentState,
                     [action.name]:pl.item
                 }
@@ -385,7 +385,7 @@ function _insert(state,action) {
     currentState = _getCurrentState(state,action);
 
 
-    if(action.stateDefine.dataType !== DataTypes.Array) {
+    if(action.schema.type !== DataTypes.Array) {
         return  state;
     }
 
@@ -415,7 +415,7 @@ function _insert(state,action) {
     }
     result = {
         ...state,
-        [action.controllerName]:{
+        [action.modelName]:{
             ...currentState,
             ...{
                 [action.name]:data

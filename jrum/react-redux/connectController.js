@@ -33,27 +33,6 @@ export default function connectController(controllerClass,view){
             enumerable:true
         });
     }
-
-    /*初始化默认值*/
-    controller.init = ()=>{
-        if(!controller.initialized){
-            AppStore.dispatch(
-                {
-                    type:INIT_DATA,
-                    payLoad:new StateInitializer(controllerParser.controllerName,controllerParser.stateDefines).getValue(),
-                }
-            );
-            Object.defineProperty(controller,"initialized",{
-                value:true,
-                writable:false,
-                configurable:false,
-                enumerable:true
-            })
-        }
-    }
-    controller.init.bind(controller);
-
-    ControllerManager.addControllerInstance(controllerParser.controllerName,controller);
     return connect(mapStateToProps,mapActionToProps)(view);
 
 }

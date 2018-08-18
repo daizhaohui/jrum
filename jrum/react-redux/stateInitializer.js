@@ -1,12 +1,12 @@
-import DataTypes from './dataTypes';
+import DataTypes from '../model/dataTypes';
 
 export default  class StateInitializer{
 
-    constructor(controllerName,defines) {
-        this.defines = defines;
-        this.controllerName = controllerName;
+    constructor(modelName,schema) {
+        this.schema = schema;
+        this.modelName = modelName;
         this.state = {
-            [controllerName]:{}
+            [modelName]:{}
         }
     }
 
@@ -15,16 +15,16 @@ export default  class StateInitializer{
             defaultValue,
             dataType;
 
-        for(name in this.defines) {
-            dataType = this.defines[name].dataType;
+        for(name in this.schema) {
+            dataType = this.schema[name].type;
             if(dataType===DataTypes.Object){
-                defaultValue = this.defines[name].defaultValue || {};
+                defaultValue = this.schema[name].default || {};
             } else if(dataType===DataTypes.Array) {
-                defaultValue = this.defines[name].defaultValue || [];
+                defaultValue = this.schema[name].default || [];
             } else {
-                defaultValue = this.defines[name].defaultValue
+                defaultValue = this.schema[name].default
             }
-            this.state[this.controllerName][name] = defaultValue;
+            this.state[this.modelName][name] = defaultValue;
         }
         return this.state;
     }

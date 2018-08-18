@@ -1,35 +1,20 @@
-import {Controller,DataTypes,ConnectController} from 'jrum';
+import {Controller,ConnectController} from 'jrum';
 import TableList from './tableList';
 
 class TableListController extends Controller{
 
-    addItem(handler) {
+    addItem() {
         var user = this.Services.Global.get("user");
-
         alert(user.name);
     }
 
-    uniqueName(){
-        return "demo.tableList";
-    }
-
-    mapActionToProps() {
+    propsMap(){
         return {
-            "onAddItem":this.addItem
-        }
-    }
-
-    state(){
-        return {
-            list:{
-                defaultValue:[1,2,3],
-                prop:"list",
-                dataType:DataTypes.Array
+            propToMethod:{
+                "onAddItem":this.addItem
             },
-            loading:{
-                defaultValue:false,
-                prop:"loading",
-                dataType:DataTypes.Boolean
+            dataToProp:{
+                "table.list":"list",
             }
         }
     }

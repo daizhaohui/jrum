@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form,Input } from 'antd';
+import { Form,Input,Modal} from 'antd';
 
 const FormItem = Form.Item;
 
@@ -32,7 +32,7 @@ export class AddModifyMenu extends React.Component{
 
     render(){
         let {menu} = this.props;
-
+        const { getFieldDecorator } = this.props.form;
         return (
             <Modal
             title={menu.isAdd?'新增':'修改'}

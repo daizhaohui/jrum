@@ -7,6 +7,11 @@ export default  class DataTypeParser {
         this.instance =  instance;
     }
 
+    static getDataTypes(){
+        return [DataTypes.String,
+            DataTypes.Number,DataTypes.Bool,DataTypes.Object,DataTypes.Array,DataTypes.Date];
+    }
+
     dataType() {
         if(Checker.isArray(this.instance)){
             return DataTypes.Array;

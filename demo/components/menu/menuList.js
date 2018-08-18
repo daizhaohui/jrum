@@ -33,7 +33,10 @@ export  default  class  MenuList extends Component {
         this.state = {
             subMenus:[],
             addModifyMenuDialogVisible:false,
-            editMenu:null,
+            editMenu:{
+                isAdd:true,
+                data:null
+            },
             currentMenu:null
         }
     }
@@ -128,7 +131,7 @@ export  default  class  MenuList extends Component {
             <div className="menu-list">
                 <AddModifyMenu 
                     visible={this.state.addModifyMenuDialogVisible} 
-                    menu={this.editMenu} 
+                    menu={this.state.editMenu} 
                     onOk={this.addModifyMenuOk} 
                     onCancel={this.addModifyMenuCancel}
                     Services={this.Services}

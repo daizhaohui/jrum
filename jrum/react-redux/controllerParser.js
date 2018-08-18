@@ -1,18 +1,18 @@
 import Checker from '../utils/checker';
-import DataTypeParser from './dataTypeParser';
+import DataTypeParser from '../model/dataTypeParser';
 import CreateAction from './createAction';
 
 export default  class ControllerParser{
 
     constructor(controller) {
         this.controller = controller;
-        this.stateDefines = controller.state();
-        this.mapActionToProps = controller.mapActionToProps();
-        this.controllerName = controller.uniqueName();
     }
 
     check(){
-        var key;
+        var key,
+            map,
+            propsMap;
+
         if(process.env.NODE_ENV==='development'){
             /*
          类型检查
@@ -21,66 +21,77 @@ export default  class ControllerParser{
                 throw new Error("constructor's parameter expected to be a instance of Controller class");
             }
 
-            if(Checker.isString(this.controllerName)===false) {
-                throw new Error(`Controller uniqueName's value is ${this.controllerName}, expected to be string`);
+            if(Checker.isFunction(this.controller.propsMap)===false) {
+                throw new Error(`Controller's propsMap  expected to be function`);
             }
 
-            if(Checker.isPlainObject(this.stateDefines)===false){
-                throw new Error(`Controller state's value is ${this.stateDefines},expected to be plain object`);
-            }
-
-            if(Checker.isPlainObject(this.mapActionToProps)===false){
-                throw new Error(`Controller mapActionToProps's value is ${this.mapActionToProps},expected to be plain object`);
+            propsMap = this.controller.propsMap();
+            if(Checker.isPlainObject(propsMap)===false){
+                throw new Error(`Controller's propsMap return value  expected to be Object`);
             }
             /*
             设置的状态配置检查
              */
-            for(key in this.stateDefines){
-                if(this.stateDefines[key]["defaultValue"]===undefined || this.stateDefines[key]["dataType"]===undefined) {
-                    throw new Error(`Controller's uniqueName is ${this.controllerName}. Controller's state is ${JSON.stringify( this.stateDefines)}. State item [${key}] must define defaultValue and dataType`);
-                }
-                if(DataTypeParser.isDataType(this.stateDefines[key]["dataType"])===false){
-                    throw new Error(`Controller's uniqueName is ${this.controllerName}. Controller's state is ${JSON.stringify( this.stateDefines)}. State item [${key}]: dataType is invalid. dataType's value must be  any one  of [DataTypes.String,
-                    DataTypes.Number,DataTypes.Bool,DataTypes.Object,DataTypes.Array,DataTypes.Date]`);
-                }
-                //默认值类型检查
-                if(new DataTypeParser(this.stateDefines[key]["defaultValue"]).dataType() !== this.stateDefines[key]["dataType"]){
-                    throw new Error(`Controller's uniqueName is ${this.controllerName}. Controller's state is ${JSON.stringify( this.stateDefines)}.State item [${key}]: defaultValue's type must be ${this.stateDefines[key]["dataType"]}`);
+            map = propsMap.dataToProp;
+            if(map){
+                for(key in map){
+                    if(key.split('.').length!==2){
+                        throw new Error(`Controller's [${JSON.stringify(propsMap)}] propToMethod item [${key}] is expected to be like '*.*'`);
+                    }
                 }
             }
-            for(key in this.mapActionToProps){
-                if(Checker.isFunction(this.mapActionToProps[key])===false) {
-                    throw new Error(`Controller's uniqueName is ${this.controllerName}.Controller's mapActionToProps: item [${key}] value is ${JSON.stringify(this.mapActionToProps[key])},expected to be function`);
+            
+            map = propsMap.propToMethod;
+            if(map){
+                for(key in map){
+                    if(Checker.isFunction(map[key])===false) {
+                        throw new Error(`Controller's propToMethod item [${key}] value is expected to be function`);
+                    }
+                   
                 }
-            }
+            }         
         }
 
     }
 
     getMapActionToProps(dispatch){
        var key,
+           map,
            result = {};
 
-        for(key in this.mapActionToProps){
-            result[key] = CreateAction(dispatch,this.controller,{
-                controllerName:this.controllerName,
-                prop:key,
-                func:this.mapActionToProps[key]
-            });
+        map = this.controller.propsMap();
+        if(map && map.propToMethod){
+            map = map.propToMethod;
+            if(map){
+                for(key in map){
+                    result[key] = CreateAction(dispatch,this.controller,{
+                        prop:key,
+                        func:map[key]
+                    });
+                }
+            }
         }
         return result;
     }
 
     getMapStateToProps(state){
         var key,
-            item,
+            prop,
+            values,
+            map,
             result = {};
-        for(key in this.stateDefines){
-            item = this.stateDefines[key];
-            if(item.prop){
-                result[item.prop] = state[this.controllerName] ? (state[this.controllerName][key] === undefined ? item.defaultValue : state[this.controllerName][key]) : item.defaultValue;
+        map = this.controller.propsMap();
+
+        if(map && map.dataToProp){
+            map = map.dataToProp;
+            for(key in map){
+                prop = map[key];
+                values = key.split('.');
+                if(prop){
+                    result[prop] = state[values[0]][values[1]];
+                }
             }
-        }
+        }   
         return result;
     }
 

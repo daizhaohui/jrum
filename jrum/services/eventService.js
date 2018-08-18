@@ -47,15 +47,20 @@ export default class EventService{
         item,
         items;
         items = this.events[name];
-        len = items.length;
-        for(i=0;i<len;i++){
-            item = items[i];
-            if(item){
-                if(args!==undefined){
-                    item.apply(null,args);
+        if(items){
+            len = items.length;
+            for(i=0;i<len;i++){
+                item = items[i];
+                if(item){
+                    if(args!==undefined){
+                        item.apply(null,args);
+                    }
                 }
             }
+        } else {
+            throw new Error(`未订阅名为${name}的事件`)
         }
+      
     }
 
 }
