@@ -4,5 +4,6 @@ export  default  {
     AUTH:"Auth",
     GLOBAL:"Global",
     EVENT:'Event',
-    CRYPTO:'Crypto'
+    CRYPTO:'Crypto',
+    DATA:'Data'
 }

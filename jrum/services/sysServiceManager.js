@@ -7,6 +7,7 @@ import GlobalService from './globalService';
 import EventService from './eventService';
 import ServiceNames from './serviceNames';
 import CryptoService from './cryptoService';
+import DataService from './eventService';
 
 export default class SysServiceManager {
 
@@ -40,7 +41,12 @@ export default class SysServiceManager {
             name:ServiceNames.AUTH,
             instance: new AuthService(data.authority||[])
         });
-        
+
+        ServiceManager.registerService({
+            name:ServiceNames.DATA,
+            instance: new DataService()
+        });
+
     }
 
 }

@@ -1,6 +1,9 @@
 import {APPEND_DATA,DELETE_DATA,UPDATE_DATA,INSERT_DATA} from './actionTypes';
 import Checker from '../utils/checker';
 
+const _StateHandlers = {
+
+};
 
 function _throwNameIsNotExist(name,controllerName) {
     throw new Error(`uniqueName()=${controllerName} Controller: state name is ${name} that is not exist.`);
@@ -28,6 +31,18 @@ function _getPayLoad(indexOrKeyOrFunc) {
 }
 
 export  default  class  StateHandler {
+
+    static createHandler(dispatch,state,controller){
+        var name = controller.uniqueName();
+        if(!_StateHandlers[name]){
+            _StateHandlers[name] = new StateHandler(dispatch,state,controller);
+        }
+        return _StateHandlers[name];
+    }
+
+    static getHandler(name){
+        return _StateHandlers[name];
+    }
 
     constructor(dispatch,state,controller){
         this.dispatch = dispatch;

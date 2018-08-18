@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {Tree,Button,Table} from 'antd';
+import AddModifyMenu from './addModifyMenu'
 
 const TreeNode = Tree.TreeNode;
 
@@ -30,7 +31,10 @@ export  default  class  MenuList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            subMenus:[]
+            subMenus:[],
+            addModifyMenuDialogVisible:false,
+            editMenu:null,
+            currentMenu:null
         }
     }
 
@@ -72,7 +76,8 @@ export  default  class  MenuList extends Component {
         let {list} = this.props;
         var menu = this.findMenu(list,e[0]);
         this.setState({
-            subMenus:menu.children
+            subMenus:menu.children,
+            currentMenu:menu
         })
     }
 
@@ -94,10 +99,40 @@ export  default  class  MenuList extends Component {
         });
     }
 
+    addModifyMenuOk= (data)=>{
+
+        this.setState({
+            addModifyMenuDialogVisible:false
+        })
+    }
+
+    addModifyMenuCancel = ()=>{
+        this.setState({
+            addModifyMenuDialogVisible:false
+        })
+    }
+
+    addMenu = ()=>{
+        this.setState({
+            addModifyMenuDialogVisible:true,
+            editMenu:{
+                isAdd:true,
+                parent:this.state.currentMenu
+            }
+        })
+    }
+
     render() {
         
         return (
             <div className="menu-list">
+                <AddModifyMenu 
+                    visible={this.state.addModifyMenuDialogVisible} 
+                    menu={this.editMenu} 
+                    onOk={this.addModifyMenuOk} 
+                    onCancel={this.addModifyMenuCancel}
+                    Services={this.Services}
+                    />
                 <div className="menu-tree">
                     <Tree onSelect={this.handleOnSelectTree}>
                         {
@@ -106,7 +141,12 @@ export  default  class  MenuList extends Component {
                     </Tree>
                 </div>
                 <div className="menu-data">
-                    <Table columns={columns} dataSource={this.state.subMenus} bordered={true}/>
+                    <div>
+                        <Button type="primary" onClick={this.addMenu}>新增</Button>
+                    </div>
+                    <div>
+                        <Table columns={columns} dataSource={this.state.subMenus} bordered={true}/>
+                    </div>  
                 </div>
 
                 <style jsx="true">{`

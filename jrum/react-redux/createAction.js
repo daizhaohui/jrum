@@ -25,7 +25,7 @@ export default  function createAction(dispatch,controller,options) {
         args = Array.prototype.slice.call(arguments);
         dispatch(
              (dispatch,getState)=>{
-                handler = new StateHandler(dispatch, getState(),controller);
+                handler =  StateHandler.createHandler(dispatch, getState(),controller);
                 args.push(handler);
                 options.func.apply(controller,args);
             }
