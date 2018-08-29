@@ -1,16 +1,13 @@
 import {APPEND_DATA,DELETE_DATA,UPDATE_DATA,INSERT_DATA, INIT_DATA} from './actionTypes';
 import Checker from '../utils/checker';
 import ModelManager from '../model/modelManager';
+import DataTypes from '../model/dataTypes';
 
 const _StateHandlers = {
 
 };
 
-function _throwNameIsNotExist(name,modelName) {
-    throw new Error(`Model [${modelName}] is not define [${name}].`);
-}
-
-function _getPayLoad(indexOrKeyOrFunc) {
+const _getPayLoad=(indexOrKeyOrFunc)=>{
     if(Checker.isNumber(indexOrKeyOrFunc)){
         return {
             index:parseInt(indexOrKeyOrFunc)
@@ -28,8 +25,15 @@ function _getPayLoad(indexOrKeyOrFunc) {
     }
     return {
     }
+};
 
-}
+const _check=(modelName,schema,name)=>{
+    if(process.env.NODE_ENV==='development'){
+        if(!schema[name]){
+            throw new Error(`模型【${modelName}】未定义属性【${name}】`);
+        }
+    }
+};
 
 import StateInitializer from './stateInitializer';
 export  default  class  StateHandler {
@@ -58,81 +62,94 @@ export  default  class  StateHandler {
     /*
     给集合对象中添加数据，
      */
-    append(name,appendedItem){
-       if(this.schema[name]){
+    append(name,appendedItem,parent){
+        _check(this.modelName,this.schema,name);
+        this.dispatch({
+            type:APPEND_DATA,
+            name:name,
+            modelName:this.modelName,
+            schema:this.schema[name],
+            parent:parent,
+            payLoad:appendedItem
+        });
+   }
+
+   delete(name,indexOrKeyOrFunc,parent) {
+       var payLoad;
+       _check(this.modelName,this.schema,name);
+        payLoad = _getPayLoad(indexOrKeyOrFunc);
+        this.dispatch({
+            type:DELETE_DATA,
+            name:name,
+            modelName:this.modelName,
+            schema:this.schema[name],
+            parent:parent,
+            payLoad:payLoad
+        });
+
+   }
+
+   insert(name,insertedItem,afterIndexOrKeyOrFunc,parent) {
+       var payLoad;
+
+       _check(this.modelName,this.schema,name);
+        payLoad = _getPayLoad(afterIndexOrKeyOrFunc);
+        payLoad.item = insertedItem;
+        this.dispatch({
+            type:INSERT_DATA,
+            name:name,
+            modelName:this.modelName,
+            schema:this.schema[name],
+            payLoad:payLoad,
+            parent:parent,
+            isInsertBefore:false
+        });
+   }
+
+   insertBefore(name,insertedItem,beforeIndexOrKeyOrFunc,parent){
+        var payLoad;
+        _check(this.modelName,this.schema,name);
+        payLoad = _getPayLoad(beforeIndexOrKeyOrFunc);
+        payLoad.item = insertedItem;
+        this.dispatch({
+            type:INSERT_DATA,
+            name:name,
+            modelName:this.modelName,
+            schema:this.schema[name],
+            payLoad:payLoad,
+            parent:parent,
+            isInsertBefore:true
+        });
+   }
+
+   update(name,updatedItem,indexOrKeyOrFunc,parent) {
+       var payLoad;
+
+        _check(this.modelName,this.schema,name);
+        if(indexOrKeyOrFunc) {
+            payLoad = _getPayLoad(indexOrKeyOrFunc);
+            payLoad.item = updatedItem;
             this.dispatch({
-                type:APPEND_DATA,
+                type:UPDATE_DATA,
                 name:name,
                 modelName:this.modelName,
                 schema:this.schema[name],
-                payLoad:appendedItem
-            })
-       } else {
-           _throwNameIsNotExist(name,this.modelName);
-       }
-   }
-
-   delete(name,indexOrKeyOrFunc) {
-       var payLoad;
-       if(this.schema[name]){
-           payLoad = _getPayLoad(indexOrKeyOrFunc);
-           this.dispatch({
-               type:DELETE_DATA,
-               name:name,
-               modelName:this.modelName,
-               schema:this.schema[name],
-               payLoad:payLoad
-           });
-       } else {
-           _throwNameIsNotExist(name,this.modelName);
-       }
-   }
-
-   insert(name,insertedItem,afterIndexOrKeyOrFunc) {
-       var payLoad;
-       if(this.schema[name]){
-           payLoad = _getPayLoad(afterIndexOrKeyOrFunc);
-           payLoad.item = insertedItem;
-           this.dispatch({
-               type:INSERT_DATA,
-               name:name,
-               modelName:this.modelName,
-               schema:this.schema[name],
-               payLoad:payLoad
-           });
-       } else {
-           _throwNameIsNotExist(name,this.modelName);
-       }
-   }
-
-   update(name,updatedItem,indexOrKeyOrFunc) {
-       var payLoad;
-       if(this.schema[name]){
-           if(indexOrKeyOrFunc) {
-               payLoad = _getPayLoad(indexOrKeyOrFunc);
-               payLoad.item = updatedItem;
-               this.dispatch({
-                   type:UPDATE_DATA,
-                   name:name,
-                   modelName:this.modelName,
-                   schema:this.schema[name],
-                   payLoad:payLoad
-               });
-           }else{
-               this.dispatch({
-                   type:UPDATE_DATA,
-                   name:name,
-                   modelName:this.modelName,
-                   schema:this.schema[name],
-                   payLoad:{
-                       item:updatedItem,
-                       covered:true
-                   }
-               });
-           }
-       } else {
-           _throwNameIsNotExist(name,this.modelName);
-       }
+                payLoad:payLoad,
+                parent:parent
+            });
+        }else{
+            this.dispatch({
+                type:UPDATE_DATA,
+                name:name,
+                modelName:this.modelName,
+                schema:this.schema[name],
+                payLoad:{
+                    item:updatedItem,
+                    covered:true
+                },
+                parent:parent
+            });
+        }
    }
 }
 

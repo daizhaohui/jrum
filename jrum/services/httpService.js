@@ -6,8 +6,8 @@ function _checkName(urls,name){
     } else if(typeof name === 'object'){
         pathName = name["name"];
         url = urls[pathName];
-        for(var para in name.paras){
-            url = url.replace(`:${para}`,name.paras[para])
+        for(var param in name.params){
+            url = url.replace(`:${param}`,name.params[param])
         }
     } 
     if(!url){

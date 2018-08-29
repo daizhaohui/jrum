@@ -346,7 +346,7 @@ function _update(state,action){
     }
     return result;
 }
-
+//insert
 function _findArrayInsertIndex(items,func){
     var i,
         len = items.length;
@@ -455,5 +455,4 @@ export default function Reducer(state={},action) {
             result = state;
     }
     return result;
-
 }

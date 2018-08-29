@@ -46,7 +46,7 @@ export default class MenuService{
 
         result = await Menu.findOneAndDelete({
             id:id,
-        }).exec();
+        });
         return result;
     }
 

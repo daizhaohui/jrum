@@ -7,23 +7,29 @@ export default class Model {
         this.__schema__ = schema;
     }
 
-    append(name,appendedItem){
+    append(name,appendedItem,parent){
         var handler = StateHandler.createHandler(AppStore.dispatch,this.__modelName__);
-        handler.append(name,appendedItem);
+        handler.append(name,appendedItem,parent);
     }
 
-    delete(name,indexOrKeyOrFunc){
+    delete(name,indexOrKeyOrFunc,parent){
         var handler = StateHandler.createHandler(AppStore.dispatch,this.__modelName__);
-        handler.delete(name,indexOrKeyOrFunc);
+        handler.delete(name,indexOrKeyOrFunc,parent);
     }
 
-    insert(name,insertedItem,afterIndexOrKeyOrFunc){
+    insert(name,insertedItem,afterIndexOrKeyOrFunc,parent){
         var handler = StateHandler.createHandler(AppStore.dispatch,this.__modelName__);
-        handler.insert(name,insertedItem,afterIndexOrKeyOrFunc);
+        handler.insert(name,insertedItem,afterIndexOrKeyOrFunc,parent);
     }
 
-    update(name,updatedItem,indexOrKeyOrFunc){
+    insertBefore(name,insertedItem,beforeIndexOrKeyOrFunc,parent){
         var handler = StateHandler.createHandler(AppStore.dispatch,this.__modelName__);
-        handler.update(name,updatedItem,indexOrKeyOrFunc);
+        handler.insertBefore(name,insertedItem,beforeIndexOrKeyOrFunc,parent);
     }
+
+    update(name,updatedItem,indexOrKeyOrFunc,parent){
+        var handler = StateHandler.createHandler(AppStore.dispatch,this.__modelName__);
+        handler.update(name,updatedItem,indexOrKeyOrFunc,parent);
+    }
+
 }

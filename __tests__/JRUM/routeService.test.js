@@ -1,6 +1,4 @@
 import RouteService from '../../jrum/services/RouteService';
-
-
 var route,
     mockHistory;
 

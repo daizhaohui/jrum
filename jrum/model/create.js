@@ -3,7 +3,18 @@ import Model from './model';
 import DataTypeParser from './dataTypeParser';
 import Checker from '../utils/checker';
 
-const _parseSchema = (schema)=>{
+const _checkSchema = (name,key,schema)=>{
+    if(process.env.NODE_ENV==='development'){
+        if(!schema.hasOwnProperty('type')){
+            throw new Error(`模型【${name}】属性【${key}】没有定义type类型`)
+        }
+        if(DataTypeParser.isDataType(schema["type"])===false){
+            throw new Error(`模型【${name}】属性【${key}】类型无效,值必须为【${JSON.stringify(DataTypeParser.getDataTypes())}】中的一种`)
+        }
+    }
+}
+
+const _parseSchema = (name,schema)=>{
     var parsedSchema,
         key;
     parsedSchema = {};
@@ -11,16 +22,12 @@ const _parseSchema = (schema)=>{
         if(Checker.isPlainObject(schema[key])){
             parsedSchema[key] = schema[key];
         } else {
-            if(process.env.NODE_ENV==='development'){
-                if(DataTypeParser.isDataType(parsedSchema[key])===false){
-                    throw new Error(`Model Schema:${JSON.stringify(schema)},${parsedSchema[key]} is invalid type,should be one of [${JSON.stringify(DataTypeParser.getDataTypes())}]}`)
-                }
-            }
             parsedSchema[key] = {
                 type:schema[key],
                 default:undefined
             }
         }
+        _checkSchema(name,key,parsedSchema[key]);
     }
     return parsedSchema;
 
@@ -32,7 +39,7 @@ const create = (name,schema)=>{
     }
     var model = new Model(name,schema);
     ModelManager.addModel(name,model);
-    ModelManager.addModelSchemal(name,_parseSchema(schema));
+    ModelManager.addModelSchemal(name,_parseSchema(name,schema));
     return model;
 }
 export default create

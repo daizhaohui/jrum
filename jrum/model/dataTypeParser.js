@@ -8,8 +8,8 @@ export default  class DataTypeParser {
     }
 
     static getDataTypes(){
-        return [DataTypes.String,
-            DataTypes.Number,DataTypes.Bool,DataTypes.Object,DataTypes.Array,DataTypes.Date];
+        return ["DataTypes.String",
+            "DataTypes.Number","DataTypes.Boolean","DataTypes.Object","DataTypes.Array","DataTypes.Date"];
     }
 
     dataType() {

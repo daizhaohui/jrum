@@ -8,4 +8,23 @@
 
 </style>
 
+
+<script>
+    var items = [1,2,3];
+    var index=2;
+
+    var insertItems = [4];
+
+
+    var result = [
+        ...items.slice(0,index),
+        ...insertItems,
+        ...items.slice(index+1)
+    ];
+
+    console.log(JSON.stringify(result));
+
+
+</script>
+
 </html>

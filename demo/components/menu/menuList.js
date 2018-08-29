@@ -1,19 +1,24 @@
 import React,{Component} from 'react';
-import {Tree,Button,Table,message} from 'antd';
+import {Tree,Button,Table,message,Modal} from 'antd';
 import AddModifyMenu from './addModifyMenu'
+import {Menu} from '../../model';
 
 const TreeNode = Tree.TreeNode;
+const confirm = Modal.confirm;
 export  default  class  MenuList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            subMenus:[],
             addModifyMenuDialogVisible:false,
             editMenu:{
                 isAdd:true,
                 data:null,
             },
-            currentMenu:null
+            currentMenu:null,
+            tableSetting:{
+                bordered:true,
+                expandedRowRender:undefined
+            }
         }
     }
 
@@ -30,8 +35,20 @@ export  default  class  MenuList extends Component {
 
     deleteMenu = (e)=>{
         let {deleteMenu} = this.props;
-        if(this.deleteMenu){
-            deleteMenu(this.deleteMenu);
+        if(this.deleteMenuInfo){
+            confirm({
+                title: '确定删除改菜单吗?',
+                content: ' ',
+                okType: 'danger',
+                okText:'确定',
+                cancelText:'取消',
+                onOk:()=> {
+                    deleteMenu(this.deleteMenuInfo);
+                },
+                onCancel:()=>{
+                  
+                },
+              });
         }
     }
 
@@ -58,27 +75,23 @@ export  default  class  MenuList extends Component {
         var columns = [
             {
                 title:'代码',
-                key:'id',
                 dataIndex:'id'       
             },
             {
                 title:'名称',
-                key:'label',
-                dataIndex:'name'       
+                dataIndex:'label'       
             },
             {
                 title:'路由地址',
-                key:'url',
                 dataIndex:'url'       
             },
             {
                 title:'图标名',
-                key:'icon',
                 dataIndex:'icon'       
             },
             {
                 title:'操作',
-                render:createOperationCell
+                render:this.createOperationCell
             }
         ]; 
         return columns;
@@ -109,12 +122,24 @@ export  default  class  MenuList extends Component {
 
     handleOnSelectTree = (e)=>{
         let {list} = this.props;
-        if(!e || e.length<0){
+        if(e.length<=0){
             return;
         }
-        var menu = this.findMenu(list,e[0]);
+        var menu;
+        //根
+        if(e[0]==0){
+            menu = {
+                id:"",
+                label:"应用菜单",
+                children:[
+                    ...list
+                ]
+            }
+        } else {
+            menu = this.findMenu(list,e[0]); 
+        }
+        Menu.update("subList",menu.children);
         this.setState({
-            subMenus:menu.children,
             currentMenu:menu,
             editMenu:{
                 ...(this.state.editMenu),
@@ -137,7 +162,7 @@ export  default  class  MenuList extends Component {
                 );
             } else {
                 return (
-                    <TreeNode title={item.label} key={item.id} isLeaf={true}/>
+                    <TreeNode title={item.label} key={item.id}/>
                 );
             }
         });
@@ -169,12 +194,15 @@ export  default  class  MenuList extends Component {
             })
         } else {
             message.info('您还没有选择父菜单！');
-        }
-        
+        }       
+    }
+
+    getRowKey = (record)=>{
+        return record["id"];
     }
 
     render() {
-        
+        let {subList} = this.props;
         return (
             <div className="menu-list">
                 <AddModifyMenu 
@@ -186,9 +214,11 @@ export  default  class  MenuList extends Component {
                     />
                 <div className="menu-tree">
                     <Tree onSelect={this.handleOnSelectTree}>
+                        <TreeNode title={'应用菜单'} key={'0'} >
                         {
                             this.createTreeNodes(this.props.list)
                         }
+                        </TreeNode>
                     </Tree>
                 </div>
                 <div className="menu-data">
@@ -196,7 +226,7 @@ export  default  class  MenuList extends Component {
                         <Button type="primary" onClick={this.addMenu} className="btn">新增</Button>
                     </div>
                     <div>
-                        <Table columns={this.getColumns()} dataSource={this.state.subMenus} bordered={true}/>
+                        <Table {...this.state.tableSetting} columns={this.getColumns()} dataSource={subList} rowKey={this.getRowKey} bordered={true}/>
                     </div>  
                 </div>
 

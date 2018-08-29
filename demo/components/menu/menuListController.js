@@ -26,6 +26,7 @@ class MenuListController extends Controller{
             if(res.status===200 && res.data){
                 if(res.data.code===1){
                     message.success('添加菜单成功！');
+                    Menu.append("subList",data);
                     this.getMenuList(); //刷新菜单
                 } else {
                     message.error('添加菜单失败！');
@@ -45,7 +46,7 @@ class MenuListController extends Controller{
             if(res.status===200 && res.data){
                 if(res.data.code===1){
                     message.success('删除菜单成功！');
-                    Menu.delete("list",data.index)
+                    Menu.delete("subList",data.index);
                 } else {
                     message.error('删除菜单失败！');
                 }
@@ -64,7 +65,7 @@ class MenuListController extends Controller{
             if(res.status===200 && res.data){
                 if(res.data.code===1){
                     message.success('修改菜单成功！');
-                    Menu.update("list",{
+                    Menu.update("subList",{
                         label:data.name,
                         icon:data.icon,
                         url:data.url
@@ -85,7 +86,8 @@ class MenuListController extends Controller{
                 "deleteMenu":this.deleteMenu
             },
             dataToProp:{
-                "menu.list":"list"
+                "menu.list":"list",
+                "menu.subList":"subList"
             }
         }
     }
