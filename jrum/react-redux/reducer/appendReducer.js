@@ -1,4 +1,3 @@
-import Reducer from './reducerHelper';
 import Checker from '../../utils/checker';
 import ReducerHelper from './reducerHelper';
 
@@ -37,7 +36,7 @@ const _createChildrenStateByAppend=(originState,childrenPropName,payLoad,indexs)
             children = Checker.isArray(payLoad) ? [...children,...payLoad] :  [...children,payLoad];
             newState = [
                 ...state.slice(0,index),
-                ...{
+                {
                   ...item,
                   [childrenPropName]:children
                 },
@@ -46,7 +45,7 @@ const _createChildrenStateByAppend=(originState,childrenPropName,payLoad,indexs)
         } else {     
             newState = [
                 ...state.slice(0,index),
-                ...{
+                {
                   ...item,
                   [childrenPropName]:_createState(children,arr.splice(0,1))
                 },
@@ -67,7 +66,7 @@ export default class AppendReducer{
     _treeExecute(state,action){
         var result,data,modelState,payLoad,childrenPropName,modelPropState,indexs,value,rootIsObject,keyName;
 
-        modelState = this.getModelState();
+        modelState = ReducerHelper.getModelState(state,action);
         modelPropState = ReducerHelper.getModelPropState(state,action);
         payLoad = action.payLoad;
         childrenPropName = action.schema.treeOption.children;
@@ -76,13 +75,9 @@ export default class AppendReducer{
         rootIsObject = ReducerHelper.dataTypeIsObject(action);
         value = action.parent;
         //没有指定父，直接在根节点追加
-        if(!value) {
+        if(ReducerHelper.parentIsEmpty(action)) {
             if(rootIsObject){
                 data = _createNewStateOfCollection(modelPropState,childrenPropName,payLoad);
-                data = {
-                    ...state,
-                    [childrenPropName]:data
-                };
             } else {
                 data = Checker.isArray(payLoad) ? [...modelPropState,...payLoad] : [...modelPropState,payLoad];
             } 
@@ -97,16 +92,8 @@ export default class AppendReducer{
             else if(indexs===-1){
                 data =_createObjectNewStateOfCollection(modelPropState,childrenPropName,payLoad);
             }
-        }
-        result = data ? {
-            ...state,
-            [action.modelName]:{
-                ...modelState,
-                ...{
-                    [action.name]:data
-                }
-            }
-        } : state;
+        }  
+        result = ReducerHelper.createState(state,modelState,data,action.modelName,action.name,childrenPropName,rootIsObject);
         return result;
     }
 
@@ -150,7 +137,7 @@ export default class AppendReducer{
 
     execute(state,action){
         ReducerHelper.execute(state,action);
-        if(action.treeOption!==undefined){
+        if(action.schema.treeOption!==undefined){
             return this._treeExecute(state,action);
         } else {
             return this._platExecute(state,action);

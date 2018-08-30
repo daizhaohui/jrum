@@ -87,7 +87,7 @@ const _createChildrenStateByDeleteInCollection = (originState,childrenPropName,p
             }
             newState = [
                 ...state.slice(0,index),
-                ...{
+                {
                   ...item,
                   [childrenPropName]:children
                 },
@@ -96,7 +96,7 @@ const _createChildrenStateByDeleteInCollection = (originState,childrenPropName,p
         } else {     
             newState = [
                 ...state.slice(0,index),
-                ...{
+                {
                   ...item,
                   [childrenPropName]:_createState(children,arr.splice(0,1))
                 },
@@ -122,7 +122,7 @@ const _createChildrenStateByDeleteItem = (originState,childrenPropName,payLoad,i
         } else  {     
             newState = [
                 ...state.slice(0,index),
-                ...{
+                {
                   ...item,
                   [childrenPropName]:_createState(children,arr.splice(0,1))
                 },
@@ -220,12 +220,6 @@ export default class DeleteReducer{
             //找到parent所在的索引路径
             indexs = ReducerHelper.findItemIndexPath(modelPropState,value,keyName,childrenPropName,rootIsObject);
             data = _createChildrenStateByDeleteInCollection(rootIsObject?state[childrenPropName]:state,childrenPropName,payLoad,indexs);
-            if(rootIsObject){
-                data = {
-                    ...state,
-                    [childrenPropName]:data
-                };
-            } 
         } 
         //在tree中查找符合条件的元素进行删除
         else {
@@ -244,15 +238,7 @@ export default class DeleteReducer{
                 data = _createChildrenStateByDeleteMultiItems(modelPropState,childrenPropName,payLoad.func);
             } 
         }
-        result = data ? {
-            ...state,
-            [action.modelName]:{
-                ...modelState,
-                ...{
-                    [action.name]:data
-                }
-            }
-        } : state;
+        result = ReducerHelper.createState(state,modelState,data,action.modelName,action.name,childrenPropName,rootIsObject);
         return result;
     }
 
@@ -326,7 +312,7 @@ export default class DeleteReducer{
 
     execute(state,action){
         ReducerHelper.execute(state,action);
-        if(action.treeOption!==undefined){
+        if(action.schema.treeOption!==undefined){
             return this._treeExecute(state,action);
         }else {
             return this._platExecute(state,action);

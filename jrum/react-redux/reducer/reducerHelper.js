@@ -1,4 +1,4 @@
-import {DataTypes} from '../../model';
+import DataTypes from '../../model/dataTypes';
 import Checker from '../../utils/checker';
 
 const _findParentPathIndexInArray = (children,childrenName,func)=>{
@@ -68,6 +68,13 @@ export default class ReducerHelper {
         return state[action.modelName][action.name] || {};
     }
 
+    static parentIsEmpty(action){
+        if(typeof action.parent === 'undefined') {
+            return true;
+        }
+        return false;
+    }
+
     static findItemIndexPathByFunc(state,childrenPropName,rootIsObject,func){
         var indexs,
 
@@ -94,6 +101,30 @@ export default class ReducerHelper {
             return item[keyName] == value;
         };
         return ReducerHelper.findItemIndexPathByFunc(state,childrenPropName,rootIsObject,_comparyKey);
+    }
+
+    static createState(state,modelState,data,modelName,name,childrenPropName,rootIsObject){
+        var result;
+        if(data){
+            if(rootIsObject){
+                data = {
+                    ...state,
+                    [childrenPropName]:data
+                };
+            } 
+            result = {
+                ...state,
+                [modelName]:{
+                    ...modelState,
+                    ...{
+                        [name]:data
+                    }
+                }
+            };
+        } else {
+            result = state;
+        }
+        return result;
     }
 
 

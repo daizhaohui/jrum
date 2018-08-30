@@ -107,7 +107,7 @@ const _createChildrenStateByUpdateItem = (originState,childrenPropName,payLoad,i
         } else  {     
             newState = [
                 ...state.slice(0,index),
-                ...{
+                {
                   ...item,
                   [childrenPropName]:_createState(children,arr.splice(0,1))
                 },
@@ -212,26 +212,7 @@ export default class UpdateReducer{
                 data = _createChildrenStateByUpdateMultiItems(modelPropState,childrenPropName,payLoad,payLoad.func);
             } 
         }
-
-        if(data){
-            if(rootIsObject){
-                data = {
-                    ...state,
-                    [childrenPropName]:data
-                };
-            } 
-            result = {
-                ...state,
-                [action.modelName]:{
-                    ...modelState,
-                    ...{
-                        [action.name]:data
-                    }
-                }
-            };
-        } else {
-            result = state;
-        }
+        result = ReducerHelper.createState(state,modelState,data,action.modelName,action.name,childrenPropName,rootIsObject);
         return result;
     }
 
@@ -351,7 +332,7 @@ export default class UpdateReducer{
  */
     execute(state,action){    
         ReducerHelper.execute(state,action);
-        if(action.treeOption!==undefined){
+        if(action.schema.treeOption!==undefined){
             return this._treeExecute(state,action);
         }else {
             return this._platExecute(state,action);

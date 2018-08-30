@@ -66,7 +66,7 @@ const _createChildrenStateByInsert = (originState,childrenPropName,payLoad,index
         } else  {     
             newState = [
                 ...state.slice(0,index),
-                ...{
+                {
                   ...item,
                   [childrenPropName]:_createState(children,arr.splice(0,1))
                 },
@@ -177,12 +177,6 @@ export default class InsertReducer{
             } else if(indexs.length>0){
                 data = _createChildrenStateByInsert(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs,isInsertBefore,isArray);
             }
-            if(rootIsObject){
-                data = {
-                    ...state,
-                    [childrenPropName]:data
-                };
-            } 
         } 
         //查找这个树
         else {
@@ -198,22 +192,8 @@ export default class InsertReducer{
             } else if(indexs.length>0){
                 data = data = _createChildrenStateByInsert(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs,isInsertBefore,isArray);
             }
-            if(indexs && rootIsObject){
-                data = {
-                    ...state,
-                    [childrenPropName]:data
-                };
-            } 
         }
-        result = data ? {
-            ...state,
-            [action.modelName]:{
-                ...modelState,
-                ...{
-                    [action.name]:data
-                }
-            }
-        } : state;
+        result = ReducerHelper.createState(state,modelState,data,action.modelName,action.name,childrenPropName,rootIsObject);
         return result;
     }
 
@@ -222,7 +202,7 @@ export default class InsertReducer{
     */
     execute(state,action){  
         ReducerHelper.execute(state,action);
-        if(action.treeOption!==undefined){
+        if(action.schema.treeOption!==undefined){
             return this._treeExecute(state,action);
         } else {
             return this._platExecute(state,action);
