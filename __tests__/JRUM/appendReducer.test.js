@@ -51,4 +51,11 @@ test("test appendReducer tree append",()=>{
     value = result.menu.list.children[3].children[0].id;
     expect(value).toStrictEqual('test-1');
 
+    _action["parent"] = "tfsh";
+    _action.payLoad.id = 'test-2';
+    result = _appendReducer.execute(_state,_action);
+    //console.log(JSON.stringify(result));
+    value = result.menu.list.children[0].children[1].children[1].children[0].id;
+    expect(value).toStrictEqual('test-2');
+
 });

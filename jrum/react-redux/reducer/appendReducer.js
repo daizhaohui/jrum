@@ -27,7 +27,8 @@ const _createObjectNewStateOfCollection = (originState,treeChildrenName,payLoad)
 };
 
 const _createChildrenStateByAppend=(originState,childrenPropName,payLoad,indexs)=>{  
-    const _createState = (state,arr)=>{
+    var arr = indexs;
+    const _createState = (state)=>{
         var children,index,item,newState;
         index = arr[0];
         item = state[index];
@@ -43,11 +44,12 @@ const _createChildrenStateByAppend=(originState,childrenPropName,payLoad,indexs)
                 ...state.slice(index+1)
             ];
         } else {     
+            arr.splice(0,1);
             newState = [
                 ...state.slice(0,index),
                 {
                   ...item,
-                  [childrenPropName]:_createState(children,arr.splice(0,1))
+                  [childrenPropName]:_createState(children)
                 },
                 ...state.slice(index+1)
             ];
@@ -92,8 +94,9 @@ export default class AppendReducer{
             else if(indexs===-1){
                 data =_createObjectNewStateOfCollection(modelPropState,childrenPropName,payLoad);
             }
+
         }  
-        result = ReducerHelper.createState(state,modelState,data,action.modelName,action.name,childrenPropName,rootIsObject);
+        result = ReducerHelper.createState(state,modelState,modelPropState,data,action.modelName,action.name,childrenPropName,rootIsObject);
         return result;
     }
 

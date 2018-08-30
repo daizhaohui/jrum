@@ -108,8 +108,9 @@ const _createChildrenStateByDeleteInCollection = (originState,childrenPropName,p
     return _createState(originState,indexs);
 };
 
-const _createChildrenStateByDeleteItem = (originState,childrenPropName,payLoad,indexs)=>{  
-    const _createState = (state,arr)=>{
+const _createChildrenStateByDeleteItem = (originState,childrenPropName,indexs)=>{  
+    var arr = indexs;
+    const _createState = (state)=>{
         var children,index,item,newState;
         index = arr[0];
         item = state[index];
@@ -119,12 +120,13 @@ const _createChildrenStateByDeleteItem = (originState,childrenPropName,payLoad,i
                 ...state.slice(0,index),
                 ...state.slice(index+1)
             ];
-        } else  {     
+        } else  {    
+            arr.splice(0,1); 
             newState = [
                 ...state.slice(0,index),
                 {
                   ...item,
-                  [childrenPropName]:_createState(children,arr.splice(0,1))
+                  [childrenPropName]:_createState(children)
                 },
                 ...state.slice(index+1)
             ];
@@ -184,10 +186,10 @@ const _findDeletedItemsIndexPath = (originState,childrenPropName,payLoad)=>{
             if(func(item)===true){  
                 if(!deletedItemsFlag[indexPath]){
                     deletedItemsFlag[iPath] = 1;
-                    _find(item[childrenName],iPath);
+                    _find(item[childrenPropName],iPath);
                 }
             } else {
-                _find(item[childrenName],iPath);
+                _find(item[childrenPropName],iPath);
             }
         }
     };
@@ -230,7 +232,7 @@ export default class DeleteReducer{
                 //indexs=-1时表示删除的对象为根对象：忽略删除
                 //indexs.lengh<=0 表示没找到删除目标
                 if(indexs!==-1 && indexs.length>=1){
-                    data = _createChildrenStateByDeleteItem(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs);
+                    data = _createChildrenStateByDeleteItem(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,indexs);
                 }
             } 
             //按函数查找
@@ -238,7 +240,7 @@ export default class DeleteReducer{
                 data = _createChildrenStateByDeleteMultiItems(modelPropState,childrenPropName,payLoad.func);
             } 
         }
-        result = ReducerHelper.createState(state,modelState,data,action.modelName,action.name,childrenPropName,rootIsObject);
+        result = ReducerHelper.createState(state,modelState,modelPropState,data,action.modelName,action.name,childrenPropName,rootIsObject);
         return result;
     }
 

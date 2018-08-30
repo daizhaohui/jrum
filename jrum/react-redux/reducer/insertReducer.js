@@ -56,7 +56,8 @@ const _createChildrenState = (state,payLoad,isInsertBefore,isArray)=>{
 
 
 const _createChildrenStateByInsert = (originState,childrenPropName,payLoad,indexs,isInsertBefore,isArray)=>{  
-    const _createState = (state,arr)=>{
+    var arr = indexs;
+    const _createState = (state)=>{
         var children,index,item,newState;
         index = arr[0];
         item = state[index];
@@ -64,11 +65,12 @@ const _createChildrenStateByInsert = (originState,childrenPropName,payLoad,index
         if(arr.length===1){     
            newState = _createChildrenState(children,payLoad,isInsertBefore,isArray);
         } else  {     
+            arr.splice(0,1);
             newState = [
                 ...state.slice(0,index),
                 {
                   ...item,
-                  [childrenPropName]:_createState(children,arr.splice(0,1))
+                  [childrenPropName]:_createState(children)
                 },
                 ...state.slice(index+1)
             ];
@@ -193,7 +195,7 @@ export default class InsertReducer{
                 data = data = _createChildrenStateByInsert(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs,isInsertBefore,isArray);
             }
         }
-        result = ReducerHelper.createState(state,modelState,data,action.modelName,action.name,childrenPropName,rootIsObject);
+        result = ReducerHelper.createState(state,modelState,modelPropState,data,action.modelName,action.name,childrenPropName,rootIsObject);
         return result;
     }
 

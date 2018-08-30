@@ -103,12 +103,12 @@ export default class ReducerHelper {
         return ReducerHelper.findItemIndexPathByFunc(state,childrenPropName,rootIsObject,_comparyKey);
     }
 
-    static createState(state,modelState,data,modelName,name,childrenPropName,rootIsObject){
+    static createState(state,modelState,modelPropState,data,modelName,name,childrenPropName,rootIsObject){
         var result;
         if(data){
             if(rootIsObject){
                 data = {
-                    ...state,
+                    ...modelPropState,
                     [childrenPropName]:data
                 };
             } 
