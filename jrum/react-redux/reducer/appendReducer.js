@@ -1,27 +1,18 @@
 import Checker from '../../utils/checker';
 import ReducerHelper from './reducerHelper';
 
-const _createObjectNewStateOfCollection = (originState,treeChildrenName,payLoad)=>{
+const _createNewStateOfCollection = (originState,treeChildrenName,payLoad)=>{
+    var data;
     if(Checker.isArray(payLoad)){
-        data = {
-            ...originState,
-            ...{
-                [treeChildrenName]:[
-                    ...originState[treeChildrenName],
-                    ...payLoad
-                ]
-            }
-        };
+        data = [
+            ...originState[treeChildrenName],
+            ...payLoad
+        ];
     } else {
-        data = {
-            ...originState,
-            ...{
-                [treeChildrenName]:[
-                    ...originState[treeChildrenName],
-                    payLoad
-                ]
-            }
-        };
+        data =[
+            ...originState[treeChildrenName],
+            payLoad
+        ];
     }
     return data;
 };
@@ -92,7 +83,7 @@ export default class AppendReducer{
             }
             //parent为根对象
             else if(indexs===-1){
-                data =_createObjectNewStateOfCollection(modelPropState,childrenPropName,payLoad);
+                data =_createNewStateOfCollection(modelPropState,childrenPropName,payLoad);
             }
 
         }  
@@ -107,7 +98,7 @@ export default class AppendReducer{
         result = state;
         if(ReducerHelper.dataTypeIsArray(action)) {
             //添加的是集合
-            if(Checker(action.payLoad)){
+            if(Checker.isArray(action.payLoad)){
                 data = [...currentState[action.name],...(action.payLoad)]
             } else {
                 data = [...currentState[action.name],action.payLoad]
