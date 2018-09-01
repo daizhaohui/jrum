@@ -66,25 +66,36 @@ const _getDelKeyOrObject=(obj,pl)=>{
     return "";
 };
 
-const _createChildrenStateByDeleteInCollection = (originState,childrenPropName,payLoad,indexs)=>{  
-    const _createState = (state,arr)=>{
+const _createStateByDeleteInCollection = (state,payLoad)=>{
+    var indexOrObject,result;
+
+    result = state;
+    indexOrObject = _getDelIndexOrArray(state,payLoad); 
+    //删除多条记录
+    if(Checker.isArray(indexOrObject)){
+        result = indexOrObject;
+    }
+    //删除单条记录  
+    else if(indexOrObject>=0 && state.length>indexOrObject){
+        result = [
+            ...state.slice(0,indexOrObject),
+            ...state.slice(indexOrObject+1)
+        ];
+    }
+    return result;
+}
+
+const _createChildrenStateByDeleteInParent = (originState,childrenPropName,payLoad,indexs)=>{  
+    var arr,indexOrObject;
+
+    arr = indexs;
+    const _createState = (state)=>{
         var children,index,item,newState;
         index = arr[0];
         item = state[index];
         children = item[childrenPropName];
         if(arr.length===1){     
-            indexOrObject = _getDelIndexOrArray(originState,payLoad); 
-            //删除多条记录
-            if(Checker.isArray(indexOrObject)){
-                children = indexOrObject;
-            }
-            //删除单条记录  
-            else if(indexOrObject>=0 && children.length>indexOrObject){
-                children = [
-                    ...children.slice(0,indexOrObject),
-                    ...children.slice(indexOrObject+1)
-                ];
-            }
+            children = _createStateByDeleteInCollection(children,payLoad);
             newState = [
                 ...state.slice(0,index),
                 {
@@ -94,18 +105,19 @@ const _createChildrenStateByDeleteInCollection = (originState,childrenPropName,p
                 ...state.slice(index+1)
             ];
         } else {     
+            arr.splice(0,1);  
             newState = [
                 ...state.slice(0,index),
                 {
                   ...item,
-                  [childrenPropName]:_createState(children,arr.splice(0,1))
+                  [childrenPropName]:_createState(children)
                 },
                 ...state.slice(index+1)
             ];
         }
         return newState;
     }
-    return _createState(originState,indexs);
+    return _createState(originState);
 };
 
 const _createChildrenStateByDeleteItem = (originState,childrenPropName,indexs)=>{  
@@ -113,8 +125,7 @@ const _createChildrenStateByDeleteItem = (originState,childrenPropName,indexs)=>
     const _createState = (state)=>{
         var children,index,item,newState;
         index = arr[0];
-        item = state[index];
-        children = item[childrenPropName];
+        item = state[index];     
         if(arr.length===1){     
             newState = [
                 ...state.slice(0,index),
@@ -122,6 +133,7 @@ const _createChildrenStateByDeleteItem = (originState,childrenPropName,indexs)=>
             ];
         } else  {    
             arr.splice(0,1); 
+            children = item[childrenPropName];
             newState = [
                 ...state.slice(0,index),
                 {
@@ -143,9 +155,8 @@ const _createChildrenStateByDeleteMultiItems = (originState,childrenPropName,fun
 
         items = [];
         len = children.length;
-        isFinded = false;
         newState = children;
-        for(i=0;i<Len;i++){
+        for(i=0;i<len;i++){
             item = children[i];
             if(!func(item)){
                 items.push(item);
@@ -153,9 +164,11 @@ const _createChildrenStateByDeleteMultiItems = (originState,childrenPropName,fun
         }
         if(items.length<children.length){
             newState = [...items];
+            items.splice(0,items.length);
         }   
+        len = newState.length;
         for(i=0;i<len;i++){
-            item = children[i];
+            item = newState[i];
             newState = [
                 ...newState.slice(0,i),
                 {
@@ -214,20 +227,25 @@ export default class DeleteReducer{
         childrenPropName = action.schema.treeOption.children;
         keyName = action.schema.treeOption.key;
         data = null;
-        rootIsObject = this.dataTypeIsObject(action);
+        rootIsObject = ReducerHelper.dataTypeIsObject(action);
         value = action.parent;
 
         //在指定的父里找符合条件的元素进行删除
-        if(value){
+        if(!ReducerHelper.parentIsEmpty(action)){
             //找到parent所在的索引路径
             indexs = ReducerHelper.findItemIndexPath(modelPropState,value,keyName,childrenPropName,rootIsObject);
-            data = _createChildrenStateByDeleteInCollection(rootIsObject?state[childrenPropName]:state,childrenPropName,payLoad,indexs);
+            if(indexs===-1){
+                data = _createStateByDeleteInCollection(rootIsObject?modelPropState[childrenPropName]:modelPropState,payLoad);
+            }
+            else if(indexs.length>0){
+                data = _createChildrenStateByDeleteInParent(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs);
+            }
         } 
         //在tree中查找符合条件的元素进行删除
         else {
             value = payLoad.key || payLoad.index;
             //单个值查找
-            if(value){
+            if(value!==undefined){
                 indexs = ReducerHelper.findItemIndexPath(modelPropState,value,keyName,childrenPropName,rootIsObject);
                 //indexs=-1时表示删除的对象为根对象：忽略删除
                 //indexs.lengh<=0 表示没找到删除目标
@@ -237,7 +255,7 @@ export default class DeleteReducer{
             } 
             //按函数查找
             else if(payLoad.func){
-                data = _createChildrenStateByDeleteMultiItems(modelPropState,childrenPropName,payLoad.func);
+                data = _createChildrenStateByDeleteMultiItems(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad.func);
             } 
         }
         result = ReducerHelper.createState(state,modelState,modelPropState,data,action.modelName,action.name,childrenPropName,rootIsObject);
@@ -286,7 +304,7 @@ export default class DeleteReducer{
                 };
             }
         }
-        else if(currentState[action.name] && this.dataTypeIsObject(action)) {
+        else if(currentState[action.name] && ReducerHelper.dataTypeIsObject(action)) {
             indexOrObject = _getDelKeyOrObject(currentState[action.name],pl);
             if(indexOrObject===""){
                 data = null;

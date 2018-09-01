@@ -2,10 +2,10 @@ import AppendReducer from '../../jrum/react-redux/reducer/appendReducer.js';
 import MenuData from '../data/menu.js';
 import DataTypes from '../../jrum/model/dataTypes';
 
-var _state,_action,_appendReducer,_actionCollection,_stateCollection;
+var _state,_action,_reducer,_actionCollection,_stateCollection;
 
 beforeEach(()=>{
-    _appendReducer = new AppendReducer();
+    _reducer = new AppendReducer();
 
     _state = {
         menu:{
@@ -74,13 +74,13 @@ test("test appendReducer tree append:root is Object",()=>{
     var result,value;
 
     _action["parent"] = "jsxt";
-    result = _appendReducer.execute(_state,_action);
+    result = _reducer.execute(_state,_action);
     value = result.menu.list.children[3].children[0].id;
     expect(value).toStrictEqual('test-1');
 
     _action["parent"] = "tfsh";
     _action.payLoad.id = 'test-2';
-    result = _appendReducer.execute(_state,_action);
+    result = _reducer.execute(_state,_action);
     value = result.menu.list.children[0].children[1].children[1].children[0].id;
     expect(value).toStrictEqual('test-2');
 
@@ -101,7 +101,7 @@ test("test appendReducer tree append:root is Object",()=>{
             children:[]
         }
     ]
-    result = _appendReducer.execute(_state,_action);
+    result = _reducer.execute(_state,_action);
     value = result.menu.list.children.length;
     expect(value).toStrictEqual(6);
     value = result.menu.list.children[4].id;
@@ -116,7 +116,7 @@ test("test appendReducer tree append:root is Object",()=>{
         icon:'test-icon5',
         children:[]
     };
-    result = _appendReducer.execute(_state,_action);
+    result = _reducer.execute(_state,_action);
     value = result.menu.list.children.length;
     expect(value).toStrictEqual(5);
     value = result.menu.list.children[4].id;
@@ -128,13 +128,13 @@ test("test appendReducer tree append:root is Collection",()=>{
     var result,value;
 
     _actionCollection["parent"] = "jsxt";
-    result = _appendReducer.execute(_stateCollection,_actionCollection);
+    result = _reducer.execute(_stateCollection,_actionCollection);
     value = result.menu.list[3].children[0].id;
     expect(value).toStrictEqual('test-1');
 
     _actionCollection["parent"] = "tfsh";
     _actionCollection.payLoad.id = 'test-2';
-    result = _appendReducer.execute(_stateCollection,_actionCollection);
+    result = _reducer.execute(_stateCollection,_actionCollection);
     value = result.menu.list[0].children[1].children[1].children[0].id;
     expect(value).toStrictEqual('test-2');
 
@@ -155,7 +155,7 @@ test("test appendReducer tree append:root is Collection",()=>{
             children:[]
         }
     ]
-    result = _appendReducer.execute(_stateCollection,_actionCollection);
+    result = _reducer.execute(_stateCollection,_actionCollection);
     value = result.menu.list.length;
     expect(value).toStrictEqual(4);
 
@@ -167,7 +167,7 @@ test("test appendReducer tree append:root is Collection",()=>{
         icon:'test-icon5',
         children:[]
     };
-    result = _appendReducer.execute(_stateCollection,_actionCollection);
+    result = _reducer.execute(_stateCollection,_actionCollection);
     value = result.menu.list.length;
     expect(value).toStrictEqual(5);
     value = result.menu.list[4].id;
@@ -193,12 +193,12 @@ test("test appendReducer flat append",()=>{
         }
     };
 
-    result = _appendReducer.execute(state,action);
+    result = _reducer.execute(state,action);
     expect(result.menu.list.length).toStrictEqual(4);
     expect(result.menu.list[3]).toStrictEqual(4);
 
     action.payLoad = [4,5,6];
-    result = _appendReducer.execute(state,action);
+    result = _reducer.execute(state,action);
     expect(result.menu.list.length).toStrictEqual(6);
     expect(result.menu.list[5]).toStrictEqual(6);
 
