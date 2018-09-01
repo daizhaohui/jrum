@@ -6,47 +6,52 @@ const _findArrayInsertIndex=(items,func)=>{
         len = items.length;
     for(i=0;i<len;i++){
         if(func(items[i])===true){
-            return i+1;
+            return i;
         }
     }
     return -1;
 };
 
-const _getArrayInsertIndex=(items,pl)=>{
+const _getArrayInsertIndex=(items,pl,keyName)=>{
     if(items){
         if(pl.index!==undefined){
             return pl.index;
-        }else if(pl.func !==undefined){
+        }
+        else if(pl.key!==undefined && keyName!==undefined){
+            return _findArrayInsertIndex(items,(item)=>{
+                return item[keyName]===pl.key;
+            });
+        }
+       else if(pl.func !==undefined){
             return _findArrayInsertIndex(items,pl.func);
         }
     }
     return -1;
 };
 
-const _createChildrenState = (state,payLoad,isInsertBefore,isArray)=>{
+const _createChildrenStateByIndex = (state,index,item,isInsertBefore,isArray)=>{
     var data,index;
 
     data = state;
-    index = _getArrayInsertIndex(state,payLoad);
     if(index!==-1){
         if(isInsertBefore){
             data = isArray ? [
                 ...state.slice(0,index),
-                ...payLoad,
+                ...item,
                 ...state.slice(index)
             ] : [
                 ...state.slice(0,index),
-                payLoad,
+                item,
                 ...state.slice(index)
             ];
         } else {
             data = isArray ? [
                 ...state.slice(0,index+1),
-                ...payLoad,
+                ...item,
                 ...state.slice(index+1)
             ] : [
                 ...state.slice(0,index+1),
-                payLoad,
+                item,
                 ...state.slice(index+1)
             ];
         }
@@ -54,18 +59,25 @@ const _createChildrenState = (state,payLoad,isInsertBefore,isArray)=>{
     return data;
 };
 
-
-const _createChildrenStateByInsert = (originState,childrenPropName,payLoad,indexs,isInsertBefore,isArray)=>{  
+const _createChildrenStateByInsertToParent = (originState,childrenPropName,keyName,payLoad,indexs,isInsertBefore,isArray)=>{  
     var arr = indexs;
     const _createState = (state)=>{
         var children,index,item,newState;
         index = arr[0];
         item = state[index];
         children = item[childrenPropName];
-        if(arr.length===1){     
-           newState = _createChildrenState(children,payLoad,isInsertBefore,isArray);
+        if(arr.length===1){    
+           newState = _createChildrenStateByIndex(children,_getArrayInsertIndex(children,payLoad,keyName),payLoad.item,isInsertBefore,isArray);
+           newState = [
+            ...state.slice(0,index),
+            {
+              ...item,
+              [childrenPropName]:newState
+            },
+            ...state.slice(index+1)
+        ];
         } else  {     
-            arr.splice(0,1);
+            arr.splice(0,1);     
             newState = [
                 ...state.slice(0,index),
                 {
@@ -77,7 +89,33 @@ const _createChildrenStateByInsert = (originState,childrenPropName,payLoad,index
         }
         return newState;
     }
-    return _createState(originState,indexs);
+    return _createState(originState);
+};
+
+const _createChildrenStateByInsert = (originState,childrenPropName,payLoad,indexs,isInsertBefore,isArray)=>{  
+    var arr = indexs;
+    const _createState = (state)=>{
+        var children,index,item,newState;
+        index = arr[0];
+        item = state[index];
+        if(arr.length===1){    
+           children = state;
+           newState = _createChildrenStateByIndex(children,index,payLoad.item,isInsertBefore,isArray);
+        } else  {     
+            arr.splice(0,1);
+            children = item[childrenPropName];
+            newState = [
+                ...state.slice(0,index),
+                {
+                  ...item,
+                  [childrenPropName]:_createState(children)
+                },
+                ...state.slice(index+1)
+            ];
+        }
+        return newState;
+    }
+    return _createState(originState);
 };
 
 export default class InsertReducer{
@@ -87,7 +125,8 @@ export default class InsertReducer{
 
     _platExecute(state,action){
         var pl,
-        currentState,
+        modelState,
+        modelPropState,
         result,
         data,
         len,
@@ -95,60 +134,27 @@ export default class InsertReducer{
 
         result = state;
         pl =  action.payLoad;
-        currentState = ReducerHelper.getModelState(state,action);
+        modelState = ReducerHelper.getModelState(state,action);
+        modelPropState = ReducerHelper.getModelPropState(state,action);
 
         if(!ReducerHelper.dataTypeIsArray(action)) {
             return  state;
         }
 
-        len = currentState[action.name].length;
-        index = _getArrayInsertIndex(currentState[action.name],pl);
+        len = modelState[action.name].length;
+        index = _getArrayInsertIndex(modelPropState,pl);
         if(index<0 ) {
             return  state;
         }
 
         if(len < index) {
-            index = len - 1 <= 0 ? 0 : len;
+            index = len - 1 <= 0 ? 0 : len-1;
         }
-
-        //插入多项
-        if(Checker.isArray(pl.item)) {
-            if(action.isInsertBefore===true){
-                data = [
-                    ...pl.item,
-                    ...currentState[action.name].slice(0,index),
-                    ...currentState[action.name].slice(index)
-                ];
-            } else {
-                data = [
-                    ...currentState[action.name].slice(0,index),
-                    ...pl.item,
-                    ...currentState[action.name].slice(index)
-                ];
-            }
-           
-        }
-        //插入单项
-        else {
-            if(action.isInsertBefore===true){
-                data = [
-                    pl.item,
-                    ...currentState[action.name].slice(0,index),
-                    ...currentState[action.name].slice(index)
-                ];
-            } else {
-                data = [
-                    ...currentState[action.name].slice(0,index),
-                    pl.item,
-                    ...currentState[action.name].slice(index)
-                ];
-            }
-           
-        }
+        data = _createChildrenStateByIndex(modelPropState,index,pl.item,action.isInsertBefore,Checker.isArray(pl.item));
         result = {
             ...state,
             [action.modelName]:{
-                ...currentState,
+                ...modelState,
                 ...{
                     [action.name]:data
                 }
@@ -158,7 +164,7 @@ export default class InsertReducer{
     }
 
     _treeExecute(state,action){
-        var result,data,modelState,payLoad,childrenPropName,modelPropState,indexs,keyName,rootIsObject,value,isInsertBefore,isArray;
+        var result,data,modelState,payLoad,childrenPropName,modelPropState,indexs,keyName,value,rootIsObject,isInsertBefore,isArray;
 
         modelState = ReducerHelper.getModelState(state,action);
         modelPropState = ReducerHelper.getModelPropState(state,action);
@@ -167,33 +173,37 @@ export default class InsertReducer{
         keyName = action.schema.treeOption.key;
         data = null;
         rootIsObject = ReducerHelper.dataTypeIsObject(action);
-        value = action.parent;
-        isArray = Checker.isArray(payLoad);
+        isArray = Checker.isArray(payLoad.item);
         isInsertBefore = action.isInsertBefore;
-
+       
         //指定了parent
-        if(value) {
+        if(!ReducerHelper.parentIsEmpty(action)) {
+            value = action.parent;
             indexs = ReducerHelper.findItemIndexPath(modelPropState,value,keyName,childrenPropName,rootIsObject);
             if(indexs===-1){
-                data = _createChildrenState(modelPropState[childrenPropName],payLoad,isInsertBefore,isArray);     
+                value = _getArrayInsertIndex(modelPropState[childrenPropName],payLoad,keyName);
+                data = _createChildrenStateByIndex(modelPropState[childrenPropName],value,payLoad.item,isInsertBefore,isArray);     
             } else if(indexs.length>0){
-                data = _createChildrenStateByInsert(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs,isInsertBefore,isArray);
+                data = _createChildrenStateByInsertToParent(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,keyName,payLoad,indexs,isInsertBefore,isArray);
             }
         } 
         //查找这个树
         else {
-            value = action.key;
-            if(value){
+            value = payLoad.key || payLoad.index;
+            if(value!==undefined){
                 indexs = ReducerHelper.findItemIndexPath(modelPropState,value,keyName,childrenPropName,rootIsObject);
-            } else if(action.func){
-                indexs = ReducerHelper.findItemIndexPathByFunc(modelPropState,childrenPropName,rootIsObject,action.func);
+            } else if(payLoad.func){
+                indexs = ReducerHelper.findItemIndexPathByFunc(modelPropState,childrenPropName,rootIsObject,payLoad.func);
+            }
+       
+            if(indexs===-1){
+                value = modelPropState[childrenPropName].length-1;
+                value = value <0 ? 0:value;
+                data = _createChildrenStateByIndex(modelPropState[childrenPropName],value,payLoad.item,isInsertBefore,isArray);  
+            } else if(indexs!==-1 && indexs.length>0){
+                data = _createChildrenStateByInsert(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs,isInsertBefore,isArray);
             }
             
-            if(indexs!==-1){
-                data = _createChildrenState(modelPropState[childrenPropName],payLoad,isInsertBefore,isArray);  
-            } else if(indexs.length>0){
-                data = data = _createChildrenStateByInsert(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs,isInsertBefore,isArray);
-            }
         }
         result = ReducerHelper.createState(state,modelState,modelPropState,data,action.modelName,action.name,childrenPropName,rootIsObject);
         return result;

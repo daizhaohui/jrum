@@ -98,7 +98,7 @@ export default class ReducerHelper {
 
         indexs =[];
         const _comparyKey = (item)=>{
-            return item[keyName] == value;
+            return item[keyName] === value;
         };
         return ReducerHelper.findItemIndexPathByFunc(state,childrenPropName,rootIsObject,_comparyKey);
     }

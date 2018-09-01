@@ -57,7 +57,7 @@ export default class AppendReducer{
     }
 
     _treeExecute(state,action){
-        var result,data,modelState,payLoad,childrenPropName,modelPropState,indexs,value,rootIsObject,keyName;
+        var result,data,modelState,payLoad,childrenPropName,modelPropState,indexs,rootIsObject,keyName;
 
         modelState = ReducerHelper.getModelState(state,action);
         modelPropState = ReducerHelper.getModelPropState(state,action);
@@ -66,7 +66,6 @@ export default class AppendReducer{
         keyName = action.schema.treeOption.key;
         data = null;
         rootIsObject = ReducerHelper.dataTypeIsObject(action);
-        value = action.parent;
         //没有指定父，直接在根节点追加
         if(ReducerHelper.parentIsEmpty(action)) {
             if(rootIsObject){
