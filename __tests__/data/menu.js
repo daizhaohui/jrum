@@ -127,7 +127,7 @@ var items = [
         icon:'qx1',
         url:'/accounts',
         children:[{
-            id:'zjqx',
+            id:'zjqx1',
             name:'组织与权限',
             icon:'qx1',
             url:'/accounts',

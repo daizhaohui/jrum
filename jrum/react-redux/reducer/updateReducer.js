@@ -14,14 +14,18 @@ const _findUpdatedItemIndexs=(items,func)=>{
     return indexs.length>0 ?indexs:[-1];
 };
 
-const _getUpdateArrayIndexs=(items,pl)=>{
+const _getUpdateArrayIndexs=(items,pl,keyName)=>{
     if(items){
-        if(pl.func!==undefined){
-            return _findUpdatedItemIndexs(items,pl.func);
-        }
-        else if(pl.index!==undefined) {
+        if(pl.index!==undefined) {
             return [pl.index];
         }
+        else if(keyName!==undefined && pl.key!==undefined){
+            return _findUpdatedItemIndexs(items,item=>item[keyName]===pl.key)
+        }
+        else if(pl.func!==undefined){
+            return _findUpdatedItemIndexs(items,pl.func);
+        }
+        
     }
     return [-1];
 };
@@ -49,64 +53,82 @@ const _getUpdateObjectKeys=(obj,pl)=>{
     return [];
 };
 
-const _createChildrenStateByUpdate = (originState,childrenPropName,payLoad,indexs)=>{  
-    var updateItem = payLoad.covered?{}:payLoad.item;
+const _createChildrenStateInCollection = (state,payLoad,keyName)=>{
+    var newState,indexOrKey,updateItem,indexOrKeys;
 
-    const _createState = (state,arr)=>{
-        var children,index,item,newState,indexOrKeys,indexOrKey;
+    updateItem = payLoad.item;
+    indexOrKeys = _getUpdateArrayIndexs(state,payLoad,keyName);
+    indexOrKey = indexOrKeys[0];
+    //修改单条记录
+    if(indexOrKeys.length===1 && indexOrKey>=0 && state.length>indexOrKey){
+        updateItem = {...(state[indexOrKey]),...updateItem} 
+        newState = [...state.slice(0,indexOrKey),
+            updateItem,
+            ...state.slice(indexOrKey+1)
+        ];
+    }
+    //修改多条记录
+    else if(indexOrKeys.length>1){
+        newState = [...state];
+        for(indexOrKey=0;indexOrKey<indexOrKeys.length;indexOrKey++){
+            newState[indexOrKeys[indexOrKey]] = {...(newState[indexOrKeys[indexOrKey]]),...updateItem};
+        }
+    } else {
+        newState = state;
+    }
+    return newState;
+};
+
+const _createChildrenStateByUpdateInParent = (originState,childrenPropName,keyName,payLoad,indexs)=>{  
+    var arr;
+    arr = indexs;
+    const _createState = (state)=>{
+        var children,index,item,newState;
         index = arr[0];
         item = state[index];
         children = item[childrenPropName];
-        if(arr.length===1){     
-            indexOrKeys = _getUpdateArrayIndexs(children,payLoad);
-            //修改单条记录
-            if(indexOrKeys.length===1 && indexOrKey>=0 && children.length>indexOrKey){
-                updateItem = {...(children[indexOrKey]),...updateItem} 
-                newState = [...children.slice(0,indexOrKey),
-                    updateItem,
-                    ...children.slice(indexOrKey+1)
-                ];
-            }
-            //修改多条记录
-            else if(indexOrKeys.length>1){
-                newState = [...children];
-                for(indexOrKey=0;indexOrKey<indexOrKeys.length;indexOrKey++){
-                    newState[indexOrKeys[indexOrKey]] = {...(newState[indexOrKeys[indexOrKey]]),...updateItem};
-                }
-            } else {
-                newState = children;
-            }
+        if(arr.length===1){    
+            newState = _createChildrenStateInCollection(children,payLoad,keyName);
+            newState = [
+                ...newState.slice(0,index),
+                {
+                  ...item,
+                  [childrenPropName]:newState
+                },
+                ...newState.slice(index+1)
+            ];
         } else  {     
+            arr.splice(0,1);
             newState = [
                 ...state.slice(0,index),
-                ...{
+                {
                   ...item,
-                  [childrenPropName]:_createState(children,arr.splice(0,1))
+                  [childrenPropName]:_createState(children)
                 },
                 ...state.slice(index+1)
             ];
         }
         return newState;
     }
-    return _createState(originState,indexs);
+    return _createState(originState);
 };
 
 const _createChildrenStateByUpdateItem = (originState,childrenPropName,payLoad,indexs)=>{ 
-    var updateItem = payLoad.covered?{}:payLoad.item;
+    var updateItem = payLoad.item;
     var arr = indexs;
     const _createState = (state)=>{
         var children,index,item,newState;
         index = arr[0];
-        item = state[index];
-        children = item[childrenPropName];
+        item = state[index];     
         if(arr.length===1){     
-            updateItem = {...(children[index]),...updateItem};
-            newState = [...children.slice(0,index),
+            updateItem = {...item,...updateItem};
+            newState = [...state.slice(0,index),
                 updateItem,
-                ...children.slice(index+1)
+                ...state.slice(index+1)
             ];
         } else  {     
             arr.splice(0,1);
+            children = item[childrenPropName];
             newState = [
                 ...state.slice(0,index),
                 {
@@ -122,28 +144,28 @@ const _createChildrenStateByUpdateItem = (originState,childrenPropName,payLoad,i
 };
 
 const _createChildrenStateByUpdateMultiItems = (originState,childrenPropName,payLoad,func)=>{  
-    var updateItem = payLoad.covered?{}:payLoad.item;
+    var updateItem = payLoad.item;
     const _createState = (children)=>{
-        var i,len,item,items,newState,updatedIndexs;
+        var i,len,item,newState,updatedIndexs;
 
         updatedIndexs = [];
         len = children.length;
-        isFinded = false;
         newState = children;
-        for(i=0;i<Len;i++){
+        for(i=0;i<len;i++){
             item = children[i];
-            if(!func(item)){
+            if(func(item)){
                 updatedIndexs.push(i);
             }
         }
-        if(items.length<children.length){
+        if(updatedIndexs.length<children.length){
             newState = [...children];
             for(i=0;i<updatedIndexs.length;i++){
                 newState[updatedIndexs[i]] = {...(newState[updatedIndexs[i]]),...updateItem};
             }
         }   
+        len = newState.length;
         for(i=0;i<len;i++){
-            item = children[i];
+            item = newState[i];
             newState = [
                 ...newState.slice(0,i),
                 {
@@ -159,25 +181,13 @@ const _createChildrenStateByUpdateMultiItems = (originState,childrenPropName,pay
     return _createState(originState);
 };
 
-const _createObjectState = (modelPropState,payLoad)=>{
-    if(payLoad.covered){
-        return payLoad.item;
-    } else {
-        return {
-            ...modelPropState,
-            ...payLoad.item
-        }
-    }
-};
-
-
 export default class UpdateReducer{
     constructor(){
     
     }
 
     _treeExecute(state,action){
-        var result,data,modelState,payLoad,childrenPropName,modelPropState,indexs,keyName,rootIsObject,value,isArray;
+        var result,data,modelState,payLoad,childrenPropName,modelPropState,indexs,keyName,rootIsObject,value;
 
         modelState = ReducerHelper.getModelState(state,action);
         modelPropState = ReducerHelper.getModelPropState(state,action);
@@ -187,34 +197,55 @@ export default class UpdateReducer{
         data = null;
         rootIsObject = ReducerHelper.dataTypeIsObject(action);
         value = action.parent;
-        isArray = Checker.isArray(payLoad);
 
-        if(value){
-            indexs = ReducerHelper.findItemIndexPath(modelPropState,value,keyName,childrenPropName,rootIsObject);
-            if(indexs===-1){
-                data = _createObjectState(modelPropState,payLoad);     
-            } else if(indexs.length>0){
-                data = _createChildrenStateByUpdate(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs);
-            }
+        if(payLoad.covered){
+            result = {
+                ...state,
+                [action.modelName]:{
+                    ...modelState,
+                    [action.name]:payLoad.item
+                }
+            };
         } else {
-            value = payLoad.key;
-            //单个值查找
-            if(value){
+            //指定了parent
+            if(!ReducerHelper.parentIsEmpty(action)){
                 indexs = ReducerHelper.findItemIndexPath(modelPropState,value,keyName,childrenPropName,rootIsObject);
-                //indexs.lengh<=0 表示没找到删除目标
                 if(indexs===-1){
-                    data = _createObjectState(modelPropState,payLoad);     
+                    data = _createChildrenStateInCollection(rootIsObject?modelPropState[childrenPropName]:modelPropState,payLoad,keyName);     
+                } else if(indexs.length>0){
+                    data = _createChildrenStateByUpdateInParent(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,keyName,payLoad,indexs);
                 }
-                else if(indexs.length>=1){
-                    data = _createChildrenStateByUpdateItem(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs);
-                }
-            } 
-            //按函数查找
-            else if(payLoad.func){
-                data = _createChildrenStateByUpdateMultiItems(modelPropState,childrenPropName,payLoad,payLoad.func);
-            } 
-        }
-        result = ReducerHelper.createState(state,modelState,modelPropState,data,action.modelName,action.name,childrenPropName,rootIsObject);
+            } else {
+                value = payLoad.key || payLoad.index;
+                //单个值查找
+                if(value!==undefined){
+                    indexs = ReducerHelper.findItemIndexPath(modelPropState,value,keyName,childrenPropName,rootIsObject);
+                    //indexs.lengh<=0 表示没找到删除目标
+                    if(indexs===-1){
+                        return {
+                            ...state,
+                            [action.modelName]:{
+                                ...modelState,
+                                ...{
+                                    [action.name]:{
+                                        ...modelPropState,
+                                        ...(payLoad.item)
+                                    }
+                                }
+                            }
+                        };
+                    }
+                    else if(indexs.length>0){
+                        data = _createChildrenStateByUpdateItem(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,indexs);
+                    }
+                } 
+                //按函数查找
+                else if(payLoad.func){
+                    data = _createChildrenStateByUpdateMultiItems(rootIsObject?modelPropState[childrenPropName]:modelPropState,childrenPropName,payLoad,payLoad.func);
+                } 
+            }
+            result = ReducerHelper.createState(state,modelState,modelPropState,data,action.modelName,action.name,childrenPropName,rootIsObject);
+        }   
         return result;
     }
 
