@@ -32,6 +32,15 @@ const _check=(modelName,schema,name)=>{
         if(!schema[name]){
             throw new Error(`模型【${modelName}】未定义属性【${name}】`);
         }
+        if(schema.treeOption!==undefined){
+            if(!schema.treeOption.key || !schema.treeOption.children){
+                throw new Error(`模型${modelName}的属性${name}设置treeOption时,必须设置key和children的值`);
+            }
+            if(schema.type!==DataTypes.Object && schema.type!==DataTypes.Array) {
+                throw new Error(`模型${modelName}的属性${name},如果设置treeOption值,type类型必须为DataTypes.Array或DataTypes.Object`);
+            }
+        }
+       
     }
 };
 

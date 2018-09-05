@@ -70,17 +70,8 @@ const  _check = (state,action)=>{
     var curState;
     if(action.name){
         curState = ReducerHelper.getModelState(state,action);
-        if(typeof curState[action.name]==='undefined'){
-            throw new Error(`模型${action.modelName}中不存在属性${action.name}`);
-        }
         //tree数据结构检查
         if(action.schema.treeOption!==undefined){
-            if(!action.schema.treeOption.key || !action.schema.treeOption.children){
-                throw new Error(`模型${action.modelName}的属性${action.name}设置treeOption时,必须设置key和children的值`);
-            }
-            if(action.schema.type!==DataTypes.Object && action.schema.type!==DataTypes.Array) {
-                throw new Error(`模型${action.modelName}的属性${action.name},如果设置treeOption值,type类型必须为DataTypes.Array或DataTypes.Object`);
-            }
             _checkTreeData(curState[action.name],action.modelName,action.name,action.schema);
         }
        
