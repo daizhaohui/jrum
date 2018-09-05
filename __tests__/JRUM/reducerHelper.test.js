@@ -4,6 +4,8 @@ import DataTypes from '../../jrum/model/dataTypes.js';
 
 var _state,_stateCollection;
 
+process.env.NODE_ENV==='development';
+
 beforeEach(()=>{
     _state = {
         menu:{
@@ -62,4 +64,47 @@ test("test Reducer:findItemIndexPath:collection",()=>{
     expect(result[0]).toStrictEqual(2);
     expect(result[1]).toStrictEqual(0);
     expect(result[2]).toStrictEqual(2);
+});
+
+test("test Reducer:check",()=>{
+    var state,action;
+    action = {
+        schema:{
+            type:DataTypes.Object,
+            treeOption:{
+                key:'id',
+                children:'children'
+            }
+        },
+        modelName:'menu',
+        name:'list'
+    }
+    state = {
+        menu:{
+            list:{
+                id:0,
+                name:0,
+                children: [{
+                    id:1,
+                    name:1,
+                    children:[{
+                        id:2,
+                        name:2,
+                        children:[{
+                            id:3,
+                            name:3,
+                            children:[]
+                        }]
+                    }]
+                },{
+                    id:4,
+                    name:4,
+                    children:[]
+                }]
+            }
+        }
+    };
+   
+    ReducerHelper.execute(state,action);
+
 });
