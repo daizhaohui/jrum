@@ -1,7 +1,6 @@
-[2018-08-18T15:53:47.410] [ERROR] dateFile - menus is not defined
-ReferenceError: menus is not defined
-    at MenuService.addMenu (file:///Users/zhaohui.dai/work/jrum/server/services/menuService.mjs:37:16)
-    at addMenu (file:///Users/zhaohui.dai/work/jrum/server/controllers/menuController.mjs:26:42)
+[2018-09-09T22:47:32.557] [ERROR] dateFile - ctx is not defined
+ReferenceError: ctx is not defined
+    at updateMenu (file:///Users/zhaohui.dai/work/jrum/server/controllers/menuController.mjs:54:53)
     at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
     at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
     at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
@@ -11,12 +10,11 @@ ReferenceError: menus is not defined
     at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
     at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:22:27)
     at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
-    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/_koa-body@4.0.4@koa-body/index.js:110:14
     at process._tickCallback (internal/process/next_tick.js:68:7)
-[2018-08-18T16:33:04.279] [ERROR] dateFile - Menu.create(...).exec is not a function
-TypeError: Menu.create(...).exec is not a function
-    at MenuService.addMenu (file:///Users/zhaohui.dai/work/jrum/server/services/menuService.mjs:40:12)
-    at addMenu (file:///Users/zhaohui.dai/work/jrum/server/controllers/menuController.mjs:26:42)
+[2018-09-09T22:47:32.635] [ERROR] dateFile - ctx is not defined
+ReferenceError: ctx is not defined
+    at updateMenu (file:///Users/zhaohui.dai/work/jrum/server/controllers/menuController.mjs:61:13)
     at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
     at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
     at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
@@ -26,20 +24,5 @@ TypeError: Menu.create(...).exec is not a function
     at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
     at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:22:27)
     at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
-    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
-    at process._tickCallback (internal/process/next_tick.js:68:7)
-[2018-08-18T16:39:00.943] [ERROR] dateFile - Menu.create(...).exec is not a function
-TypeError: Menu.create(...).exec is not a function
-    at MenuService.addMenu (file:///Users/zhaohui.dai/work/jrum/server/services/menuService.mjs:40:12)
-    at addMenu (file:///Users/zhaohui.dai/work/jrum/server/controllers/menuController.mjs:26:42)
-    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
-    at next (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
-    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:346:16
-    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
-    at /Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
-    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-router/lib/router.js:351:31)
-    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
-    at checkUserToken (file:///Users/zhaohui.dai/work/jrum/server/controllers/authController.mjs:22:27)
-    at dispatch (/Users/zhaohui.dai/work/jrum/server/node_modules/koa-compose/index.js:42:32)
-    at /Users/zhaohui.dai/work/jrum/node_modules/koa-body/index.js:110:14
+    at /Users/zhaohui.dai/work/jrum/server/node_modules/_koa-body@4.0.4@koa-body/index.js:110:14
     at process._tickCallback (internal/process/next_tick.js:68:7)

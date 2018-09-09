@@ -20,7 +20,7 @@ const _findParentPathIndexInArray = (children,childrenName,func)=>{
                 result = iPath;
                 break;
             } else {
-                _find(item[childrenName],iPath);
+                item[childrenName] && _find(item[childrenName],iPath);
             }
         }
     }
@@ -67,15 +67,15 @@ const _checkTreeData = (data,modelName,propName,schema)=>{
     *检查指定的名称是否存在
     */
 const  _check = (state,action)=>{
-    var curState;
-    if(action.name){
-        curState = ReducerHelper.getModelState(state,action);
-        //tree数据结构检查
-        if(action.schema.treeOption!==undefined){
-            _checkTreeData(curState[action.name],action.modelName,action.name,action.schema);
-        }
+    // var curState;
+    // if(action.name){
+    //     curState = ReducerHelper.getModelState(state,action);
+    //     //tree数据结构检查
+    //     if(action.schema.treeOption!==undefined){
+    //         _checkTreeData(curState[action.name],action.modelName,action.name,action.schema);
+    //     }
        
-    } 
+    // } 
 };
 
 export default class ReducerHelper {

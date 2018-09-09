@@ -12,18 +12,23 @@ export class AddModifyMenu extends React.Component{
     }
 
     handleOk = (e)=>{
-        let {onOk,menu} = this.props;
+        let {onOk,menu,isEdit} = this.props;
         e.preventDefault();
         var data;
 
         this.props.form.validateFieldsAndScroll((err, values) => {
           if (!err) {
-                if(menu.isAdd){
+                if(isEdit){
+                    data = {
+                        ...values
+                    }
+                } else {
                     data = {
                         ...values,
-                        parent:menu.parent.id
-                     }
+                        parent:menu.id
+                    }
                 }
+               
                 this.props.form.resetFields();
                 onOk && onOk(data);
           }
@@ -31,29 +36,35 @@ export class AddModifyMenu extends React.Component{
         
     }
 
-    componentWillUpdate(props,state){
-        let {menu} = props;
-        if(!menu.isAdd){
-            this.props.form.setFields({
-               ...menu,
-               ...{
-                   name:menu.label
-               }
-            })
-        }
+    componentDidMount(){
+        var {Services} = this.props;
+        Services.Event.on("edit-menu",(menu)=>{
+            this.props.form.setFieldsValue({
+                label:menu.label,
+                id:menu.id,
+                icon:menu.icon,
+                url:menu.url
+            });
+        });
+    }
+
+    componentWillMount(){
+        var {Services} = this.props;
+        Services.Event.off("edit-menu");
     }
 
     handleCancel = ()=>{
         let {onCancel} = this.props;
+        this.props.form.resetFields();
         onCancel && onCancel();
     }
 
     render(){
-        let {menu,visible} = this.props;
+        let {visible,isEdit} = this.props;
         const { getFieldDecorator } = this.props.form;
         return (
             <Modal
-            title={menu.isAdd?'新增':'修改'}
+            title={!isEdit?'新增':'修改'}
             visible={visible}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
@@ -67,7 +78,7 @@ export class AddModifyMenu extends React.Component{
                         getFieldDecorator('id', {
                             rules: [{ required: true, message: '请输入编码!' }],
                         })(
-                            <Input />
+                            <Input disabled={isEdit}/>
                         )
                     }
                 </FormItem>
@@ -76,7 +87,7 @@ export class AddModifyMenu extends React.Component{
                     labelCol={{ span: 5 }}
                     wrapperCol={{ span: 12 }}>
                     {
-                        getFieldDecorator('name', {
+                        getFieldDecorator('label', {
                             rules: [{ required: true, message: '请输入名称!' }],
                         })(
                             <Input />

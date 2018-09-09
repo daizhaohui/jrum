@@ -24,10 +24,9 @@ class MenuListController extends Controller{
         var http = this.Services.Http;
         http.post("addMenu",data).then(res=>{
             if(res.status===200 && res.data){
-                if(res.data.code===1){
+                if(res.data.code===1){  
+                    Menu.append("list",data,data.parent);
                     message.success('添加菜单成功！');
-                    Menu.append("subList",data);
-                    this.getMenuList(); //刷新菜单
                 } else {
                     message.error('添加菜单失败！');
                 }
@@ -44,9 +43,9 @@ class MenuListController extends Controller{
                 }
             }).then(res=>{
             if(res.status===200 && res.data){
-                if(res.data.code===1){
+                if(res.data.code===1){           
+                    Menu.delete("list",data.id);
                     message.success('删除菜单成功！');
-                    Menu.delete("subList",data.index);
                 } else {
                     message.error('删除菜单失败！');
                 }
@@ -64,12 +63,12 @@ class MenuListController extends Controller{
             }).then(res=>{
             if(res.status===200 && res.data){
                 if(res.data.code===1){
-                    message.success('修改菜单成功！');
-                    Menu.update("subList",{
-                        label:data.name,
+                    Menu.update("list",{
+                        label:data.label,
                         icon:data.icon,
                         url:data.url
-                    },(item)=>item.id===data.id)
+                    },data.id);
+                    message.success('修改菜单成功！');
                 } else {
                     message.error('删除菜单失败！');
                 }
@@ -86,8 +85,7 @@ class MenuListController extends Controller{
                 "deleteMenu":this.deleteMenu
             },
             dataToProp:{
-                "menu.list":"list",
-                "menu.subList":"subList"
+                "menu.list":"list"
             }
         }
     }

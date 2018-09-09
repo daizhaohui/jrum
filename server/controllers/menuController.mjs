@@ -48,8 +48,18 @@ export default class MenuController {
         } 
     }
 
-    static async updateMenu(menu) {
-
+    static async updateMenu(ctx,next) {
+        var result;
+        try{
+            result =  await _menuService.updateMenu(ctx.request.body);
+            ctx.body = {
+                code:result?1:0,
+                message:result?'success':'fail'
+            };  
+        }catch(e){
+            ErrorHandler.handle(e);
+            ctx.body = ErrorHandler.getResponseOfServerError(e);
+        } 
     }
 
     static async getMenus(ctx,next) {

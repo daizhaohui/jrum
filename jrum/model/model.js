@@ -32,4 +32,8 @@ export default class Model {
         handler.update(name,updatedItem,indexOrKeyOrFunc,parent);
     }
 
+    find(name,func){
+        
+    }
+
 }

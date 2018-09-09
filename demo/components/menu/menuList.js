@@ -10,10 +10,7 @@ export  default  class  MenuList extends Component {
         super(props);
         this.state = {
             addModifyMenuDialogVisible:false,
-            editMenu:{
-                isAdd:true,
-                data:null,
-            },
+            isEdit:false,
             currentMenu:null,
             tableSetting:{
                 bordered:true,
@@ -37,7 +34,7 @@ export  default  class  MenuList extends Component {
         let {deleteMenu} = this.props;
         if(this.deleteMenuInfo){
             confirm({
-                title: '确定删除改菜单吗?',
+                title: '确定删除该菜单吗?',
                 content: ' ',
                 okType: 'danger',
                 okText:'确定',
@@ -52,11 +49,6 @@ export  default  class  MenuList extends Component {
         }
     }
 
-    updateMenu = (data)=>{
-        let {updateMenu} = this.props;
-        updateMenu(data);
-    }
-
     getDeleteFunc = (record,index)=>{
         this.deleteMenuInfo = {
             index:index,
@@ -65,9 +57,14 @@ export  default  class  MenuList extends Component {
         return this.deleteMenu;
     }
 
+   
+
     createOperationCell = (text, record, index)=>{
         return (
-            <Button onClick={this.getDeleteFunc(record,index)}>删除</Button>
+            <div>
+             <Button onClick={this.getDeleteFunc(record,index)}>删除</Button>
+             <Button onClick={this.getEditFunc(record,index)}>修改</Button>
+            </div>
         );
     }
 
@@ -138,21 +135,14 @@ export  default  class  MenuList extends Component {
         } else {
             menu = this.findMenu(list,e[0]); 
         }
-        Menu.update("subList",menu.children);
         this.setState({
-            currentMenu:menu,
-            editMenu:{
-                ...(this.state.editMenu),
-                ...{
-                    data:menu
-                }
-            }
+            currentMenu:menu
         })
     }
 
     createTreeNodes = (list)=>{
         return list.map(item=>{
-            if(item.children.length>0){
+            if(item.children && item.children.length>0){
                 return (
                     <TreeNode title={item.label} key={item.id}>
                         {
@@ -169,12 +159,16 @@ export  default  class  MenuList extends Component {
     }
 
     addModifyMenuOk= (data)=>{
-        let {addMenu} = this.props;
+        let {addMenu,updateMenu} = this.props;
         this.setState({
             addModifyMenuDialogVisible:false
-        })
-        addMenu(data);
-
+        });
+        if(this.state.isEdit){
+            updateMenu(data);
+        } else {
+            addMenu(data);
+        }
+     
     }
 
     addModifyMenuCancel = ()=>{
@@ -183,14 +177,26 @@ export  default  class  MenuList extends Component {
         })
     }
 
+    getEditFunc = (record,index)=>{
+        this.editMenu = record;
+        return this.updateMenu;
+    }
+
+    updateMenu = ()=>{
+        this.setState({
+            editMenu:this.editMenu,
+            addModifyMenuDialogVisible:true,
+            isEdit:true
+        });
+        this.Services.Event.emit("edit-menu",this.editMenu);
+    }
+
     addMenu = ()=>{
-        if(this.state.editMenu.data){
+        if(this.state.currentMenu){
             this.setState({
                 addModifyMenuDialogVisible:true,
-                editMenu:{
-                    isAdd:true,
-                    parent:this.state.currentMenu
-                }
+                isEdit:false,
+                editMenu:this.state.currentMenu
             })
         } else {
             message.info('您还没有选择父菜单！');
@@ -201,12 +207,22 @@ export  default  class  MenuList extends Component {
         return record["id"];
     }
 
+    getCurrentMenuChildren(){
+        var children;
+        let {list} = this.props;
+        if(this.state.currentMenu){
+            children = this.findMenu(list,this.state.currentMenu.id).children;
+        }
+        return children ? children : [];
+    }
+
     render() {
-        let {subList} = this.props;
+        var subList = this.getCurrentMenuChildren();
         return (
             <div className="menu-list">
                 <AddModifyMenu 
                     visible={this.state.addModifyMenuDialogVisible} 
+                    isEdit={this.state.isEdit}
                     menu={this.state.editMenu} 
                     onOk={this.addModifyMenuOk} 
                     onCancel={this.addModifyMenuCancel}

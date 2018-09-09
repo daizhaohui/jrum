@@ -33,7 +33,7 @@ export default class MenuService{
             
         result = await Menu.create({
             id:menu.id,
-            label:menu.name,
+            label:menu.label,
             icon:menu.icon?menu.icon:'',
             url:menu.url?menu.url:'',
             parent:menu.parent?menu.parent:''
@@ -58,7 +58,7 @@ export default class MenuService{
                 id:menu.id
             },
             {
-                label:menu.name,
+                label:menu.label,
                 icon:menu.icon?menu.icon:'',
                 url:menu.url?menu.url:'',
             }
